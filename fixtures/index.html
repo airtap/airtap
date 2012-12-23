@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <title>there is only zuul</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="/mocha.css" />
+    <script src="/mocha.js"></script>
+    <script>mocha.setup('__mocha_ui__')</script>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="/build.js"></script>
+    <script>
+      var harness = window.mochaPhantomJS || mocha;
+      harness.run();
+    </script>
+  </body>
+</html>
