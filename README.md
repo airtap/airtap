@@ -16,7 +16,7 @@ Zuul will start a server on localhost:9000 which you can visit to get awesome ht
 
 ## headless zuul
 
-If you just want to run your tests in a headless environment courtesy of mocha-phantomjs and phantomjs, zull will oblige!
+If you just want to run your tests in a headless environment courtesy of mocha-phantomjs and phantomjs, zuul will oblige!
 
 ```shell
 $ zuul /path/to/your/test/*.js
