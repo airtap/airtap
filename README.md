@@ -12,7 +12,7 @@ $ zuul --server 9000 /path/to/your/test/*.js
 
 Zuul will start a server on localhost:9000 which you can visit to get awesome html output (courtesy of mocha).
 
-![html](/shtylman/zuul/master/img/html.png)
+![html](https://raw.github.com/shtylman/zuul/master/img/html.png)
 
 ## headless zuul
 
@@ -22,7 +22,7 @@ If you just want to run your tests in a headless environment courtesy of mocha-p
 $ zuul /path/to/your/test/*.js
 ```
 
-![headless](/shtylman/zuul/master/img/headless.png)
+![headless](https://raw.github.com/shtylman/zuul/master/img/headless.png)
 
 ## install
 
