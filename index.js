@@ -36,7 +36,8 @@ if (argv.server && isNaN(parseInt(argv.server))) {
 
 // bundle the javascript we are interested in
 var bundle = browserify({
-    debug: true
+    debug: true,
+    watch: true
 });
 argv._.forEach(bundle.addEntry.bind(bundle));
 
