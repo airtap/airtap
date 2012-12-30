@@ -28,6 +28,10 @@ $ zuul /path/to/your/tests
 
 You can specify either a specific javascript file(s) or a directory(s) to zuul. If you specify a directory, zuul will load all of the ```.js``` files in that directory.
 
+## mocha.opts
+
+If ```test/mocha.opts``` is available relative to your launch directory, then zuul will incorporate those options into the mocha setup.
+
 ## install
 
 ```shell
