@@ -21,6 +21,7 @@ var index = fs.readFileSync(__dirname + '/fixtures/index.html', 'utf-8');
 var argv = optimist
     .usage('zuul [options] file(s)|dir')
     .describe('server', 'port to start harness server for manual testing')
+    .describe('wwwroot', 'location where the webserver will serve additional static files')
     .describe('ui', 'mocha ui (bdd, tdd, qunit, exports')
     .default('ui')
     .argv;
@@ -35,8 +36,6 @@ if (argv.server && isNaN(parseInt(argv.server))) {
     optimist.showHelp(console.error);
     process.exit(-1);
 }
-
-// if specified directory, then load mocha opts
 
 // bundle the javascript we are interested in
 var bundle = browserify({
@@ -89,15 +88,19 @@ if (fs.existsSync(mocha_opts_path)) {
 
 // backwards compat for command line arg
 // overrides anything in mocha.opt file
-if (argv.ui) {
-    mocha_opt.ui = argv.ui;
-}
+mocha_opt.ui = argv.ui || mocha_opt.ui || 'bdd';
 
 // the default (html) reporter must be used for browser testing
 delete mocha_opt.reporter;
 
 // setup http server to serve our harness files
 var app = express();
+app.use(app.router);
+
+if (argv.wwwroot) {
+    app.use(express.static(argv.wwwroot));
+}
+
 app.get('/', function(req, res) {
     res.send(index.replace('__mocha_opts__', JSON.stringify(mocha_opt)));
 });
