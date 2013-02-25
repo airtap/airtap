@@ -37,11 +37,9 @@ if (argv.server && isNaN(parseInt(argv.server))) {
     process.exit(-1);
 }
 
-// bundle the javascript we are interested in
-var bundle = browserify({
-    debug: true,
-    watch: true
-});
+var bundle = browserify();
+
+// TODO (shtylman) debug and watch mode for browserify?
 
 // user can specify files or directories
 // directories are checked for .js files
@@ -49,7 +47,7 @@ argv._.forEach(function(file_or_dir) {
     var stat = fs.statSync(file_or_dir);
 
     if (stat.isFile()) {
-        return bundle.addEntry(file_or_dir);
+        return bundle.require(file_or_dir, { entry: true });
     }
 
     // ignore non js and hidden files
@@ -61,7 +59,7 @@ argv._.forEach(function(file_or_dir) {
         return path.join(cwd, file_or_dir, file);
     });
 
-    files.forEach(bundle.addEntry.bind(bundle));
+    files.forEach(bundle.require.bind(bundle, { entry: true }));
 });
 
 // options which will be passed to `mocha.setup`
@@ -106,7 +104,9 @@ app.get('/', function(req, res) {
 });
 app.get('/build.js', function(req, res) {
     res.contentType('application/javascript');
-    res.send(bundle.bundle());
+    bundle.bundle(function(err, src) {
+        res.end(src);
+    });
 });
 app.get('/mocha.js', function(req, res) {
     res.sendfile(mocha_path + '/mocha.js');
