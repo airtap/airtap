@@ -47,7 +47,8 @@ argv._.forEach(function(file_or_dir) {
     var stat = fs.statSync(file_or_dir);
 
     if (stat.isFile()) {
-        return bundle.require(file_or_dir, { entry: true });
+        var file = path.join(cwd, file_or_dir);
+        return bundle.require(file, { entry: true });
     }
 
     // ignore non js and hidden files
@@ -104,7 +105,7 @@ app.get('/', function(req, res) {
 });
 app.get('/build.js', function(req, res) {
     res.contentType('application/javascript');
-    bundle.bundle(function(err, src) {
+    bundle.bundle({ insertGlobals: true }, function(err, src) {
         res.end(src);
     });
 });
