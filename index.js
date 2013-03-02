@@ -118,39 +118,41 @@ app.get('/mocha.css', function(req, res) {
 
 // go go go!!
 var server = app.listen(argv.server);
-var port = server.address().port;
 
 // if user just wants a server, then stop here
 if (argv.server) {
-    console.log('server listening: http://localhost:' + port);
+    server.once('listening', function() {
+        var port = server.address().port;
+        console.log('server listening: http://localhost:' + port);
+    });
 }
 // default is to run under phantomjs
 else {
     // location of mocha_phantomjs runner
     var mocha_phantom = require.resolve('mocha-phantomjs');
-    var phantom = require.resolve('phantomjs');
+    var phantom = require('phantomjs').path;
 
     if (!mocha_phantom) {
         console.error('mocha-phantomjs is not installed');
         console.error('run: npm install -g mocha-phantomjs');
         process.exit(-1);
     }
-    else if (!phantom) {
-        console.error('phantomjs is not installed');
-        console.error('run: npm install -g phantomjs');
-    }
 
-    // launch phantomjs to run the harness files
-    var cmd = 'phantomjs';
-    var args = [mocha_phantom, 'http://localhost:' + port];
+    server.on('listening', function() {
+        var port = server.address().port;
 
-    var child = child_proc.spawn(cmd, args);
+        // launch phantomjs to run the harness files
+        var cmd = phantom;
+        var args = [mocha_phantom, 'http://localhost:' + port];
 
-    child.stdout.pipe(process.stdout);
-    child.stderr.pipe(process.stderr);
+        var child = child_proc.spawn(cmd, args);
 
-    child.on('exit', function(code) {
-        server.close();
-        process.exit(code);
+        child.stdout.pipe(process.stdout);
+        child.stderr.pipe(process.stderr);
+
+        child.on('exit', function(code) {
+            server.close();
+            process.exit(code);
+        });
     });
 }
