@@ -4,11 +4,11 @@
   "description": "browser testing harness for mocha tests",
   "main": "index.js",
   "dependencies": {
-    "browserify": "2.13.2",
-    "express": "3.2.2",
-    "mocha-phantomjs": "2.0.1",
-    "optimist": "0.4.0",
-    "phantomjs": "1.9.0-3"
+    "browserify": "2.25.1",
+    "express": "3.3.4",
+    "mocha-phantomjs": "3.1.0",
+    "optimist": "0.6.0",
+    "phantomjs": "1.9.1-0"
   },
   "peerDependencies": {
     "mocha": ">= 1.7.0"
