@@ -108,6 +108,10 @@ app.get('/', function(req, res) {
 app.get('/build.js', function(req, res) {
     res.contentType('application/javascript');
     bundle.bundle({ insertGlobals: true }, function(err, src) {
+        if (err) { 
+          console.error(err);
+          return res.send(500);
+        }
         res.end(src);
     });
 });
