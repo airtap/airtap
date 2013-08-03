@@ -1,6 +1,6 @@
 {
   "name": "zuul",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "browser testing harness for mocha tests",
   "main": "index.js",
   "dependencies": {
