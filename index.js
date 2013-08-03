@@ -60,7 +60,9 @@ argv._.forEach(function(file_or_dir) {
         return path.join(cwd, file_or_dir, file);
     });
 
-    files.forEach(bundle.require.bind(bundle, { entry: true }));
+    files.forEach(function (file) { 
+      bundle.require(file, { entry: true });
+    });
 });
 
 // options which will be passed to `mocha.setup`
