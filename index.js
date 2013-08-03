@@ -107,14 +107,15 @@ delete mocha_opt.reporter;
 
 // setup http server to serve our harness files
 var app = express();
+
+if (config.initApp) {
+    config.initApp(app, express);
+}
+
 app.use(app.router);
 
 if (argv.wwwroot) {
     app.use(express.static(argv.wwwroot));
-}
-
-if (config.initApp) {
-    config.initApp(app, express);
 }
 
 app.get('/', function(req, res) {
