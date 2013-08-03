@@ -39,36 +39,42 @@ var config = (argv.config) ? require(path.join(cwd, argv.config)) : {};
 
 // html harness
 var index = config.fixture 
-  ? config.fixture() 
-  : fs.readFileSync(__dirname + '/fixtures/index.html', 'utf-8');
+    ? config.fixture() 
+    : fs.readFileSync(__dirname + '/fixtures/index.html', 'utf-8');
 
-var bundle = config.browserify ? config.browserify() : browserify();
+var bundleOpts = config.bundleOpts || { insertGlobals: true, debug: !!argv.server }
+function createBundle() {
 
-// TODO (shtylman) debug and watch mode for browserify?
+    var bundle = config.browserify ? config.browserify() : browserify();
 
-// user can specify files or directories
-// directories are checked for .js files
-argv._.forEach(function(file_or_dir) {
-    var stat = fs.statSync(file_or_dir);
+    // TODO (shtylman) debug and watch mode for browserify?
 
-    if (stat.isFile()) {
-        var file = path.join(cwd, file_or_dir);
-        return bundle.require(file, { entry: true });
-    }
+    // user can specify files or directories
+    // directories are checked for .js files
+    argv._.forEach(function(file_or_dir) {
+        var stat = fs.statSync(file_or_dir);
 
-    // ignore non js and hidden files
-    var files = fs.readdirSync(file_or_dir).filter(function(file) {
-        return path.extname(file) === '.js' && file[0] !== '.';
+        if (stat.isFile()) {
+            var file = path.join(cwd, file_or_dir);
+            return bundle.require(file, { entry: true });
+        }
+
+        // ignore non js and hidden files
+        var files = fs.readdirSync(file_or_dir).filter(function(file) {
+            return path.extname(file) === '.js' && file[0] !== '.';
+        });
+
+        files = files.map(function(file) {
+            return path.join(cwd, file_or_dir, file);
+        });
+
+        files.forEach(function (file) { 
+          bundle.require(file, { entry: true });
+        });
     });
 
-    files = files.map(function(file) {
-        return path.join(cwd, file_or_dir, file);
-    });
-
-    files.forEach(function (file) { 
-      bundle.require(file, { entry: true });
-    });
-});
+    return bundle;
+}
 
 // options which will be passed to `mocha.setup`
 var mocha_opt = {};
@@ -103,8 +109,6 @@ delete mocha_opt.reporter;
 var app = express();
 app.use(app.router);
 
-var bundleOpts = config.bundleOpts || { insertGlobals: true, debug: !!argv.server }
-
 if (argv.wwwroot) {
     app.use(express.static(argv.wwwroot));
 }
@@ -118,7 +122,7 @@ app.get('/', function(req, res) {
 });
 app.get('/build.js', function(req, res) {
     res.contentType('application/javascript');
-    bundle.bundle(bundleOpts, function(err, src) {
+    createBundle().bundle(bundleOpts, function(err, src) {
         if (err) { 
           console.error(err);
           return res.send(500);
