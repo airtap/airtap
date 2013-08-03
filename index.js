@@ -15,15 +15,13 @@ var mocha_path = path.dirname(require.resolve('mocha'));
 
 var cwd = process.cwd();
 
-// html harness
-var index = fs.readFileSync(__dirname + '/fixtures/index.html', 'utf-8');
-
 var argv = optimist
     .usage('zuul [options] file(s)|dir')
     .describe('server', 'port to start harness server for manual testing')
     .describe('wwwroot', 'location where the webserver will serve additional static files')
     .describe('ui', 'mocha ui (bdd, tdd, qunit, exports')
     .default('ui')
+    .describe('config', 'point to a config file that overrides zuul settings')
     .argv;
 
 if (argv.help) {
@@ -31,11 +29,18 @@ if (argv.help) {
     process.exit();
 }
 
-if (argv.server && isNaN(parseInt(argv.server))) {
+if (argv.server && isNaN(parseInt(argv.server, 10))) {
     console.error('--server argument must be a numeric port\n');
     optimist.showHelp(console.error);
     process.exit(-1);
 }
+
+var config = (argv.config) ? require(path.join(cwd, argv.config)) : {};
+
+// html harness
+var index = config.fixture 
+  ? config.fixture() 
+  : fs.readFileSync(__dirname + '/fixtures/index.html', 'utf-8');
 
 var bundle = browserify();
 
