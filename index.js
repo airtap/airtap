@@ -42,7 +42,7 @@ var index = config.fixture
   ? config.fixture() 
   : fs.readFileSync(__dirname + '/fixtures/index.html', 'utf-8');
 
-var bundle = browserify();
+var bundle = config.browserify ? config.browserify() : browserify();
 
 // TODO (shtylman) debug and watch mode for browserify?
 
@@ -103,6 +103,8 @@ delete mocha_opt.reporter;
 var app = express();
 app.use(app.router);
 
+var bundleOpts = config.bundleOpts || { insertGlobals: true, debug: !!argv.server }
+
 if (argv.wwwroot) {
     app.use(express.static(argv.wwwroot));
 }
@@ -116,7 +118,7 @@ app.get('/', function(req, res) {
 });
 app.get('/build.js', function(req, res) {
     res.contentType('application/javascript');
-    bundle.bundle({ insertGlobals: true }, function(err, src) {
+    bundle.bundle(bundleOpts, function(err, src) {
         if (err) { 
           console.error(err);
           return res.send(500);
