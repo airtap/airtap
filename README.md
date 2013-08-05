@@ -38,7 +38,7 @@ If ```test/mocha.opts``` is available relative to your launch directory, then zu
 $ npm install -g zuul
 ```
 
-## usage 
+## usage
 
 ```
 zuul [options] file(s)|dir
@@ -99,6 +99,17 @@ exports.initApp = function (app, express) {
   });
 };
 ```
+
+### api
+
+If you want to use this programmatically, do `var zuul = require('zuul')` and call it with some of these options.
+
+- **files**: `{Array}` of test filenames or directory names. Defaults to `['test']`, which will pick up all `.js` files under the `test` directory under the CWD.
+- **mochaOpts**: `{Object|String}` Either an object containing the Mocha options, or a string path to a `mocha.opts` file. Defaults to `test/mocha.opts` under the CWD.
+- **port**: `{Number}` giving the port to run a server on for manual testing. Leaving this out will run the tests in PhantomJS.
+- **ui**: `{String}` allowing you to easily specify or override the Mocha UI used (bdd, tdd, qunit, or exports). Takes precedence over `mochaOpts`.
+- **wwwroot**: `{String}` giving a directory to serve static content from.
+- **browserify**, **bundleOpts**, **fixture**, **initApp**: see config section above.
 
 ## credits
 

@@ -2,7 +2,7 @@
   "name": "zuul",
   "version": "0.1.0",
   "description": "browser testing harness for mocha tests",
-  "main": "index.js",
+  "main": "lib/zuul.js",
   "dependencies": {
     "browserify": "2.25.1",
     "express": "3.3.4",
@@ -19,6 +19,9 @@
   },
   "bin": {
     "zuul": "./bin/zuul"
+  },
+  "scripts": {
+    "test": "mocha ./test/"
   },
   "keywords": [
     "zuul",
