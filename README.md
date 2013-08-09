@@ -1,4 +1,4 @@
-# zuul
+# zuul [![Build Status](https://travis-ci.org/shtylman/zuul.png)](https://travis-ci.org/shtylman/zuul)
 
 Zuul is a test runner/harness to make running your mocha tests in a browser easier. Just point it at your mocha test files and let zuul consume them!
 
