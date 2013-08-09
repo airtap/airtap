@@ -1,2 +1,2 @@
---reporter tap
+--reporter list
 --ui tdd
