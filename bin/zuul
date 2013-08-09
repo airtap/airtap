@@ -26,17 +26,16 @@ if (argv.help) {
 var config = argv.config ? require(path.resolve(argv.config)) : {};
 
 try {
-    zuulApi({
+    zuulApi({ 
         port: argv.server,
         wwwroot: argv.wwwroot,
-        fixture: config.fixture,
-        bundleOpts: config.bundleOpts,
-        browserify: config.browserify,
-        initApp: config.initApp,
-        ui: argv.ui
+        ui: argv.ui,
+        files : argv._ ,
+        config: config
     });
 } catch (e) {
     console.error(e.message);
+    console.error(e.stack);
     optimist.showHelp(console.error);
     process.exit(-1);
 }
