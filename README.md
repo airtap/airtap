@@ -1,4 +1,4 @@
-# zuul [![Build Status](https://travis-ci.org/shtylman/zuul.png)](https://travis-ci.org/shtylman/zuul)
+# zuul [![Build Status](https://travis-ci.org/defunctzombie/zuul.png)](https://travis-ci.org/defunctzombie/zuul)
 
 Zuul is a test runner/harness to make running your mocha tests in a browser easier. Just point it at your mocha test files and let zuul consume them!
 
@@ -12,7 +12,7 @@ $ zuul --server 9000 /path/to/your/tests
 
 Zuul will start a server on localhost:9000 which you can visit to get awesome html output (courtesy of mocha).
 
-![html](https://raw.github.com/shtylman/zuul/master/img/html.png)
+![html](https://raw.github.com/defunctzombie/zuul/master/img/html.png)
 
 ## headless zuul
 
@@ -22,7 +22,7 @@ If you just want to run your tests in a headless environment courtesy of mocha-p
 $ zuul /path/to/your/tests
 ```
 
-![headless](https://raw.github.com/shtylman/zuul/master/img/headless.png)
+![headless](https://raw.github.com/defunctzombie/zuul/master/img/headless.png)
 
 ## finding tests
 
@@ -60,7 +60,7 @@ eventual overrides specified in it, all of which are optional:
 
 - **bundleOpts**: `{Object}` options passed to `browserify().bundle(options)`
 - **fixture**: `{Function}` returning a `{String}` that allows overriding the [default html
-  fixture](https://github.com/shtylman/zuul/blob/master/fixtures/index.html), but needs to keep the necessary setup
+  fixture](https://github.com/defunctzombie/zuul/blob/master/fixtures/index.html), but needs to keep the necessary setup
   (mocha, phantom) in order to work with zuul
 - **initApp**: `{Function}` invoked with the `app` instance and `express` which allows adding endpoints to the app and
   whatever else you need to do to properly set up your tests
