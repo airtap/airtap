@@ -27,9 +27,6 @@
   "bin": {
     "zuul": "./bin/zuul"
   },
-  "scripts": {
-    "test": "mocha ./test/"
-  },
   "keywords": [
     "zuul",
     "testing",
