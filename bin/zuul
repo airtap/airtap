@@ -1,41 +1,50 @@
 #!/usr/bin/env node
 
-// builtin
 var path = require('path');
 
-// vendor
-var optimist = require('optimist');
+var program = require('commander');
+var yaml = require('yamljs');
+var xtend = require('xtend');
 
-// mine
-var zuulApi = require('../lib/zuul');
+var zuul = require('../lib/zuul');
 
-var argv = optimist
-    .usage('zuul [options] file(s)|dir')
-    .describe('server', 'port to start harness server for manual testing')
-    .describe('wwwroot', 'location where the webserver will serve additional static files')
-    .describe('ui', 'mocha ui (bdd, tdd, qunit, exports')
-    .default('ui')
-    .describe('config', 'point to a config file that overrides zuul settings')
-    .argv;
+program
+.usage('[options] <files | dir>')
+.option('--ui <mocha ui>', 'mocha ui for tests (bdd, tdd, qunit, export) [tdd]')
+.option('--local [port]', 'port for manual testing in a local browser')
+.parse(process.argv);
 
-if (argv.help) {
-    optimist.showHelp();
-    process.exit();
-}
+var config = {
+    files: program.args,
+    local: program.local,
+    ui: program.ui
+};
 
-var config = argv.config ? require(path.resolve(argv.config)) : {};
+// read config files
+// main zuul.yml and possible env.yml
 
 try {
-    zuulApi({ 
-        port: argv.server,
-        wwwroot: argv.wwwroot,
-        ui: argv.ui,
-        files : argv._ ,
-        config: config
-    });
-} catch (e) {
-    console.error(e.message);
-    console.error(e.stack);
-    optimist.showHelp(console.error);
-    process.exit(-1);
+    var cfg_file = path.join(process.cwd(), '.zuul.yml');
+    var main_config = require(cfg_file);
+
+    config = xtend(config, main_config);
+} catch (err) {
+    console.error('error loading %s config file', cfg_file);
+    process.exit(1);
 }
+
+// optinal additional env config
+try {
+    var env_vars = require(path.join(process.cwd(), '.zuul.env.yml'));
+    config = xtend(config, env_vars);
+} catch (err) {} // ignored
+
+var sauce_username = process.env.SAUCE_USERNAME;
+var sauce_key = process.env.SAUCE_ACCESS_KEY;
+
+config.username = config.username || sauce_username;
+config.key = config.key || sauce_key;
+
+zuul(config);
+
+// vim: ft=javascript

@@ -4,14 +4,18 @@
   "description": "browser testing harness for mocha tests",
   "main": "lib/zuul.js",
   "dependencies": {
-    "browserify": "2.25.1",
-    "express": "3.3.4",
-    "mocha-phantomjs": "3.1.0",
-    "optimist": "0.6.0",
-    "phantomjs": "1.9.1-0"
+    "browserify": "2.35.1",
+    "express": "3.4.4",
+    "commander": "2.0.0",
+    "yamljs": "0.1.4",
+    "xtend": "2.1.1",
+    "debug": "0.7.3",
+    "bouncy": "3.2.1",
+    "localtunnel": "0.1.1",
+    "mocha-cloud": "defunctzombie/mocha-cloud#0798a5"
   },
   "devDependencies": {
-    "mocha": "1.12.0"
+    "mocha": "1.14.0"
   },
   "peerDependencies": {
     "mocha": ">= 1.7.0"
