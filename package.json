@@ -12,7 +12,7 @@
     "debug": "0.7.3",
     "bouncy": "3.2.1",
     "localtunnel": "0.1.1",
-    "mocha-cloud": "defunctzombie/mocha-cloud#0798a5"
+    "mocha-cloud": "defunctzombie/mocha-cloud#f395c17"
   },
   "devDependencies": {
     "mocha": "1.14.0"
