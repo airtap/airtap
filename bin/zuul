@@ -45,6 +45,13 @@ var sauce_key = process.env.SAUCE_ACCESS_KEY;
 config.username = sauce_username || config.sauce_username;
 config.key = sauce_key || config.sauce_key;
 
+var pkg = {};
+try {
+    pkg = require(process.cwd() + '/package.json');
+} catch (err) {}
+
+config.name = config.name || pkg.name || 'there is only zuul';
+
 zuul(config);
 
 // vim: ft=javascript
