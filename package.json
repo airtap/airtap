@@ -13,7 +13,7 @@
     "bouncy": "3.2.1",
     "localtunnel": "0.1.1",
     "osenv": "0.0.3",
-    "mocha-cloud": "defunctzombie/mocha-cloud#f395c17"
+    "mocha-cloud": "defunctzombie/mocha-cloud#3184a959"
   },
   "devDependencies": {
     "mocha": "1.14.0"
