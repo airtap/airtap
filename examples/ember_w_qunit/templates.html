@@ -1,0 +1,33 @@
+<div id="app-root"></div>
+
+<script type="text/x-handlebars">
+  {{#link-to "index"}}Home{{/link-to}}
+  {{#link-to "posts"}}Posts{{/link-to}}
+  {{#link-to "echo" classNames="echo"}}Echo{{/link-to}}
+
+  <div>
+    {{outlet}}
+  </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="posts">
+  <h1>Posts</h1>
+
+  {{#each post in controller}}
+    <div class="post">
+      {{post.title}}
+    </div>
+  {{/each}}
+</script>
+
+<script type=text/x-handlebars data-template-name="echo">
+  {{input value=yourName
+    classNames="your-name"
+    placeholder="What is your name?"}}
+
+  {{#if yourName}}
+    <div class="greeting">
+      Hello {{yourName}}
+    </div>
+  {{/if}}
+</script>

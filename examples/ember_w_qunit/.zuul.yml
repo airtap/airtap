@@ -1,0 +1,17 @@
+name: ember_w_qunit
+ui: qunit
+html: templates.html
+scripts:
+  - "http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"
+  - "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"
+  - "http://builds.emberjs.com/tags/v1.2.0-beta.1/ember.js"
+  - "app.js"
+browsers:
+  - name: chrome
+    version: 27..latest
+  - name: firefox
+    version: latest
+  - name: safari
+    version: latest
+  - name: ie
+    version: 6..latest
