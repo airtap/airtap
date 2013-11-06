@@ -22,14 +22,10 @@ var config = {
     ui: program.ui
 };
 
-try {
-    var cfg_file = path.join(process.cwd(), '.zuul.yml');
-    var main_config = require(cfg_file);
-
-    config = xtend(config, main_config);
-} catch (err) {
-    console.error('error loading %s config file', cfg_file);
-    process.exit(1);
+var cfg_file = path.join(process.cwd(), '.zuul.yml');
+if (fs.existsSync(cfg_file)) {
+    var zuulyml = yaml.parse(fs.readFileSync(cfg_file, 'utf-8'));
+    config = xtend(config, zuulyml);
 }
 
 // optinal additional config from $HOME/.zuulrc
