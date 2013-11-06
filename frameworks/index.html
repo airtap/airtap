@@ -1,0 +1,31 @@
+<!doctype html>
+<head>
+  <title>{{title}}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  {{#each framework_css}}
+  <link rel="stylesheet" href="/__zuul/{{this}}">
+  {{/each}}
+
+</head>
+<body>
+  {{{user_html}}}
+
+  {{{framework_html}}}
+
+  <script>{{{state}}}</script>
+
+  {{#each user_scripts}}
+  <script src="{{this}}"></script>
+  {{/each}}
+
+  {{#each framework_scripts}}
+  <script src="/__zuul/{{this}}"></script>
+  {{/each}}
+
+  <script src="/__zuul/{{test_script}}"></script>
+
+  {{#each framework_post_scripts}}
+  <script src="/__zuul/{{this}}"></script>
+  {{/each}}
+</body>

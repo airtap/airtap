@@ -24,5 +24,6 @@ runner.on('fail', function(test, err){
 
 runner.on('end', function(){
   runner.stats.failed = failed;
-  global.mochaResults = runner.stats;
+  runner.stats.passed = failed.length === 0;
+  window.zuul_results = runner.stats;
 });

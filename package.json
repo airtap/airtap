@@ -1,7 +1,7 @@
 {
   "name": "zuul",
   "version": "0.2.1",
-  "description": "browser testing harness for mocha tests",
+  "description": "simple browser testing",
   "main": "lib/zuul.js",
   "dependencies": {
     "browserify": "2.35.1",
@@ -13,7 +13,12 @@
     "bouncy": "3.2.1",
     "localtunnel": "0.1.1",
     "osenv": "0.0.3",
-    "mocha-cloud": "defunctzombie/mocha-cloud#3184a959"
+    "hbs": "2.4.0",
+    "shallow-copy": "0.0.1",
+    "shell-quote": "1.4.0",
+    "batch": "0.5.0",
+    "express-state": "1.0.2",
+    "wd": "0.2.2"
   },
   "devDependencies": {
     "mocha": "1.14.0"
@@ -32,7 +37,9 @@
     "zuul",
     "testing",
     "browser",
-    "mocha"
+    "qunit",
+    "mocha",
+    "saucelabs"
   ],
   "author": "Roman Shtylman <shtylman@gmail.com>",
   "license": "MIT"
