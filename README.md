@@ -1,125 +1,61 @@
 # zuul [![Build Status](https://travis-ci.org/defunctzombie/zuul.png)](https://travis-ci.org/defunctzombie/zuul)
 
-Zuul makes testing client side javascript easy! Use the zuul local server while developing tests and when ready to publish your changes, use zuul to test your code in cloud browsers.
+Zuul is the easiest way to test your javascript in browsers. Start testing your code in seconds locally and move to cloud based browsers seamlessly for better coverage.
 
 Don't just claim your js supports "all browsers", prove it with tests!
 
-## Using Zuul
+## Zuul workflow
 
-Zuul is meant to be used for developing your tests locally as well as with continuous integration tools like [travis-ci](https://travis-ci.org/). All you need to get started with zuul is a library you want to test and a file with some tests. The following walkthorugh will get you up and running locally and then show you how to test your project in the cloud!
+Zuul works out of the box with a few commonly used javascript frameworks (qunit, mocha). If you are already testing using these, zuul setup will be trivial.
 
-### 1. install zuul
+Zuul has 3 major ways in which it helps you test your code: locally, cloud browsers, and continuous integration. You should make sure that zuul is running for you locally before you try to run the other two.
 
-Beforew we can use zuul we need to install it. We will install zuul globally so we can use it to debug our browser tests. Later we will install it so we can use it with continuous intragration tests.
+Once you have [installed](https://github.com/defunctzombie/zuul/wiki/installation) zuul proceed to the [quickstart](https://github.com/defunctzombie/zuul/wiki/quickstart) to write your first test.
 
-```shell
-npm install -g zuul
+### Running zuul locally
+
+When iterating on your tests during development, simply use zuul `--local` mode to see your tests run in a browser.
+
+![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/develop-tests-locally.png)
+
+See the [quickstart](https://github.com/defunctzombie/zuul/wiki/quickstart) page on the wiki for more details.
+
+### Takeoff into the cloud
+
+The reason we go through all this trouble in the first place is to seamlessly run our tests against all those browsers we don't have installed. Luckily, [saucelabs](https://saucelabs.com/) runs some browsers and we can easily task zuul to test on those.
+
+![testing in the cloud](https://raw.github.com/defunctzombie/zuul/gh-pages/double-check-with-sauce.png)
+
+See the [cooking with sauce](https://github.com/defunctzombie/zuul/wiki/cloud-testing) wiki page to get your tests running in the cloud.
+
+### Bring it home with travis-ci
+
+No testing setup would be complete without a badge for passing or failing tests. After making sure your tests all pass in the cloud from your local machine, we will configure our tests to pass from travis-ci when we commit changes.
+
+![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/finalize-with-travis.png)
+
+See the [travis-ci integration](https://github.com/defunctzombie/zuul/wiki/travis-ci) wiki page.
+
+## Examples
+
+See the examples directory for some simple tests. Use the above knowledge to test the examples with your install of zuul.
+
+All of the examples can be tested locally by running the following command in each example directory.
+
+```
+zuul --local 8080 -- test.js
 ```
 
-### 2. write some code you want to test
+## zuul.yml
 
-`my-module.js` would look like the following. Note the use of node.js/commonjs style module pattern locally. This is important so the tests can use your module code. See the example modules section later in this readme for code tested with zuul. If you are familiar with writing mocha tests then zuul will work out of the box in most cases.
+The zuul consumes a yaml config file. See the [zuul.yml](https://github.com/defunctzombie/zuul/wiki/zuul.yml) wiki page for all of the goodies this file provides.
 
-```js
-function html(el, html) {
-    if (!html) {
-        return el.innerHTML = '';
-    }
-	el.innerHTML = html;
-}
+It includes advanced usage like how to run an additional server to support tests that make ajax requests.
 
-module.exports = html;
-```
+## License
 
-### 3. write a test file
+MIT
 
-Tests are written using [mocha](http://visionmedia.github.io/mocha/). I recommend using the `tdd` or `qunit` testing style for simplicity; your tests will look match your examples. Also recommend using the default [assert](http://nodejs.org/api/assert.html) module as shown below. You are of course free to use the other styles and zuul with support them. You can also use other assertion frameworks.
+## Credits
 
-`test.js` would contain something like the following:
-
-```js
-var assert = require('assert');
-var html = require(./my-module');
-
-suite('html');
-
-test('should set inner html', function() {
-    var el = document.createElement('div');
-    html(el, '<p>foobar</p>');
-    assert.equal(el.innerHTML, '<p>foobar</p>');
-});
-
-test('should clear inner html', function() {
-    var el = document.createElement('div');
-    el.innerHTML = 'foobar';
-    html(el);
-    assert.equal(el.innerHTML, '');
-});
-```
-
-### 4. launch zuul
-
-```shell
-zuul --local 9000 --ui qunit -- test.js
-```
-
-### 5. open a browser and see your tests
-
-The zuul command will print a url. Open this url in any local browser and your tests will run.
-
-### 6. Rinse and repeat
-
-Make changes to your code and test files as needed. No need to restart zuul, just refresh your browser.
-
-## zuul in the cloud
-
-Local testing is just the start and should be used to get your tests running and make sure they pass on your browser and in your dev environment. Great client modules should also be tested across different browsers and operating systems. For this, we will leverage [saucelabs](https://saucelabs.com/home) to run our same tests in the browser.
-
-### 1. get a saucelabs account
-
-Open source projects can use the awesome [free for open source](https://saucelabs.com/opensauce) version. User's with a saucelabs account already can skip this step.
-
-### 2. configure your account
-
-Once you have a sauce account, they will assign you an `access key`. Open `~/.zuulrc` with your favorite editor and make it look like the following:
-
-```yaml
-sauce_username: my_awesome_username
-sauce_key: 550e8400-e29b-41d4-a716-446655440000
-```
-
-Obviously replace with your name and key
-
-### 3. select browsers to test
-
-Back in your project directory, add the following file `.zuul.yml`
-
-```yaml
-ui: qunit
-browsers:
-  - name: chrome
-    version: 27..latest
-```
-
-This will run our tests on the `chrome` web browser and test all versions from 27 to latest availabel on saucelabs.
-
-### 4. run zuul
-
-```shell
-zuul -- test
-```
-
-Notice that we do not specify --local since we will run in the cloud. Zuul will create a server, establish a tunnel, and then ask saucelabs to run your tests. You can open your [saucelabs dashboard](https://saucelabs.com/account) to see yur tests being run. Zuul will exit when all tests are done.
-
-## credits
-
-This probject is made possible by all the awesome modules it uses. The real credit goes to these projects and the many others not listed.
-
-* [mocha](http://visionmedia.github.com/mocha/)
-* [express](http://expressjs.com/)
-* [localtunnel](http://localtunnel.me/)
-* [mocha-cloud](https://github.com/visionmedia/mocha-cloud)
-* [browserify](https://github.com/substack/node-browserify)
-* [bouncy](https://github.com/substack/bouncy)
-
-And others! See the `package.json` file for all the awesome.
+This probject is made possible by all the awesome modules it uses. See the `package.json` file for all the awesome.
