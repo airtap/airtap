@@ -18,7 +18,8 @@
     "shell-quote": "1.4.0",
     "batch": "0.5.0",
     "express-state": "1.0.2",
-    "wd": "0.2.2"
+    "wd": "0.2.2",
+    "colors": "0.6.2"
   },
   "devDependencies": {
     "mocha": "1.14.0"
