@@ -40,6 +40,9 @@ See the [travis-ci integration](https://github.com/defunctzombie/zuul/wiki/travi
 
 See the examples directory for some simple tests. Use the above knowledge to test the examples with your install of zuul.
 
+* [quickstart](https://github.com/defunctzombie/zuul/tree/master/examples/quickstart) - from the [quickstart](https://github.com/defunctzombie/zuul/wiki/Quickstart) wiki tutorial
+* [emberjs with qunit](https://github.com/defunctzombie/zuul/tree/master/examples/ember_w_qunit) - basic ember.js app with qunit tests
+
 All of the examples can be tested locally by running the following command in each example directory.
 
 ```
