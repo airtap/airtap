@@ -4,6 +4,8 @@ Zuul is the easiest way to test your javascript in browsers. Start testing your 
 
 Don't just claim your js supports "all browsers", prove it with tests!
 
+![zuul](https://f.cloud.github.com/assets/71256/1669799/fb463296-5c81-11e3-818a-26776dc7a256.jpg)
+
 ## Zuul workflow
 
 Zuul works out of the box with a few commonly used javascript frameworks (qunit, mocha). If you are already testing using these, zuul setup will be trivial.
