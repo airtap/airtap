@@ -13,7 +13,7 @@ var zuul = require('../lib/zuul');
 
 program
 .usage('[options] <files | dir>')
-.option('--ui <testing ui>', 'ui for tests (mocha-bdd, mocha-tdd, qunit)')
+.option('--ui <testing ui>', 'ui for tests (mocha-bdd, mocha-tdd, qunit, tape)')
 .option('--local [port]', 'port for manual testing in a local browser')
 .option('--tunnel', 'establish a tunnel for outside acceess. only used when --local is specified')
 .parse(process.argv);
