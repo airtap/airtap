@@ -1,17 +1,11 @@
 var test = require('tape');
 var through = require('through');
+var parser = require('tap-parser');
+var inspect = require('util').inspect;
+var load = require('load-script');
+var console = require('console');
 
 process.stdout = through();
-
-var finished = require('tap-finished');
-var stream = finished(function (results) {
-    var failed = results.fail;
-    window.zuul_results = {
-        failed: failed,
-        passed: failed.length === 0
-    };
-});
-process.stdout.pipe(stream);
 
 var params = (function () {
     var unesc = typeof decodeURIComponent !== 'undefined'
@@ -49,6 +43,7 @@ console.log = function (msg) {
             elem.appendChild(txt);
         }
     }
+
     process.stdout.write(msg + '\n');
 
     if (typeof originalLog === 'function') {
@@ -56,3 +51,25 @@ console.log = function (msg) {
     }
     else if (originalLog) return originalLog(arguments[0]);
 };
+
+var parse_stream = parser(function(results) {
+    var failed = results.fail;
+    window.zuul_results = {
+        failed: failed,
+        passed: failed.length === 0
+    };
+});
+
+process.stdout.pipe(parse_stream);
+
+load('/__zuul/test-bundle.js', run);
+
+function run(err) {
+  if (err) {
+    window.zuul_results = {
+      failures: 0,
+      passed: false
+    };
+    return;
+  }
+}
