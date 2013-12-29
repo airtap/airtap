@@ -20,7 +20,8 @@
     "express-state": "1.0.2",
     "wd": "0.2.2",
     "colors": "0.6.2",
-    "superstack": "0.0.4"
+    "superstack": "0.0.4",
+    "convert-source-map": "0.0.3"
   },
   "devDependencies": {
     "mocha": "1.14.0"
