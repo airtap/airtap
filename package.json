@@ -4,7 +4,7 @@
   "description": "simple browser testing",
   "main": "lib/zuul.js",
   "dependencies": {
-    "browserify": "2.35.1",
+    "browserify": "3.17.0",
     "express": "3.4.4",
     "commander": "2.0.0",
     "yamljs": "0.1.4",
