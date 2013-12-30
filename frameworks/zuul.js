@@ -1,8 +1,19 @@
+
+// TODO(shtylman)
+// we can do something good with this
+// cause we have the mappings file
+// we can actually show where in the source this is!!
+// before we boot anything we should install this to get reasonable debugging
+window.onerror = function(msg, file, line) {
+    //var item = document.createTextNode(msg + ':' + file + ':' + line);
+    //document.body.appendChild(item);
+}
+
+global.JSON = global.JSON || require('JSON2');
+
 var load = require('load-script');
 var stacktrace = require('stacktrace-js');
 var ajax = require('superagent');
-
-global.JSON = global.JSON || require('JSON2');
 
 try {
     var stack_mapper = require('stack-mapper');
@@ -17,7 +28,7 @@ var ZuulReporter = function(run_fn) {
     self.run_fn = run_fn;
     self._fail_count = 0;
 
-    var main_div = document.querySelector('#zuul');
+    var main_div = document.getElementById('zuul');
 
     var header = document.createElement('div');
     header.className = 'heading';
