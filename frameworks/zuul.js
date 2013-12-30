@@ -76,6 +76,10 @@ ZuulReporter.prototype.start = function() {
 // all tests done
 ZuulReporter.prototype.done = function(err) {
     var self = this;
+    window.zuul_results = {
+        passed: self._fail_count === 0,
+        failures: self._fail_count
+    };
 };
 
 // new test starting
