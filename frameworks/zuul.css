@@ -1,0 +1,50 @@
+* {
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.heading {
+    background-color: rgb(230, 235, 214);
+    font-size: 2em;
+    padding: 5px;
+    color: #222;
+    font-weight: 300;
+}
+
+.sub-heading {
+    background-color: rgb(195, 198, 226);
+    padding: 3px;
+    color: #333;
+    padding: 3px;
+    text-align: right;
+    font-size: 0.75em;
+}
+
+.test {
+    padding: 5px;
+    color: white;
+    border-bottom: 1px solid white;
+}
+
+.test.pending {
+    background-color: orange;
+}
+
+.test.passed {
+    background-color: rgb(126, 206, 126);
+}
+
+.test.failed {
+    background-color: rgb(240, 0, 0);
+}
+
+.test h1 {
+    margin: 0;
+    font-size: 1.25em;
+    font-weight: 300;
+}

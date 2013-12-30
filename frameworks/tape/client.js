@@ -1,24 +1,11 @@
-var test = require('tape');
 var through = require('through');
 var parser = require('tap-parser');
 var inspect = require('util').inspect;
-var load = require('load-script');
 var console = require('console');
 
-process.stdout = through();
+var ZuulReporter = require('../zuul');
 
-var params = (function () {
-    var unesc = typeof decodeURIComponent !== 'undefined'
-    ? decodeURIComponent : unescape
-    ;
-var parts = (window.location.search || '').replace(/^\?/, '').split('&');
-var opts = {};
-for (var i = 0; i < parts.length; i++) {
-    var x = parts[i].split('=');
-    opts[unesc(x[0])] = unesc(x[1]);
-}
-return opts;
-})();
+process.stdout = through();
 
 var originalLog = console.log;
 console.log = function (msg) {
@@ -36,14 +23,6 @@ console.log = function (msg) {
         msg += ' ' + inspect(args[i]);
     }
 
-    if (params.show === undefined || parseBoolean(params.show)) {
-        var elem = document.getElementById('__testling_output');
-        if (elem) {
-            var txt = document.createTextNode(msg + '\n');
-            elem.appendChild(txt);
-        }
-    }
-
     process.stdout.write(msg + '\n');
 
     if (typeof originalLog === 'function') {
@@ -52,24 +31,69 @@ console.log = function (msg) {
     else if (originalLog) return originalLog(arguments[0]);
 };
 
+var reporter = ZuulReporter(run);
+
+var previous_test = undefined;
+var assertions = 0;
+var done = false;
+
 var parse_stream = parser(function(results) {
-    var failed = results.fail;
-    window.zuul_results = {
-        failed: failed,
-        passed: failed.length === 0
-    };
+  reporter.done();
+});
+
+parse_stream.on('comment', function(comment) {
+  if (done) {
+    return;
+  }
+
+  if (previous_test) {
+    reporter.test_end({
+      passed: assertions === 0,
+      name: previous_test.name
+    });
+  }
+
+  previous_test = {
+    name: comment
+  };
+
+  assertions = 0;
+
+  reporter.test({
+    name: comment
+  });
+});
+
+parse_stream.on('assert', function(assert) {
+  if (!assert.ok) {
+    assertions++;
+  }
+
+  reporter.assertion({
+    result: assert.ok,
+    expected: undefined,
+    actual: undefined,
+    message: assert.name,
+    error: undefined,
+    stack: undefined
+  });
+});
+
+parse_stream.on('plan', function(plan) {
+  done = true;
+  reporter.done();
+});
+
+parse_stream.on('results', function(results) {
+  console.log(results);
+});
+
+parse_stream.on('extra', function(extra) {
 });
 
 process.stdout.pipe(parse_stream);
 
-load('/__zuul/test-bundle.js', run);
-
-function run(err) {
-  if (err) {
-    window.zuul_results = {
-      failures: 0,
-      passed: false
-    };
-    return;
-  }
+function run() {
+  // tape tests already start by default
+  // I don't like this stuff, very annoying to interface with
 }
