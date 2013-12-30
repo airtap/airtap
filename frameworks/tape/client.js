@@ -81,6 +81,13 @@ parse_stream.on('assert', function(assert) {
 
 parse_stream.on('plan', function(plan) {
   done = true;
+
+  if (previous_test) {
+    reporter.test_end({
+      passed: assertions === 0,
+      name: previous_test.name
+    });
+  }
   reporter.done();
 });
 
