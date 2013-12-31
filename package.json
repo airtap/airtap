@@ -25,7 +25,7 @@
     "load-script": "0.0.3",
     "through": "2.3.4",
     "tape": "2.3.2",
-    "tap-parser": "0.4.0",
+    "tap-parser": "0.4.1",
     "JSON2": "0.1.0",
     "stack-mapper": "0.2.1",
     "superagent": "0.15.7",
