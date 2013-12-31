@@ -7,11 +7,12 @@ var ui_map = {
   'mocha-tdd': 'tdd'
 };
 
-// TODO(shtylman) setup mocha?
-mocha.setup({
+var mocha_opt = {
   ui: ui_map[zuul.ui],
   reporter: function() {}
-});
+};
+
+mocha.setup(mocha_opt);
 
 var reporter = ZuulReporter(run);
 
@@ -37,6 +38,7 @@ function run(err) {
       result: false,
       actual: undefined,
       expected: undefined,
+      message: err.message,
       error: err,
       source: err.stack
     });
