@@ -9,15 +9,18 @@ html, body {
 }
 
 .heading {
-    background-color: rgb(230, 235, 214);
     font-size: 2em;
     padding: 5px;
     color: #222;
     font-weight: 300;
 }
 
+.heading .status {
+    float: right;
+}
+
 .sub-heading {
-    background-color: rgb(195, 198, 226);
+    background-color: #fafafa;
     padding: 3px;
     color: #333;
     padding: 3px;
@@ -31,15 +34,15 @@ html, body {
     border-bottom: 1px solid white;
 }
 
-.test.pending {
+.pending {
     background-color: orange;
 }
 
-.test.passed {
+.passed {
     background-color: rgb(126, 206, 126);
 }
 
-.test.failed {
+.failed {
     background-color: rgb(240, 0, 0);
 }
 
@@ -47,4 +50,10 @@ html, body {
     margin: 0;
     font-size: 1.25em;
     font-weight: 300;
+}
+
+.test.passed {
+    display: inline-block;
+    font-size: 0.75em;
+    border: 1px solid white;
 }

@@ -27,13 +27,22 @@ var ZuulReporter = function(run_fn) {
     var self = this;
     self.run_fn = run_fn;
     self._fail_count = 0;
+    self._pass_count = 0;
 
     var main_div = document.getElementById('zuul');
 
-    var header = document.createElement('div');
-    header.className = 'heading';
+    var header = self.header = document.createElement('div');
+    header.className = 'heading pending';
     header.innerHTML = zuul.title;
     main_div.appendChild(header);
+
+    self.status = header.appendChild(document.createElement('div'));
+    self.status.className = 'status';
+
+    self._set_status({
+        passed: 0,
+        failed: 0
+    });
 
     var sub = document.createElement('div');
     sub.className = 'sub-heading';
@@ -78,6 +87,14 @@ var ZuulReporter = function(run_fn) {
     }
 };
 
+ZuulReporter.prototype._set_status = function(info) {
+    var self = this;
+    var html = '';
+    html += '<span>' + info.failed + ' <small>failing</small></span> ';
+    html += '<span>' + info.passed + ' <small>passing</small></span>';
+    self.status.innerHTML = html;
+};
+
 // tests are starting
 ZuulReporter.prototype.start = function() {
     var self = this;
@@ -89,8 +106,16 @@ ZuulReporter.prototype.done = function(err) {
     var self = this;
     window.zuul_results = {
         passed: self._fail_count === 0,
-        failures: self._fail_count
+        failures: self._fail_count,
+        fails: self.fails
     };
+
+    if (self._fail_count > 0) {
+        self.header.className += ' failed';
+    }
+    else {
+        self.header.className += ' passed';
+    }
 };
 
 // new test starting
@@ -113,9 +138,22 @@ ZuulReporter.prototype.test_end = function(test) {
 
     var cls = test.passed ? 'passed' : 'failed';
 
+    if (test.passed) {
+        self._pass_count++;
+    }
+    else {
+        self._fail_count++;
+    }
+
     // current test element
     self._current_container.className += ' ' + cls;
-    self._current_container = self._current_container.parentElement;
+    // use parentNode for legacy browsers (firefox)
+    self._current_container = self._current_container.parentNode;
+
+    self._set_status({
+        passed: self._pass_count,
+        failed: self._fail_count
+    });
 };
 
 // new suite starting
@@ -144,9 +182,15 @@ ZuulReporter.prototype.assertion = function(details) {
         return;
     }
 
-    self._fail_count++;
+    if (details.message) {
+        var pre = document.createElement('pre');
+        pre.innerHTML = details.message;
+        self._current_container.appendChild(pre);
+    }
 
-    var message = details.message;
+    // TODO actual, expected
+
+
     var error = details.error;
     var stack = details.source;
 
@@ -174,8 +218,7 @@ ZuulReporter.prototype.assertion = function(details) {
         var include_source = false;
         var mapped = mapper.map(frames, include_source);
 
-        // create a v8 style stacktrace with new mappings
-        var str = error.toString();
+        var str = '';
         for (var i = 0; i <mapped.length; ++i) {
             var frame = mapped[i];
             str += '\n\tat ';
