@@ -1,11 +1,14 @@
 var through = require('through');
 var parser = require('tap-parser');
 var inspect = require('util').inspect;
-var console = require('console');
 
 var ZuulReporter = require('../zuul');
 
 process.stdout = through();
+
+if (typeof console === 'undefined') {
+  console = {};
+}
 
 var originalLog = console.log;
 console.log = function (msg) {
@@ -92,7 +95,6 @@ parse_stream.on('plan', function(plan) {
 });
 
 parse_stream.on('results', function(results) {
-  console.log(results);
 });
 
 parse_stream.on('extra', function(extra) {
