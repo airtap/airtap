@@ -1,3 +1,5 @@
-module.exports.qunit = require('./qunit');
-module.exports.mocha = require('./mocha');
-module.exports.tape = require('./tape');
+module.exports.qunit = __dirname + '/qunit';
+module.exports.tape = __dirname + '/tape';
+module.exports['mocha-bdd'] = __dirname + '/mocha';
+module.exports['mocha-tdd'] = __dirname + '/mocha';
+module.exports['mocha-qunit'] = __dirname + '/mocha';

@@ -106,8 +106,7 @@ ZuulReporter.prototype.done = function(err) {
     var self = this;
     window.zuul_results = {
         passed: self._fail_count === 0,
-        failures: self._fail_count,
-        fails: self.fails
+        failures: self._fail_count
     };
 
     if (self._fail_count > 0) {

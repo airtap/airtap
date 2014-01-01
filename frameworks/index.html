@@ -3,15 +3,12 @@
   <title>{{title}}</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-  {{#each framework_css}}
-  <link rel="stylesheet" href="/__zuul/{{this}}">
-  {{/each}}
-
+  <link rel="stylesheet" href="/__zuul/zuul.css">
 </head>
 <body>
-  {{{user_html}}}
+  <div id="zuul"></div>
 
-  {{{framework_html}}}
+  {{{user_html}}}
 
   <script>{{{state}}}</script>
 
@@ -19,7 +16,6 @@
   <script src="{{this}}"></script>
   {{/each}}
 
-  {{#each framework_scripts}}
-  <script src="/__zuul/{{this}}"></script>
-  {{/each}}
+  <script src="/__zuul/framework.js"></script>
+  <script src="/__zuul/client.js"></script>
 </body>
