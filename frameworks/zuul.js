@@ -19,6 +19,9 @@ try {
     var stack_mapper = require('stack-mapper');
 } catch (err) {};
 
+// post messages here to send back to clients
+var zuul_msg_bus = window.zuul_msg_bus = [];
+
 var ZuulReporter = function(run_fn) {
     if (!(this instanceof ZuulReporter)) {
         return new ZuulReporter(run_fn);
@@ -104,8 +107,11 @@ ZuulReporter.prototype.start = function() {
 // all tests done
 ZuulReporter.prototype.done = function(err) {
     var self = this;
+
+    var passed = self._fail_count === 0;
+
     window.zuul_results = {
-        passed: self._fail_count === 0,
+        passed: passed,
         failures: self._fail_count
     };
 
@@ -115,6 +121,12 @@ ZuulReporter.prototype.done = function(err) {
     else {
         self.header.className += ' passed';
     }
+
+    post_message({
+        type: 'done',
+        passed: passed,
+        failures: self._fail_count
+    });
 };
 
 // new test starting
@@ -128,6 +140,11 @@ ZuulReporter.prototype.test = function(test) {
     header.innerHTML = test.name;
 
     self._current_container = self._current_container.appendChild(container);
+
+    post_message({
+        type: 'test',
+        name: test.name
+    });
 };
 
 // test ended
@@ -152,6 +169,12 @@ ZuulReporter.prototype.test_end = function(test) {
     self._set_status({
         passed: self._pass_count,
         failed: self._fail_count
+    });
+
+    post_message({
+        type: 'test_end',
+        name: test.name,
+        passed: test.passed
     });
 };
 
@@ -189,7 +212,6 @@ ZuulReporter.prototype.assertion = function(details) {
 
     // TODO actual, expected
 
-
     var error = details.error;
     var stack = details.source;
 
@@ -204,20 +226,17 @@ ZuulReporter.prototype.assertion = function(details) {
         }
     }
 
+    var frames = [];
     try {
-        var frames = stacktrace(error);
-    } catch (err) {
-        var pre = document.createElement('pre');
-        pre.innerHTML = stack || message || error.toString();
-        self._current_container.appendChild(pre);
-        return;
-    }
+        frames = stacktrace(error);
+    } catch (err) {}
 
+    var str = '';
     if (mapper && frames.length) {
         var include_source = false;
         var mapped = mapper.map(frames, include_source);
 
-        var str = '';
+        str = '';
         for (var i = 0; i <mapped.length; ++i) {
             var frame = mapped[i];
             str += '\n\tat ';
@@ -227,8 +246,21 @@ ZuulReporter.prototype.assertion = function(details) {
     }
 
     var pre = document.createElement('pre');
-    pre.innerHTML = str;
+    pre.innerHTML = str ? str : (stack || message || error.toString());
     self._current_container.appendChild(pre);
+
+    post_message({
+        type: 'assertion',
+        actual: details.actual,
+        expected: details.expected,
+        message: details.message,
+        source: details.source,
+        frames: frames
+    });
 };
+
+function post_message(msg) {
+    zuul_msg_bus.push(msg);
+}
 
 module.exports = ZuulReporter;

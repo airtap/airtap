@@ -29,7 +29,8 @@
     "JSON2": "0.1.0",
     "stack-mapper": "0.2.1",
     "superagent": "0.15.7",
-    "stacktrace-js": "defunctzombie/stacktrace.js#70283b0b"
+    "stacktrace-js": "defunctzombie/stacktrace.js#07e7b95",
+    "char-split": "0.2.0"
   },
   "devDependencies": {
     "mocha": "1.14.0"
