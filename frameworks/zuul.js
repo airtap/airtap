@@ -82,7 +82,7 @@ var ZuulReporter = function(run_fn) {
             }
 
             try {
-                mapper = stack_mapper(res.body);
+                self._mapper = stack_mapper(res.body);
             } catch (err) {}
 
             self.start();
@@ -198,6 +198,7 @@ ZuulReporter.prototype.assertion = function(details) {
     // error
     // source (stack) if available
 
+    var mapper = self._mapper;
     var passed = details.result;
 
     if (passed) {
@@ -212,6 +213,7 @@ ZuulReporter.prototype.assertion = function(details) {
 
     // TODO actual, expected
 
+    var message = details.message;
     var error = details.error;
     var stack = details.source;
 
