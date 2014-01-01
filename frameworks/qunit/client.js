@@ -1,11 +1,39 @@
-var load = require('load-script');
+var ZuulReporter = require('../zuul');
 
-QUnit.done(function(details) {
-    details.passed = details.failed === 0;
-    window.zuul_results = details;
+var reporter = ZuulReporter(run);
+
+QUnit.config.autostart = false;
+
+QUnit.begin(function() {
 });
 
-load('/__zuul/test-bundle.js', run);
+QUnit.done(function(details) {
+    reporter.done();
+});
+
+QUnit.testStart(function(details) {
+    reporter.test({
+        name: details.name
+    });
+});
+
+QUnit.testDone(function(details) {
+    reporter.test_end({
+        name: details.name,
+        passed: details.passed
+    });
+});
+
+QUnit.log(function(details) {
+    reporter.assertion({
+        result: details.result,
+        expected: details.expected,
+        actual: details.actual,
+        message: details.message,
+        source: details.source
+    });
+});
 
 function run() {
+    QUnit.start();
 }
