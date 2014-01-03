@@ -33,7 +33,9 @@
     "char-split": "0.2.0"
   },
   "devDependencies": {
-    "mocha": "1.14.0"
+    "mocha": "~1.16.2",
+    "after": "~0.8.1",
+    "phantomjs": "1.9.2-6"
   },
   "peerDependencies": {
     "mocha": ">= 1.7.0"
@@ -54,5 +56,8 @@
     "saucelabs"
   ],
   "author": "Roman Shtylman <shtylman@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha --ui qunit --timeout 0 --bail -- test/index.js"
+  }
 }

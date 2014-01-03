@@ -29,8 +29,10 @@ var ZuulReporter = function(run_fn) {
 
     var self = this;
     self.run_fn = run_fn;
-    self._fail_count = 0;
-    self._pass_count = 0;
+    self.stats = {
+        passed: 0,
+        failed: 0
+    };
 
     var main_div = document.getElementById('zuul');
 
@@ -42,10 +44,7 @@ var ZuulReporter = function(run_fn) {
     self.status = header.appendChild(document.createElement('div'));
     self.status.className = 'status';
 
-    self._set_status({
-        passed: 0,
-        failed: 0
-    });
+    self._set_status(self.stats);
 
     var sub = document.createElement('div');
     sub.className = 'sub-heading';
@@ -110,10 +109,7 @@ ZuulReporter.prototype.done = function(err) {
 
     var passed = self._fail_count === 0;
 
-    window.zuul_results = {
-        passed: passed,
-        failures: self._fail_count
-    };
+    window.zuul_results = self.stats;
 
     if (self._fail_count > 0) {
         self.header.className += ' failed';
@@ -155,10 +151,10 @@ ZuulReporter.prototype.test_end = function(test) {
     var cls = test.passed ? 'passed' : 'failed';
 
     if (test.passed) {
-        self._pass_count++;
+        self.stats.passed++;
     }
     else {
-        self._fail_count++;
+        self.stats.failed++;
     }
 
     // current test element
@@ -166,10 +162,7 @@ ZuulReporter.prototype.test_end = function(test) {
     // use parentNode for legacy browsers (firefox)
     self._current_container = self._current_container.parentNode;
 
-    self._set_status({
-        passed: self._pass_count,
-        failed: self._fail_count
-    });
+    self._set_status(self.stats);
 
     post_message({
         type: 'test_end',

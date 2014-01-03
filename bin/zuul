@@ -9,7 +9,7 @@ var yaml = require('yamljs');
 var xtend = require('xtend');
 var osenv = require('osenv');
 
-var zuul = require('../lib/zuul');
+var Zuul = require('../lib/zuul');
 
 program
 .usage('[options] <files | dir>')
@@ -24,7 +24,8 @@ var config = {
     local: program.local,
     ui: program.ui,
     tunnel: program.tunnel,
-    phantom: program.phantom
+    phantom: program.phantom,
+    prj_dir: process.cwd()
 };
 
 var cfg_file = path.join(process.cwd(), '.zuul.yml');
@@ -53,6 +54,9 @@ try {
 
 config.name = config.name || pkg.name || 'there is only zuul';
 
-zuul(config);
+var zuul = Zuul(config);
+zuul.run(function(passed) {
+    process.exit(passed ? 0 : 1);
+});
 
 // vim: ft=javascript
