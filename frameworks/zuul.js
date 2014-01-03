@@ -1,3 +1,4 @@
+'use strict';
 
 // TODO(shtylman)
 // we can do something good with this
@@ -14,10 +15,11 @@ global.JSON = global.JSON || require('JSON2');
 var load = require('load-script');
 var stacktrace = require('stacktrace-js');
 var ajax = require('superagent');
+var trace_anchors = require('./trace-anchors');
 
 try {
     var stack_mapper = require('stack-mapper');
-} catch (err) {};
+} catch (err) {}
 
 // post messages here to send back to clients
 var zuul_msg_bus = window.zuul_msg_bus = [];
@@ -38,6 +40,7 @@ var ZuulReporter = function(run_fn) {
 
     var header = self.header = document.createElement('div');
     header.className = 'heading pending';
+    /*global zuul */
     header.innerHTML = zuul.title;
     main_div.appendChild(header);
 
@@ -80,6 +83,7 @@ var ZuulReporter = function(run_fn) {
                 return self.start();
             }
 
+            self._source_map = res.body;
             try {
                 self._mapper = stack_mapper(res.body);
             } catch (err) {}
@@ -191,7 +195,6 @@ ZuulReporter.prototype.assertion = function(details) {
     // error
     // source (stack) if available
 
-    var mapper = self._mapper;
     var passed = details.result;
 
     if (passed) {
@@ -226,23 +229,7 @@ ZuulReporter.prototype.assertion = function(details) {
         frames = stacktrace(error);
     } catch (err) {}
 
-    var str = '';
-    if (mapper && frames.length) {
-        var include_source = false;
-        var mapped = mapper.map(frames, include_source);
-
-        str = '';
-        for (var i = 0; i <mapped.length; ++i) {
-            var frame = mapped[i];
-            str += '\n\tat ';
-            str += frame.func + ' (' + frame.filename + ':' + frame.line + ':';
-            str += (frame.column || 0) + ')';
-        }
-    }
-
-    var pre = document.createElement('pre');
-    pre.innerHTML = str ? str : (stack || message || error.toString());
-    self._current_container.appendChild(pre);
+    self._renderError(stack, frames, message, error);
 
     post_message({
         type: 'assertion',
@@ -253,6 +240,33 @@ ZuulReporter.prototype.assertion = function(details) {
         frames: frames
     });
 };
+
+ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
+    var self = this;
+    var mapper = self._mapper;
+    var str;
+
+    if (mapper && frames.length) {
+        var mapped = mapper.map(frames);
+        str = trace_anchors(mapped, self._source_map);
+        // TODO:(thlorenz) pass opts if we wanna configure how traces are shown
+        //str = plainString(mapped);
+    }
+
+    var pre = document.createElement('pre');
+    pre.innerHTML = str ? str : (stack || message || error.toString());
+    self._current_container.appendChild(pre);
+};
+
+function plainString (mapped) {
+    var str = '';
+    for (var i = 0; i <mapped.length; ++i) {
+        var frame = mapped[i];
+        str += '\n\tat ';
+        str += frame.func + ' (' + frame.filename + ':' + frame.line + ':';
+        str += (frame.column || 0) + ')';
+    }
+}
 
 function post_message(msg) {
     zuul_msg_bus.push(msg);

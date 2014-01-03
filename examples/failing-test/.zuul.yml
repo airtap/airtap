@@ -1,0 +1,5 @@
+name: failing test
+ui: mocha-qunit
+browsers:
+  - name: chrome
+    version: latest

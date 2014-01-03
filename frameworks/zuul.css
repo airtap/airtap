@@ -1,3 +1,5 @@
+@import 'hljs-monokai.css';
+
 * {
 }
 
@@ -56,4 +58,11 @@ html, body {
     display: inline-block;
     font-size: 0.75em;
     border: 1px solid white;
+}
+
+.trace-anchor a {
+  color: white;
+  line-height: 5px;
+  margin: 0;
+  padding: 0;
 }
