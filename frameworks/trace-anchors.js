@@ -1,6 +1,6 @@
 'use strict';
 
-var hljs = require('highlight.js');
+var hljs = require('./hl.js');
 
 // TODO: (thlorenz) pull generic logic into separate module?
 function getCode(sources, frame) {
@@ -16,10 +16,15 @@ function getCode(sources, frame) {
     // hljs is pretty bad at guessing the language
     var ext = frame.filename.slice(-3);
 
-    var highlight = ext === '.js' ? function (s) { return hljs.highlight('javascript', s) } : hljs.higlightAuto;
+    var highlight_fn = hljs.highlightAuto;
+    if (ext === '.js') {
+        highlight_fn = function(src) {
+            return hljs.highlight('javascript', src)
+        }
+    }
 
     try {
-        return highlight(code).value;
+        return highlight_fn(code).value;
     } catch (e) {
         return code;
     }
