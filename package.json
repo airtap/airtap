@@ -59,6 +59,6 @@
   "author": "Roman Shtylman <shtylman@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "mocha --ui qunit --timeout 0 --bail -- test/index.js"
+    "test": "DEBUG=zuul* mocha --ui qunit --timeout 0 --bail -- test/index.js"
   }
 }
