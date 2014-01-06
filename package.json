@@ -31,7 +31,8 @@
     "superagent": "0.15.7",
     "stacktrace-js": "defunctzombie/stacktrace.js#07e7b95",
     "char-split": "0.2.0",
-    "highlight.js": "7.5.0"
+    "highlight.js": "7.5.0",
+    "zeroclipboard": "1.3.0-beta.1"
   },
   "devDependencies": {
     "mocha": "~1.16.2",

@@ -1,8 +1,11 @@
 'use strict';
+/*jshint browser: true*/
+
+// Not ideal: (thlorenz) ZeroClipboard has to load via a script tag, otherwise things don't work, I suspect that this is a permissions problem
+/* global ZeroClipboard */
 
 var hljs = require('./hl.js');
 
-// TODO: (thlorenz) pull generic logic into separate module?
 function getCode(sources, frame) {
     var codeArr = sources[frame.filename];
     if (!codeArr || codeArr.length < frame.line) return '';
@@ -55,13 +58,13 @@ function onTraceClick (ev) {
     // nothing we can do in that case
     if (!li) return;
 
-    var div = li.children[1];
+    var details = li.children[1];
 
     // don't show anything if no code was added (should never get here since then it's not clickable)
-    if (!div) return false;
+    if (!details) return false;
 
-    var next = ~div.getAttribute('style').indexOf('display: block') ? 'none' : 'block';
-    div.setAttribute('style', 'display: ' + next + ';')
+    var next = ~details.getAttribute('style').indexOf('display: block') ? 'none' : 'block';
+    details.setAttribute('style', 'display: ' + next + ';')
 }
 
 var on_click = 'onclick="(' + onTraceClick + ').call(this, arguments[0])"';
@@ -69,7 +72,7 @@ var on_click = 'onclick="(' + onTraceClick + ').call(this, arguments[0])"';
 // creates clickable anchors for the mapped stack trace
 // when clicked the appropriate code in the source map is shown
 // the code of the first stack is shown initially by default
-module.exports = function (mapped, source_map) {
+exports = module.exports = function (mapped, source_map) {
     var sources_by_file = hashByFile(source_map);
 
     var str = '<ul class="trace-anchor" style="list-style-type: none;"' + '" ' + on_click + '>'
@@ -89,12 +92,28 @@ module.exports = function (mapped, source_map) {
         str +=              (frame.column || 0) + ')';
         str +=          '</pre>';
         str +=      '</a>';
-        if (code.length) {
-            str += '<div class="hljs" style="display: ' + display + ';">' + code + '</div>'
+        str +=      '<div class="details" style="display: block;">'
+        if (i === 0) {
+        str +=        '<button class="zc-button" id="zc-button-' + i + '" data-clipboard-target="zc-textarea-' + i + '" style="float:right">Copy</button>'
+        str +=        '<textarea id="zc-textarea-' + i + '" cols="80" rows="1">' + frame.filename + ':' + frame.line + '</textarea>'
         }
+        if (code.length) {
+            str +=    '<div class="hljs" style="display: ' + display + ';min-width: 500px;">' + code + '</div>'
+        }
+        str +=     '</div>'
         str +=   '</li>';
     }
 
     str += '</ul>';
     return str;
 };
+
+exports.init_clipboard = function () {
+    // for now we only support the first stacktrace to be clipped
+    return new ZeroClipboard(document.getElementById("zc-button-0"));
+};
+
+ZeroClipboard.config({
+    trustedDomains: [window.location.protocol + "//" + window.location.host ],
+    moviePath: "/__zuul/ZeroClipboard.swf"
+});

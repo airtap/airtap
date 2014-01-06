@@ -249,13 +249,12 @@ ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
     if (mapper && frames.length) {
         var mapped = mapper.map(frames);
         str = trace_anchors(mapped, self._source_map);
-        // TODO:(thlorenz) pass opts if we wanna configure how traces are shown
-        //str = plainString(mapped);
     }
 
     var pre = document.createElement('pre');
     pre.innerHTML = str ? str : (stack || message || error.toString());
     self._current_container.appendChild(pre);
+    trace_anchors.init_clipboard();
 };
 
 function plainString (mapped) {

@@ -61,8 +61,27 @@ html, body {
 }
 
 .trace-anchor a {
-  color: white;
-  line-height: 5px;
-  margin: 0;
-  padding: 0;
+    color: white;
+    line-height: 5px;
+    margin: 0;
+    padding: 0;
 }
+
+.trace-anchor button {
+    cursor           : pointer;
+    width            : 50px;
+    text-align       : center;
+    border           : 1px solid darkred;
+    border-radius    : 3px;
+    background-color : #ccc;
+    padding          : 5px;
+    margin-right     : 3px;
+    margin-top       : -30px;
+}
+
+.trace-anchor textarea {
+  display: none;
+} 
+
+.trace-anchor button.zeroclipboard-is-hover { background-color:#eee; }
+.trace-anchor button.zeroclipboard-is-active { background-color:#aaa; }
