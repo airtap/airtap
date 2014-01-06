@@ -12,50 +12,11 @@ test('mocha-qunit - phantom', function(done) {
         ui: 'mocha-qunit',
         prj_dir: __dirname + '/mocha-qunit',
         phantom: true,
+        concurrency: 1,
         files: [__dirname + '/mocha-qunit/test.js']
     };
 
     var zuul = Zuul(config);
-
-    // each browser we test will emit as a browser
-    zuul.on('browser', function(browser) {
-        browser.on('init', function() {
-            done();
-        });
-
-        browser.on('done', function(results) {
-            assert.equal(results.passed, 1);
-            assert.equal(results.failed, 1);
-            done();
-        });
-    });
-
-    zuul.run(function(passed) {
-        assert.ok(!passed);
-        done();
-    });
-});
-
-// sanity test single browser before letting the beast loose
-test('mocha-qunit - chrome 31', function(done) {
-
-    done = after(3, done);
-
-    var config = {
-        ui: 'mocha-qunit',
-        prj_dir: __dirname + '/mocha-qunit',
-        files: [__dirname + '/mocha-qunit/test.js'],
-        username: auth.username,
-        key: auth.key
-    };
-
-    var zuul = Zuul(config);
-
-    zuul.browser({
-        name: 'chrome',
-        version: '31',
-        platform: 'any'
-    });
 
     // each browser we test will emit as a browser
     zuul.on('browser', function(browser) {
@@ -82,6 +43,7 @@ test('mocha-qunit - sauce', function(done) {
         prj_dir: __dirname + '/mocha-qunit',
         files: [__dirname + '/mocha-qunit/test.js'],
         username: auth.username,
+        concurrency: 1,
         key: auth.key
     };
 
@@ -93,10 +55,19 @@ test('mocha-qunit - sauce', function(done) {
         var total = 0;
         Object.keys(browsers).forEach(function(key) {
             var list = browsers[key];
-            list.forEach(function(info) {
+            if (list.length === 1) {
                 total++;
-                zuul.browser(info);
+                return zuul.browser(list);
+            }
+
+            list.sort(function(a, b) {
+                return a.version - b.version;
             });
+
+            // test latest and oldest
+            total += 2;
+            zuul.browser(list.shift());
+            zuul.browser(list.pop());
         });
 
         // twice per browser and once for all done
