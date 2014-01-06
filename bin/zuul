@@ -4,12 +4,15 @@ require('superstack');
 var path = require('path');
 var fs = require('fs');
 
+var colors = require('colors');
 var program = require('commander');
 var yaml = require('yamljs');
 var xtend = require('xtend');
 var osenv = require('osenv');
 
 var Zuul = require('../lib/zuul');
+var scout_browser = require('../lib/scout_browser');
+var flatten_browser = require('../lib/flatten_browser');
 
 program
 .usage('[options] <files | dir>')
@@ -55,8 +58,85 @@ try {
 config.name = config.name || pkg.name || 'there is only zuul';
 
 var zuul = Zuul(config);
-zuul.run(function(passed) {
-    process.exit(passed ? 0 : 1);
+
+if (config.local) {
+    return zuul.run(function(passed) {
+    });
+}
+else if (config.phantom) {
+    return zuul.run(function(passed) {
+        process.exit(passed ? 0 : 1);
+    });
+}
+
+scout_browser(function(err, all_browsers) {
+    if (err) {
+        console.error('Unable to get available browsers for saucelabs'.red);
+        console.error(err.stack);
+        return process.exit(1);
+    }
+
+    // common mappings for some of us senile folks
+    all_browsers.iexplore = all_browsers['internet explorer'];
+    all_browsers.ie = all_browsers['internet explorer'];
+    all_browsers.googlechrome = all_browsers.chrome;
+
+    // flatten into list of testable browsers
+    var to_test = flatten_browser(config.browsers, all_browsers);
+
+    // pretty prints which browsers we will test on what platforms
+    {
+        var by_os = {};
+        to_test.forEach(function(browser) {
+            var key = browser.name + ' @ ' + browser.platform;
+            (by_os[key] = by_os[key] || []).push(browser.version);
+        });
+
+        for (var item in by_os) {
+            console.log('- testing: %s: %s'.grey, item, by_os[item].join(' '));
+        }
+    }
+
+    to_test.forEach(function(info) {
+        zuul.browser(info);
+    });
+
+    var passed_count = 0;
+    var failed_count = 0;
+
+    zuul.on('browser', function(browser) {
+        var name = browser.toString();
+
+        browser.once('init', function() {
+            console.log('- queuing: %s'.grey, name);
+        });
+
+        browser.once('start', function() {
+            console.log('- starting: %s'.white, name);
+        });
+
+        browser.once('done', function(results) {
+            passed_count += results.passed;
+            failed_count += results.failed;
+
+            if (results.failed || results.passed === 0) {
+                console.log('- failed: %s (%d failed, %d passed)'.red, name,
+                    results.failed, results.passed);
+                return;
+            }
+            console.log('- passed: %s'.green, name);
+        });
+    });
+
+    zuul.run(function(passed) {
+        if (passed) {
+            console.log('all browsers passed'.green);
+        }
+        else {
+            console.log('%d browser(s) failed'.red, failed_count);
+        }
+        process.exit(passed ? 0 : 1);
+    });
 });
 
 // vim: ft=javascript
