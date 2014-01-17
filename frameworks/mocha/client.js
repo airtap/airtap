@@ -52,6 +52,12 @@ function run(err) {
   });
 
   runner.on('test end', function(test) {
+    // mocha is broken
+    // https://github.com/defunctzombie/zuul/issues/35#issuecomment-32622253
+    if (test.state === undefined) {
+      return;
+    }
+
     reporter.test_end({
       name: test.title,
       passed: test.state === 'passed',

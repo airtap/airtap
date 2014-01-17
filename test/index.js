@@ -5,6 +5,38 @@ var auth = require('./auth');
 var Zuul = require('../');
 var scout_browser = require('../lib/scout_browser');
 
+test('mocha-bdd - phantom', function(done) {
+    done = after(3, done);
+
+    var config = {
+        ui: 'mocha-bdd',
+        prj_dir: __dirname + '/mocha-bdd',
+        phantom: true,
+        concurrency: 1,
+        files: [__dirname + '/mocha-bdd/test.js']
+    };
+
+    var zuul = Zuul(config);
+
+    // each browser we test will emit as a browser
+    zuul.on('browser', function(browser) {
+        browser.on('init', function() {
+            done();
+        });
+
+        browser.on('done', function(results) {
+            assert.equal(results.passed, 1);
+            assert.equal(results.failed, 1);
+            done();
+        });
+    });
+
+    zuul.run(function(passed) {
+        assert.ok(!passed);
+        done();
+    });
+});
+
 test('mocha-qunit - phantom', function(done) {
     done = after(3, done);
 
