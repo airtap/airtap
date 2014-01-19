@@ -37,15 +37,15 @@ test('mocha-bdd - phantom', function(done) {
     });
 });
 
-test('mocha-qunit - phantom', function(done) {
+test('jasmine - phantom', function(done) {
     done = after(3, done);
 
     var config = {
-        ui: 'mocha-qunit',
-        prj_dir: __dirname + '/mocha-qunit',
+        ui: 'jasmine',
+        prj_dir: __dirname + '/jasmine',
         phantom: true,
         concurrency: 1,
-        files: [__dirname + '/mocha-qunit/test.js']
+        files: [__dirname + '/jasmine/test.js']
     };
 
     var zuul = Zuul(config);
@@ -66,6 +66,28 @@ test('mocha-qunit - phantom', function(done) {
     zuul.run(function(passed) {
         assert.ok(!passed);
         done();
+    });
+});
+
+test('mocha-qunit - phantom', function() {
+    var config = {
+        ui: 'mocha-qunit',
+        prj_dir: __dirname + '/mocha-qunit',
+        phantom: true,
+        concurrency: 1,
+        files: [__dirname + '/mocha-qunit/test.js']
+    };
+    var zuul = Zuul(config);
+
+    zuul.on('browser', function(browser) {
+        browser.on('done', function(results) {
+            assert.equal(results.passed, 1);
+            assert.equal(results.failed, 1);
+        });
+    });
+
+    zuul.run(function(passed) {
+        assert.ok(!passed);
     });
 });
 
