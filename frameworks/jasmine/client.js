@@ -28,9 +28,23 @@ ZuulJasmineReporter.prototype.reportSpecStarting = function (spec) {
 };
 
 ZuulJasmineReporter.prototype.reportSpecResults = function (spec) {
+    var passed = !!spec.results().passedCount;
+
+    if (!passed) {
+        var result = spec.results_.items_[0];
+        reporter.assertion({
+            result: false,
+            actual: result.actual,
+            expected: result.expected,
+            message: result.trace.message,
+            error: result.trace,
+            source: result.trace.stack
+        });
+    }
+
     reporter.test_end({
         name: getFullSpecName(spec),
-        passed: !!spec.results().passedCount
+        passed: passed
     });
 };
 
