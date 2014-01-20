@@ -13,8 +13,25 @@ function getFullSpecName(spec, separator) {
         return parentSuitesNames + suite.description;
     }
 
-
     return getFullSuiteName(spec.suite) + separator + spec.description;
+}
+
+function reportFirstSpecFailure(results) {
+    for (var i = 0; i < results.length; i++) {
+        if (!results[i].passed()) {
+            var result = results[i];
+            reporter.assertion({
+                result: false,
+                actual: result.actual,
+                expected: result.expected,
+                message: result.trace.message,
+                error: result.trace,
+                source: result.trace.stack
+            });
+            return;
+        }
+    }
+
 }
 
 ZuulJasmineReporter.prototype.reportRunnerResults = function () {
@@ -28,18 +45,10 @@ ZuulJasmineReporter.prototype.reportSpecStarting = function (spec) {
 };
 
 ZuulJasmineReporter.prototype.reportSpecResults = function (spec) {
-    var passed = !!spec.results().passedCount;
+    var passed = !spec.results().failedCount;
 
     if (!passed) {
-        var result = spec.results_.items_[0];
-        reporter.assertion({
-            result: false,
-            actual: result.actual,
-            expected: result.expected,
-            message: result.trace.message,
-            error: result.trace,
-            source: result.trace.stack
-        });
+        reportFirstSpecFailure(spec.results_.items_);
     }
 
     reporter.test_end({
