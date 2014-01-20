@@ -1,9 +1,7 @@
 var ZuulReporter = require('../zuul');
 var reporter = ZuulReporter(run);
 
-
-function ZuulJasmineReporter() {
-}
+function ZuulJasmineReporter() {}
 
 function getFullSpecName(spec, separator) {
     separator = separator || " :: ";
@@ -59,7 +57,6 @@ ZuulJasmineReporter.prototype.reportSpecResults = function (spec) {
 
 var zuulJasmineReporter = new ZuulJasmineReporter();
 var jasmineEnv = jasmine.getEnv();
-
 
 jasmineEnv.addReporter(zuulJasmineReporter);
 

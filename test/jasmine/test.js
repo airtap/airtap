@@ -7,8 +7,7 @@ describe('suite', function() {
         expect( true ).toBeFalsy();
     });
 
-
-    xit('should be skipped', function(done) {
+    xit('should be skipped', function() {
         expect( true ).toBeFalsy();
     });
 });
