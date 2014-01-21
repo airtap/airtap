@@ -27,11 +27,11 @@
     "tape": "2.3.2",
     "tap-parser": "0.4.1",
     "JSON2": "0.1.0",
-    "stack-mapper": "0.2.1",
+    "stack-mapper": "0.2.2",
     "superagent": "0.15.7",
     "stacktrace-js": "defunctzombie/stacktrace.js#07e7b95",
     "char-split": "0.2.0",
-    "highlight.js": "~7.5.0"
+    "highlight.js": "8.0.0"
   },
   "devDependencies": {
     "mocha": "~1.16.2",
