@@ -1,6 +1,8 @@
 # zuul [![Build Status](https://travis-ci.org/defunctzombie/zuul.png)](https://travis-ci.org/defunctzombie/zuul)
 
-Zuul is the easiest way to test your javascript in browsers. Start testing your code in seconds locally and move to cloud based browsers seamlessly for better coverage.
+Zuul is an easy way to test your javascript in browsers. Start testing your code in seconds locally and move to cloud based browsers seamlessly for better coverage.
+
+Zuul is different than other cross browser test runners in its simplicity and ability to easily run your test suite in many browsers without having them installed locally. It lets you iterate quickly during development and provide good browser coverage before release without worrying about missing a supported browser.
 
 Don't just claim your js supports "all browsers", prove it with tests!
 
@@ -8,9 +10,9 @@ Don't just claim your js supports "all browsers", prove it with tests!
 
 ## Zuul workflow
 
-Zuul works out of the box with a few commonly used javascript frameworks (qunit, mocha). If you are already testing using these, zuul setup will be trivial.
+Zuul works out of the box with a few commonly used javascript frameworks (qunit, mocha, tape, jasmine). If you are already testing using these, zuul setup will be trivial.
 
-Zuul has 3 major ways in which it helps you test your code: locally, cloud browsers, and continuous integration. You should make sure that zuul is running for you locally before you try to run the other two.
+Zuul has 3 modes of operation: locally, cloud browsers, and continuous integration. You should make sure that zuul is working locally before you try to run the other two.
 
 Once you have [installed](https://github.com/defunctzombie/zuul/wiki/installation) zuul proceed to the [quickstart](https://github.com/defunctzombie/zuul/wiki/quickstart) to write your first test.
 
@@ -22,7 +24,7 @@ When iterating on your tests during development, simply use zuul `--local` mode 
 
 See the [quickstart](https://github.com/defunctzombie/zuul/wiki/quickstart) page on the wiki for more details.
 
-### Takeoff into the cloud
+### Cross browser testing via Saucelabs
 
 The reason we go through all this trouble in the first place is to seamlessly run our tests against all those browsers we don't have installed. Luckily, [saucelabs](https://saucelabs.com/) runs some browsers and we can easily task zuul to test on those.
 
@@ -30,7 +32,7 @@ The reason we go through all this trouble in the first place is to seamlessly ru
 
 See the [cooking with sauce](https://github.com/defunctzombie/zuul/wiki/cloud-testing) wiki page to get your tests running in the cloud.
 
-### Bring it home with travis-ci
+### Continuous integration
 
 No testing setup would be complete without a badge for passing or failing tests. After making sure your tests all pass in the cloud from your local machine, we will configure our tests to pass from travis-ci when we commit changes.
 
@@ -38,7 +40,16 @@ No testing setup would be complete without a badge for passing or failing tests.
 
 See the [travis-ci integration](https://github.com/defunctzombie/zuul/wiki/travis-ci) wiki page.
 
-## Examples
+## Frameworks
+
+The following frameworks are supported:
+
+* mocha (tdd, qunit, and bdd flavors)
+* tape
+* qunit
+* jasmine
+
+### Examples
 
 See the examples directory for some simple tests. Use the above knowledge to test the examples with your install of zuul.
 
