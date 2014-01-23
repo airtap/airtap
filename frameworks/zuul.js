@@ -132,8 +132,6 @@ ZuulReporter.prototype.done = function(err) {
 
     var passed = self._fail_count === 0;
 
-    window.zuul_results = self.stats;
-
     if (self._fail_count > 0) {
         self.header.className += ' failed';
     }
