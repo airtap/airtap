@@ -111,8 +111,36 @@ scout_browser(function(err, all_browsers) {
             console.log('- queuing: %s'.grey, name);
         });
 
-        browser.once('start', function() {
+        browser.once('start', function(reporter) {
             console.log('- starting: %s'.white, name);
+
+            var wait_interval = setInterval(function() {
+                console.log('- waiting: %s'.yellow, name);
+            }, 1000 * 30);
+
+            var current_test = undefined;
+            reporter.on('test', function(test) {
+                current_test = test;
+            });
+
+            reporter.on('console', function(msg) {
+                console.log('%s console'.white, name);
+                console.log.apply(console, msg.args);
+            });
+
+            reporter.on('assertion', function(assertion) {
+                console.log();
+                console.log('%s %s'.red, name, current_test.name);
+                console.log('Error: %s'.red, assertion.message);
+                assertion.frames.forEach(function(frame) {
+                    console.log('    %s %s:%d'.grey, frame.func, frame.filename, frame.line);
+                });
+                console.log();
+            });
+
+            reporter.once('done', function() {
+                clearInterval(wait_interval);
+            });
         });
 
         browser.once('done', function(results) {
@@ -126,6 +154,7 @@ scout_browser(function(err, all_browsers) {
             }
             console.log('- passed: %s'.green, name);
         });
+
     });
 
     zuul.run(function(passed) {

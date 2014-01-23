@@ -24,6 +24,25 @@ try {
 // post messages here to send back to clients
 var zuul_msg_bus = window.zuul_msg_bus = [];
 
+// shim console.log so we can report back to user
+if (typeof console === 'undefined') {
+  console = {};
+}
+
+var originalLog = console.log;
+console.log = function (msg) {
+    var args = [].slice.call(arguments);
+
+    zuul_msg_bus.push({
+        type: 'console',
+        args: args
+    });
+
+    if (typeof originalLog === 'function') {
+        return originalLog.apply(this, arguments);
+    }
+};
+
 var ZuulReporter = function(run_fn) {
     if (!(this instanceof ZuulReporter)) {
         return new ZuulReporter(run_fn);
