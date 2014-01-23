@@ -2,7 +2,6 @@
 
 var hljs = require('./hl.js');
 
-// TODO: (thlorenz) pull generic logic into separate module?
 function getCode(sources, frame) {
     var codeArr = sources[frame.filename];
     if (!codeArr || codeArr.length < frame.line) return '';
@@ -45,34 +44,32 @@ function onTraceClick (ev) {
     if (ev.preventDefault) ev.preventDefault();
     if (ev.stopPropagation) ev.stopPropagation();
 
-    var li = (function findDiv (el) {
-        var tagname = el.tagName;
-        if (!tagname) return null;
 
-        return tagname.toUpperCase() === 'LI' ? el : findDiv(el.parentElement);
-    })(ev.target);
+    var tgt = ev.target;
+    if (tgt.className !== 'trace') return;
 
-    // nothing we can do in that case
-    if (!li) return;
+    var input = tgt.parentElement.getElementsByClassName('trace-copy')[0];
+    if (!input) return;
 
-    var div = li.children[1];
+    input.style.display = 'inline';
+    input.style.width = tgt.offsetWidth + 'px';
+    input.focus();
+    input.select();
 
-    // don't show anything if no code was added (should never get here since then it's not clickable)
-    if (!div) return false;
+    input.onblur = function () {
+        input.style.display = 'none';
+        tgt.style.display = 'inline';
+    };
 
-    var next = ~div.getAttribute('style').indexOf('display: block') ? 'none' : 'block';
-    div.setAttribute('style', 'display: ' + next + ';')
+    tgt.style.display = 'none';
 }
 
 var on_click = 'onclick="(' + onTraceClick + ').call(this, arguments[0])"';
 
-// creates clickable anchors for the mapped stack trace
-// when clicked the appropriate code in the source map is shown
-// the code of the first stack is shown initially by default
 module.exports = function (mapped, source_map) {
     var sources_by_file = hashByFile(source_map);
 
-    var str = '<ul class="trace-anchor" style="list-style-type: none;"' + '" ' + on_click + '>'
+    var str = '<ul class="stack-trace" style="list-style-type: none;"' + '" ' + on_click + '>'
 
     for (var i = 0; i < mapped.length; ++i) {
         var frame = mapped[i];
@@ -83,12 +80,12 @@ module.exports = function (mapped, source_map) {
         var anchor_style = code.length ? '' : 'style="cursor: default; text-decoration: none;"';
 
         str +=  '<li>';
-        str +=      '<a href="" ' + anchor_style + ' >';
-        str +=          '<pre>';
-        str +=              'at ' + frame.func + ' (' + frame.filename + ':' + frame.line + ':';
-        str +=              (frame.column || 0) + ')';
-        str +=          '</pre>';
-        str +=      '</a>';
+        str +=      '<span>';
+        str +=          'at ' + frame.func + ' (';
+        str +=          '<input class="trace-copy" spellcheck="false" type="text" value="' + frame.filename + ':' + frame.line + '">';
+        str +=          '<span class="trace">' + frame.filename + ':' + frame.line + '</span>';
+        str +=          ':' + (frame.column || 0) + ')';
+        str +=      '</span>';
         if (code.length) {
             str += '<div class="hljs" style="display: ' + display + ';">' + code + '</div>'
         }

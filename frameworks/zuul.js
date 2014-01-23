@@ -15,7 +15,7 @@ global.JSON = global.JSON || require('JSON2');
 var load = require('load-script');
 var stacktrace = require('stacktrace-js');
 var ajax = require('superagent');
-var trace_anchors = require('./trace-anchors');
+var render_stacktrace = require('./render-stacktrace');
 
 try {
     var stack_mapper = require('stack-mapper');
@@ -267,14 +267,12 @@ ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
 
     if (mapper && frames.length) {
         var mapped = mapper.map(frames);
-        str = trace_anchors(mapped, self._source_map);
-        // TODO:(thlorenz) pass opts if we wanna configure how traces are shown
-        //str = plainString(mapped);
+        str = render_stacktrace(mapped, self._source_map);
     }
 
-    var pre = document.createElement('pre');
-    pre.innerHTML = str ? str : (stack || message || error.toString());
-    self._current_container.appendChild(pre);
+    var div = document.createElement('div');
+    div.innerHTML = str ? str : (stack || message || error.toString());
+    self._current_container.appendChild(div);
 };
 
 function plainString (mapped) {
