@@ -130,19 +130,20 @@ ZuulReporter.prototype.start = function() {
 ZuulReporter.prototype.done = function(err) {
     var self = this;
 
-    var passed = self._fail_count === 0;
+    var stats = self.stats;
+    var passed = stats.failed === 0 && stats.passed > 0;
 
-    if (self._fail_count > 0) {
-        self.header.className += ' failed';
+    if (passed) {
+        self.header.className += ' passed';
     }
     else {
-        self.header.className += ' passed';
+        self.header.className += ' failed';
     }
 
     post_message({
         type: 'done',
-        passed: passed,
-        failures: self._fail_count
+        stats: stats,
+        passed: passed
     });
 };
 
