@@ -69,7 +69,9 @@ test('jasmine - phantom', function(done) {
     });
 });
 
-test('mocha-qunit - phantom', function() {
+test('mocha-qunit - phantom', function(done) {
+    done = after(3, done);
+
     var config = {
         ui: 'mocha-qunit',
         prj_dir: __dirname + '/mocha-qunit',
@@ -80,14 +82,25 @@ test('mocha-qunit - phantom', function() {
     var zuul = Zuul(config);
 
     zuul.on('browser', function(browser) {
+        browser.once('start', function(reporter) {
+            reporter.once('done', function(results) {
+                assert.equal(results.passed, false);
+                assert.equal(results.stats.passed, 1);
+                assert.equal(results.stats.failed, 1);
+                done();
+            });
+        });
+
         browser.on('done', function(results) {
             assert.equal(results.passed, 1);
             assert.equal(results.failed, 1);
+            done();
         });
     });
 
     zuul.run(function(passed) {
         assert.ok(!passed);
+        done();
     });
 });
 
@@ -124,13 +137,22 @@ test('mocha-qunit - sauce', function(done) {
             zuul.browser(list.pop());
         });
 
-        // twice per browser and once for all done
-        done = after(total * 2 + 1, done);
+        // N times per browser and once for all done
+        done = after(total * 3 + 1, done);
 
         // each browser we test will emit as a browser
         zuul.on('browser', function(browser) {
             browser.on('init', function() {
                 done();
+            });
+
+            browser.once('start', function(reporter) {
+                reporter.on('done', function(results) {
+                    assert.equal(results.passed, false);
+                    assert.equal(results.stats.passed, 1);
+                    assert.equal(results.stats.failed, 1);
+                    done();
+                });
             });
 
             browser.on('done', function(results) {
