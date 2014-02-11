@@ -41,6 +41,11 @@ console.log = function (msg) {
     if (typeof originalLog === 'function') {
         return originalLog.apply(this, arguments);
     }
+    // old ghetto ass IE doesn't report typeof correctly
+    // so we just have to call log
+    else if (originalLog) {
+      return originalLog(arguments[0]);
+    }
 };
 
 var ZuulReporter = function(run_fn) {
