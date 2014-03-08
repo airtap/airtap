@@ -67,6 +67,15 @@ try {
 
 config.name = config.name || pkg.name || 'there is only zuul';
 
+if (config.builder) {
+    // relative path will needs to be under project dir
+    if (config.builder[0] === '.') {
+        config.builder = path.resolve(config.prj_dir, config.builder);
+    }
+
+    config.builder = require.resolve(config.builder);
+}
+
 var zuul = Zuul(config);
 
 if (config.local) {
