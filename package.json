@@ -11,7 +11,7 @@
     "xtend": "2.1.2",
     "debug": "0.7.4",
     "bouncy": "3.2.1",
-    "localtunnel": "0.2.1",
+    "localtunnel": "1.1.0",
     "osenv": "0.0.3",
     "hbs": "2.4.0",
     "shallow-copy": "0.0.1",
