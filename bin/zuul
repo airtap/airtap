@@ -31,6 +31,26 @@ var config = {
     prj_dir: process.cwd()
 };
 
+if(!process.stdout.isTTY){
+    colors.setTheme({
+        bold: 'stripColors',
+        italic: 'stripColors',
+        underline: 'stripColors',
+        inverse: 'stripColors',
+        yellow: 'stripColors',
+        cyan: 'stripColors',
+        white: 'stripColors',
+        magenta: 'stripColors',
+        green: 'stripColors',
+        red: 'stripColors',
+        grey: 'stripColors',
+        blue: 'stripColors',
+        rainbow: 'stripColors',
+        zebra: 'stripColors',
+        random: 'stripColors'
+    });
+}
+
 if (config.files.length === 0) {
     console.error('at least one `js` test file must be specified');
     return process.exit(1);
