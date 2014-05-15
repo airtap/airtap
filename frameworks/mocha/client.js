@@ -16,6 +16,15 @@ mocha.setup(mocha_opt);
 
 var reporter = ZuulReporter(run);
 
+function getTitle(item){
+  var title = item.title;
+  if(item.parent.title){
+    return getTitle(item.parent) + ' :: ' + title;
+  }
+
+  return title;
+}
+
 function run(err) {
   if (err) {
     return reporter.done(err);
@@ -47,7 +56,7 @@ function run(err) {
 
   runner.on('test', function(test) {
     reporter.test({
-      name: test.title
+      name: getTitle(test)
     });
   });
 
