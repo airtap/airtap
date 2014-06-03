@@ -57,6 +57,7 @@ var ZuulReporter = function(run_fn) {
     self.run_fn = run_fn;
     self.stats = {
         passed: 0,
+        pending: 0,
         failed: 0
     };
 
@@ -121,7 +122,11 @@ ZuulReporter.prototype._set_status = function(info) {
     var self = this;
     var html = '';
     html += '<span>' + info.failed + ' <small>failing</small></span> ';
-    html += '<span>' + info.passed + ' <small>passing</small></span>';
+    html += '<span>' + info.passed + ' <small>passing</small></span> ';
+    if(self.stats.pending){
+        html += '<span>' + info.pending + ' <small>pending</small></span>';
+    }
+
     self.status.innerHTML = html;
 };
 
@@ -163,6 +168,28 @@ ZuulReporter.prototype.test = function(test) {
     header.innerHTML = test.name;
 
     self._current_container = self._current_container.appendChild(container);
+
+    post_message({
+        type: 'test',
+        name: test.name
+    });
+};
+
+// reports on skipped tests
+ZuulReporter.prototype.skippedTest = function(test){
+    var self = this;
+
+    self.stats.pending++;
+
+    var container = document.createElement('div');
+    container.className = 'test pending skipped';
+
+    var header = container.appendChild(document.createElement('h1'));
+    header.innerHTML = test.name;
+
+    self._current_container.appendChild(container);
+
+    self._set_status(self.stats);
 
     post_message({
         type: 'test',

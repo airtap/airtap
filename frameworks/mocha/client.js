@@ -54,6 +54,12 @@ function run(err) {
 
   });
 
+  runner.on('pending', function(test){
+    reporter.skippedTest({
+      name: getTitle(test)
+    });
+  });
+
   runner.on('test', function(test) {
     reporter.test({
       name: getTitle(test)

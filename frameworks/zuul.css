@@ -36,7 +36,8 @@ html, body {
     border-bottom: 1px solid white;
 }
 
-.pending {
+.pending,
+.skipped {
     background-color: orange;
 }
 
@@ -54,7 +55,8 @@ html, body {
     font-weight: 300;
 }
 
-.test.passed {
+.test.passed,
+.test.skipped {
     display: inline-block;
     font-size: 0.75em;
     border: 1px solid white;
