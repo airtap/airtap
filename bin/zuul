@@ -62,7 +62,7 @@ if (fs.existsSync(cfg_file)) {
     config = xtend(config, zuulyml);
 }
 
-// optinal additional config from $HOME/.zuulrc
+// optional additional config from $HOME/.zuulrc
 var home_config = path.join(osenv.home(), '.zuulrc');
 if (fs.existsSync(home_config)) {
     var zuulrc = yaml.parse(fs.readFileSync(home_config, 'utf-8'));
