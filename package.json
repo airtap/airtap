@@ -38,9 +38,6 @@
     "after": "~0.8.1",
     "phantomjs": "1.9.2-6"
   },
-  "peerDependencies": {
-    "mocha": ">= 1.7.0"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/shtylman/zuul.git"
