@@ -210,13 +210,17 @@ scout_browser(function(err, all_browsers) {
     });
 
     zuul.run(function(passed) {
-        if (passed) {
-            console.log('all browsers passed'.green);
-        }
-        else {
+        if (failed_count > 0) {
             console.log('%d browser(s) failed'.red, failed_count);
         }
-        process.exit(passed ? 0 : 1);
+        else if (passed_count === 0) {
+            console.log('no tests ran'.yellow);
+        }
+        else {
+            console.log('all browsers passed'.green);
+        }
+
+        process.exit((passed_count > 0 && failed_count == 0) ? 0 : 1);
     });
 });
 
