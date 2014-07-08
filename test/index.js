@@ -168,3 +168,30 @@ test('mocha-qunit - sauce', function(done) {
         });
     });
 });
+
+test('capabilities config', function(done) {
+    var config = {
+        ui: 'mocha-bdd',
+        capabilities: {
+            public: 'private'
+        }
+    };
+
+    var zuul = Zuul(config);
+
+    zuul.browser({
+        name: 'chrome',
+        version: 'latest',
+        platform: 'osx'
+    });
+
+    var browser = zuul._browsers[0];
+
+    browser.on('init', function(config){
+        assert.ok(config.capabilities);
+        assert.equal(config.capabilities.public, 'private');
+        done();
+    });
+
+    browser.start();
+});
