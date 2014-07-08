@@ -20,6 +20,7 @@ program
 .option('--local [port]', 'port for manual testing in a local browser')
 .option('--tunnel', 'establish a tunnel for outside acceess. only used when --local is specified')
 .option('--phantom', 'run tests in phantomjs. PhantomJS must be installed separately.')
+.option('--tunnel-host <host url>', 'specify a localtunnel server to use for forwarding')
 .parse(process.argv);
 
 var config = {
@@ -28,7 +29,8 @@ var config = {
     ui: program.ui,
     tunnel: program.tunnel,
     phantom: program.phantom,
-    prj_dir: process.cwd()
+    prj_dir: process.cwd(),
+    tunnel_host: program.tunnelHost
 };
 
 if(!process.stdout.isTTY){
@@ -67,6 +69,7 @@ var home_config = path.join(osenv.home(), '.zuulrc');
 if (fs.existsSync(home_config)) {
     var zuulrc = yaml.parse(fs.readFileSync(home_config, 'utf-8'));
     config = xtend(zuulrc, config);
+    config.tunnel_host = config.tunnel_host || zuulrc.tunnel_host;
 }
 
 var sauce_username = process.env.SAUCE_USERNAME;
