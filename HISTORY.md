@@ -1,3 +1,8 @@
+# UNRELEASED
+
+  * configurable localtunnel server
+  * specify `capabilities` in zuul.yml
+
 # 1.8.0 (2014-07-03)
 
   * remove mocha peer dep
