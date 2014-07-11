@@ -2,6 +2,7 @@
 
   * configurable localtunnel server
   * specify `capabilities` in zuul.yml
+  * add config option to specify firefox extensions
 
 # 1.8.0 (2014-07-03)
 
