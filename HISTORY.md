@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.9.0 (2014-07-11)
 
   * configurable localtunnel server
   * specify `capabilities` in zuul.yml
