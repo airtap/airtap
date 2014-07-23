@@ -1,3 +1,7 @@
+# UNRELEASED
+
+  * update browserify to 4.2.3
+
 # 1.9.0 (2014-07-11)
 
   * configurable localtunnel server
