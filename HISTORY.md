@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.10.1 (2014-08-07)
 
   * ignore non-numeric browser versions when parsing for version ranges
 
