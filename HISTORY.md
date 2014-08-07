@@ -1,3 +1,7 @@
+# UNRELEASED
+
+  * ignore non-numeric browser versions when parsing for version ranges
+
 # 1.10.0 (2014-07-22)
 
   * update browserify to 4.2.3
