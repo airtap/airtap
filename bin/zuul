@@ -21,6 +21,10 @@ program
 .option('--tunnel', 'establish a tunnel for outside acceess. only used when --local is specified')
 .option('--phantom', 'run tests in phantomjs. PhantomJS must be installed separately.')
 .option('--tunnel-host <host url>', 'specify a localtunnel server to use for forwarding')
+.option('--server <the server script>', 'specify a server script to be run')
+.option('--browser-name <browser name>', 'specficy the browser name to test an individual browser')
+.option('--browser-version <browser version>', 'specficy the browser version to test an individual browser')
+.option('--browser-platform <browser platform>', 'specficy the browser platform to test an individual browser')
 .parse(process.argv);
 
 var config = {
@@ -30,7 +34,8 @@ var config = {
     tunnel: program.tunnel,
     phantom: program.phantom,
     prj_dir: process.cwd(),
-    tunnel_host: program.tunnelHost
+    tunnel_host: program.tunnelHost,
+    server: program.server
 };
 
 if(!process.stdout.isTTY){
@@ -58,10 +63,25 @@ if (config.files.length === 0) {
     return process.exit(1);
 }
 
+if ((program.browserVersion || program.browserPlatform) && !program.browserName) {
+    console.error('the browser name needs to be specified (via --browser-name)');
+    return process.exit(1);
+}
+
+if ((program.browserName || program.browserPlatform) && !program.browserVersion) {
+    console.error('the browser version needs to be specified (via --browser-version)');
+    return process.exit(1);
+}
+
 var cfg_file = path.join(process.cwd(), '.zuul.yml');
 if (fs.existsSync(cfg_file)) {
     var zuulyml = yaml.parse(fs.readFileSync(cfg_file, 'utf-8'));
     config = xtend(config, zuulyml);
+}
+
+// Overwrite browsers from command line arguments
+if (program.browserName) {
+    config = xtend(config, { browsers: [{ name: program.browserName, version: program.browserVersion, platform: program.browserPlatform }] });
 }
 
 // optional additional config from $HOME/.zuulrc
