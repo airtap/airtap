@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.10.2 (2014-08-24)
 
   * add --browser-<name,version,platform> flags to override browser launching
 
