@@ -1,4 +1,4 @@
-# zuul [![Build Status](https://travis-ci.org/defunctzombie/zuul.png)](https://travis-ci.org/defunctzombie/zuul)
+# zuul [![Build Status](https://travis-ci.org/defunctzombie/zuul.svg)](https://travis-ci.org/defunctzombie/zuul)
 
 Zuul is an easy way to test your javascript in browsers. Start testing your code in seconds locally and move to cloud based browsers seamlessly for better coverage.
 
