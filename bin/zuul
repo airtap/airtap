@@ -23,6 +23,7 @@ program
 .option('--tunnel-host <host url>', 'specify a localtunnel server to use for forwarding')
 .option('--sauce-connect [tunnel-identifier]', 'use saucelabs with sauce connect instead of localtunnel. Optionally specify the tunnel-identifier')
 .option('--server <the server script>', 'specify a server script to be run')
+.option('--list-available-browsers', 'list available browsers and versions')
 .option('--browser-name <browser name>', 'specficy the browser name to test an individual browser')
 .option('--browser-version <browser version>', 'specficy the browser version to test an individual browser')
 .option('--browser-platform <browser platform>', 'specficy the browser platform to test an individual browser')
@@ -58,6 +59,19 @@ if(!process.stdout.isTTY){
         zebra: 'stripColors',
         random: 'stripColors'
     });
+}
+
+if (program.listAvailableBrowsers) {
+    scout_browser(function(err, all_browsers) {
+        if (err) {
+            console.error('Unable to get available browsers for saucelabs'.red);
+            console.error(err.stack);
+            return process.exit(1);
+        }
+
+        console.dir(all_browsers);
+    });
+    return;
 }
 
 if (config.files.length === 0) {
