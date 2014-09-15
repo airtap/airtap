@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.11.0 (2014-09-14)
 
  * add --sauce-connect option to use sauce connect instead of localtunnel
  * fix version range parsing to properly handle 'beta'
