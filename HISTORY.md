@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.11.1 (2014-10-08)
 
  * better sauce labs non number range parsing
 
