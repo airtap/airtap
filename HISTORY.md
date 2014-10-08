@@ -1,3 +1,7 @@
+# UNRELEASED
+
+ * better sauce labs non number range parsing
+
 # 1.11.0 (2014-09-14)
 
  * add --sauce-connect option to use sauce connect instead of localtunnel
