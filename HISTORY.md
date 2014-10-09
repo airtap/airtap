@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.11.2 (2014-10-09)
 
  * update bouncy to 3.2.2 (fix large data to support server)
 
