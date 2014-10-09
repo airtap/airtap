@@ -1,3 +1,7 @@
+# UNRELEASED
+
+ * update bouncy to 3.2.2 (fix large data to support server)
+
 # 1.11.1 (2014-10-08)
 
  * better sauce labs non number range parsing
