@@ -32,7 +32,8 @@
     "stacktrace-js": "defunctzombie/stacktrace.js#07e7b95",
     "char-split": "0.2.0",
     "highlight.js": "7.5.0",
-    "firefox-profile": "0.2.7"
+    "firefox-profile": "0.2.7",
+    "find-nearest-file": "1.0.0"
   },
   "devDependencies": {
     "mocha": "~1.16.2",
