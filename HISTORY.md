@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.12.0 (2014-10-26)
 
  * upgrade requests handled better for local server
  * search for .zuulrc in project root before $HOME
