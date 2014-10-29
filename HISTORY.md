@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.13.0 (2014-10-29)
 
 * upgrade to browserify v6
 
