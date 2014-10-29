@@ -4,7 +4,7 @@
   "description": "simple browser testing",
   "main": "lib/zuul.js",
   "dependencies": {
-    "browserify": "4.2.3",
+    "browserify": "6.2.0",
     "express": "3.4.8",
     "commander": "2.1.0",
     "yamljs": "0.1.4",
@@ -21,7 +21,7 @@
     "wd": "0.2.9",
     "colors": "0.6.2",
     "superstack": "0.0.4",
-    "convert-source-map": "0.3.3",
+    "convert-source-map": "0.4.1",
     "load-script": "0.0.4",
     "through": "2.3.4",
     "tape": "2.3.2",
