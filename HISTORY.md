@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* upgrade to browserify v6
+
 # 1.12.0 (2014-10-26)
 
  * upgrade requests handled better for local server
