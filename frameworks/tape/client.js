@@ -1,10 +1,7 @@
-var through = require('through');
 var parser = require('tap-parser');
 var inspect = require('util').inspect;
 
 var ZuulReporter = require('../zuul');
-
-process.stdout = through();
 
 if (typeof console === 'undefined') {
   console = {};
@@ -26,7 +23,10 @@ console.log = function (msg) {
         msg += ' ' + inspect(args[i]);
     }
 
-    process.stdout.write(msg + '\n');
+    parse_stream.write(msg + '\n');
+    if (/^# fail\s*\d+$/.test(msg) || /^# ok/.test(msg)) {
+      parse_stream.end();
+    }
 
     if (typeof originalLog === 'function') {
         return originalLog.apply(this, arguments);
@@ -35,7 +35,6 @@ console.log = function (msg) {
 };
 
 var reporter = ZuulReporter(run);
-
 var previous_test = undefined;
 var assertions = 0;
 var done = false;
@@ -91,16 +90,7 @@ parse_stream.on('plan', function(plan) {
       name: previous_test.name
     });
   }
-  reporter.done();
 });
-
-parse_stream.on('results', function(results) {
-});
-
-parse_stream.on('extra', function(extra) {
-});
-
-process.stdout.pipe(parse_stream);
 
 function run() {
   // tape tests already start by default
