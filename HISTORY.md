@@ -1,5 +1,6 @@
 # UNRELEASED
 
+* tweak zuul_msg_bus message fetching
 * add empty framework.js file for tape
 
 # 1.13.0 (2014-10-29)
