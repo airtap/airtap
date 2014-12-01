@@ -19,7 +19,7 @@ program
 .usage('[options] <files | dir>')
 .option('--ui <testing ui>', 'ui for tests (mocha-bdd, mocha-tdd, qunit, tape)')
 .option('--local [port]', 'port for manual testing in a local browser')
-.option('--tunnel', 'establish a tunnel for outside acceess. only used when --local is specified')
+.option('--tunnel', 'establish a tunnel for outside access. only used when --local is specified')
 .option('--phantom', 'run tests in phantomjs. PhantomJS must be installed separately.')
 .option('--tunnel-host <host url>', 'specify a localtunnel server to use for forwarding')
 .option('--sauce-connect [tunnel-identifier]', 'use saucelabs with sauce connect instead of localtunnel. Optionally specify the tunnel-identifier')
@@ -28,6 +28,7 @@ program
 .option('--browser-name <browser name>', 'specficy the browser name to test an individual browser')
 .option('--browser-version <browser version>', 'specficy the browser version to test an individual browser')
 .option('--browser-platform <browser platform>', 'specficy the browser platform to test an individual browser')
+.option('--open', 'open a browser automatically. only used when --local is specified')
 .parse(process.argv);
 
 var config = {
@@ -39,7 +40,8 @@ var config = {
     prj_dir: process.cwd(),
     tunnel_host: program.tunnelHost,
     sauce_connect: program.sauceConnect,
-    server: program.server
+    server: program.server,
+    open: program.open
 };
 
 if(!process.stdout.isTTY){
