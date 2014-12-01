@@ -22,6 +22,7 @@
     "load-script": "0.0.5",
     "localtunnel": "1.1.0",
     "lodash": "2.4.1",
+    "opener": "1.4.0",
     "osenv": "0.0.3",
     "shallow-copy": "0.0.1",
     "shell-quote": "1.4.1",
