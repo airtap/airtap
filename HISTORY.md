@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* fix builder browserify
+
 # 1.15.0 (2014-12-03)
 
 * add config options for browserify to zuul.yml
