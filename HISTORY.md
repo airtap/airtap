@@ -1,3 +1,9 @@
+# UNRELEASED
+
+* add config options for browserify to zuul.yml
+* add config option for server cwd
+* add --open option to the CLI
+
 # 1.14.0 (2014-11-26)
 
 * tweak zuul_msg_bus message fetching
