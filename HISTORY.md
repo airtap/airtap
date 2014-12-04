@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* fix browserify config options
+
 # 1.15.1 (2014-12-03)
 
 * fix builder browserify
