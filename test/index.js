@@ -146,7 +146,7 @@ test('mocha-qunit - sauce', function(done) {
                 done();
             });
 
-            browser.once('start', function(reporter) {
+            browser.on('start', function(reporter) {
                 reporter.on('done', function(results) {
                     assert.equal(results.passed, false);
                     assert.equal(results.stats.passed, 1);
