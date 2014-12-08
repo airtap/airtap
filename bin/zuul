@@ -248,7 +248,11 @@ scout_browser(function(err, all_browsers) {
             }
             console.log('- passed: %s'.green, name);
         });
+    });
 
+    zuul.on('restart', function(browser) {
+        var name = browser.toString();
+        console.log('- restarting: %s'.red, name);
     });
 
     zuul.run(function(passed) {
