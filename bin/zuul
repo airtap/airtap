@@ -202,6 +202,7 @@ scout_browser(function(err, all_browsers) {
 
     zuul.on('browser', function(browser) {
         var name = browser.toString();
+        var wait_interval;
 
         browser.once('init', function() {
             console.log('- queuing: %s'.grey, name);
@@ -209,10 +210,6 @@ scout_browser(function(err, all_browsers) {
 
         browser.once('start', function(reporter) {
             console.log('- starting: %s'.white, name);
-
-            var wait_interval = setInterval(function() {
-                console.log('- waiting: %s'.yellow, name);
-            }, 1000 * 30);
 
             var current_test = undefined;
             reporter.on('test', function(test) {
@@ -237,6 +234,13 @@ scout_browser(function(err, all_browsers) {
             reporter.once('done', function() {
                 clearInterval(wait_interval);
             });
+        });
+
+        browser.on('start', function() {
+            clearInterval(wait_interval);
+            wait_interval = setInterval(function() {
+                console.log('- waiting: %s'.yellow, name);
+            }, 1000 * 30);
         });
 
         browser.once('done', function(results) {
