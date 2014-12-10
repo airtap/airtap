@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.16.0 (2014-12-10)
 
 * add concurrency CLI option
 * retry logic if saucelabs browser fails (more robust testing)
