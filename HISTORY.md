@@ -1,3 +1,8 @@
+# UNRELEASED
+
+* add concurrency CLI option
+* retry logic if saucelabs browser fails (more robust testing)
+
 # 1.15.2 (2014-12-04)
 
 * fix browserify config options
