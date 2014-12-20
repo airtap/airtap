@@ -16,6 +16,7 @@ var scout_browser = require('../lib/scout_browser');
 var flatten_browser = require('../lib/flatten_browser');
 
 program
+.version(require('../package.json').version)
 .usage('[options] <files | dir>')
 .option('--ui <testing ui>', 'ui for tests (mocha-bdd, mocha-tdd, qunit, tape)')
 .option('--local [port]', 'port for manual testing in a local browser')
