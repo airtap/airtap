@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* reset stats on restart
+
 # 1.16.0 (2014-12-10)
 
 * add concurrency CLI option
