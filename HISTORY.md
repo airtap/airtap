@@ -1,3 +1,7 @@
+# 1.16.2 (2014-12-21)
+
+* avoid failing when closing sauce browser
+
 # 1.16.1 (2014-12-20)
 
 * reset stats on restart
