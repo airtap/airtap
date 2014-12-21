@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.16.1 (2014-12-20)
 
 * reset stats on restart
 
