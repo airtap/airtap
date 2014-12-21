@@ -138,7 +138,7 @@ test('mocha-qunit - sauce', function(done) {
         });
 
         // N times per browser and once for all done
-        done = after(total * 3 + 1, done);
+        done = after(total * 2 + 1, done);
 
         // each browser we test will emit as a browser
         zuul.on('browser', function(browser) {
@@ -146,20 +146,15 @@ test('mocha-qunit - sauce', function(done) {
                 done();
             });
 
-            browser.on('start', function(reporter) {
-                reporter.on('done', function(results) {
-                    assert.equal(results.passed, false);
-                    assert.equal(results.stats.passed, 1);
-                    assert.equal(results.stats.failed, 1);
-                    done();
-                });
-            });
-
             browser.on('done', function(results) {
                 assert.equal(results.passed, 1);
                 assert.equal(results.failed, 1);
                 done();
             });
+        });
+
+        zuul.on('error', function(err) {
+            done(err);
         });
 
         zuul.run(function(passed) {
