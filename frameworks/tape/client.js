@@ -7,10 +7,23 @@ if (typeof console === 'undefined') {
     console = {};
 }
 
+var reporter = ZuulReporter(run);
+var previous_test = undefined;
+var assertions = 0;
+var done = false;
+
+var parse_stream = parser(function(results) {
+    reporter.done();
+});
+
 var originalLog = console.log;
 console.log = function (msg) {
     var index = 1;
     var args = arguments;
+
+    if (!msg) {
+        return;
+    }
 
     if (typeof msg === 'string') {
         msg = msg.replace(/(^|[^%])%[sd]/g, function (_, s) {
@@ -35,15 +48,6 @@ console.log = function (msg) {
         return originalLog(arguments[0]);
     }
 };
-
-var reporter = ZuulReporter(run);
-var previous_test = undefined;
-var assertions = 0;
-var done = false;
-
-var parse_stream = parser(function(results) {
-    reporter.done();
-});
 
 parse_stream.on('comment', function(comment) {
     if (done) {
