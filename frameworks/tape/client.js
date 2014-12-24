@@ -4,7 +4,7 @@ var inspect = require('util').inspect;
 var ZuulReporter = require('../zuul');
 
 if (typeof console === 'undefined') {
-  console = {};
+    console = {};
 }
 
 var originalLog = console.log;
@@ -25,13 +25,15 @@ console.log = function (msg) {
 
     parse_stream.write(msg + '\n');
     if (/^# fail\s*\d+$/.test(msg) || /^# ok/.test(msg)) {
-      parse_stream.end();
+        parse_stream.end();
     }
 
     if (typeof originalLog === 'function') {
         return originalLog.apply(this, arguments);
     }
-    else if (originalLog) return originalLog(arguments[0]);
+    else if (originalLog) {
+        return originalLog(arguments[0]);
+    }
 };
 
 var reporter = ZuulReporter(run);
@@ -40,56 +42,56 @@ var assertions = 0;
 var done = false;
 
 var parse_stream = parser(function(results) {
-  reporter.done();
+    reporter.done();
 });
 
 parse_stream.on('comment', function(comment) {
-  if (done) {
-    return;
-  }
+    if (done) {
+        return;
+    }
 
-  if (previous_test) {
-    reporter.test_end({
-      passed: assertions === 0,
-      name: previous_test.name
+    if (previous_test) {
+        reporter.test_end({
+            passed: assertions === 0,
+            name: previous_test.name
+        });
+    }
+
+    previous_test = {
+        name: comment
+    };
+
+    assertions = 0;
+
+    reporter.test({
+        name: comment
     });
-  }
-
-  previous_test = {
-    name: comment
-  };
-
-  assertions = 0;
-
-  reporter.test({
-    name: comment
-  });
 });
 
 parse_stream.on('assert', function(assert) {
-  if (!assert.ok) {
-    assertions++;
-  }
+    if (!assert.ok) {
+        assertions++;
+    }
 
-  reporter.assertion({
-    result: assert.ok,
-    expected: undefined,
-    actual: undefined,
-    message: assert.name,
-    error: undefined,
-    stack: undefined
-  });
+    reporter.assertion({
+        result: assert.ok,
+        expected: undefined,
+        actual: undefined,
+        message: assert.name,
+        error: undefined,
+        stack: undefined
+    });
 });
 
 parse_stream.on('plan', function(plan) {
-  done = true;
+    done = true;
 
-  if (previous_test) {
-    reporter.test_end({
-      passed: assertions === 0,
-      name: previous_test.name
-    });
-  }
+    if (previous_test) {
+        reporter.test_end({
+            passed: assertions === 0,
+            name: previous_test.name
+        });
+    }
 });
 
 function run() {
