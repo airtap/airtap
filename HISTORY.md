@@ -1,3 +1,7 @@
+# 1.16.3 (2014-12-24)
+
+* fix tape issue for write after end
+
 # 1.16.2 (2014-12-21)
 
 * avoid failing when closing sauce browser
