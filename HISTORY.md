@@ -1,3 +1,7 @@
+# 1.16.4 (2015-01-10)
+
+* wait for browser quit before closing saucelabs browser
+
 # 1.16.3 (2014-12-24)
 
 * fix tape issue for write after end
