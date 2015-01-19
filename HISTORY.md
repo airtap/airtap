@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.16.5 (2015-01-18)
 
 * fix tape console.log bug with multiple arguments
 
