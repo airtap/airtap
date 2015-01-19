@@ -17,9 +17,10 @@ var parse_stream = parser(function(results) {
 });
 
 var originalLog = console.log;
-console.log = function (msg) {
+console.log = function () {
     var index = 1;
     var args = arguments;
+    var msg = args[0];
 
     if (!msg) {
         return;
