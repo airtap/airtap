@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* fix tape console.log bug with multiple arguments
+
 # 1.16.4 (2015-01-10)
 
 * wait for browser quit before closing saucelabs browser
