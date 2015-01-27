@@ -218,6 +218,16 @@ ZuulReporter.prototype.test_end = function(test) {
 
     self._set_status(self.stats);
 
+    var cov = window.__coverage__ || {};
+    ajax.post('/__zuul/coverage/client')
+      .send(cov)
+      .end(function(err, res) {
+        if (err) {
+          console.log('error in coverage reports');
+          console.log(err);
+        }
+      });
+
     post_message({
         type: 'test_end',
         name: test.name,
