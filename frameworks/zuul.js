@@ -150,6 +150,11 @@ ZuulReporter.prototype.done = function(err) {
         self.header.className += ' failed';
     }
 
+    // add coverage button
+    if (window.__coverage__) {
+        self.status.innerHTML += '<a class="btn" href="/__zuul/coverage">Coverage</a>';
+    }
+
     post_message({
         type: 'done',
         stats: stats,
