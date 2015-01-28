@@ -223,15 +223,18 @@ ZuulReporter.prototype.test_end = function(test) {
 
     self._set_status(self.stats);
 
-    var cov = window.__coverage__ || {};
-    ajax.post('/__zuul/coverage/client')
-      .send(cov)
-      .end(function(err, res) {
-        if (err) {
-          console.log('error in coverage reports');
-          console.log(err);
-        }
-      });
+    var cov = window.__coverage__ ;
+
+    if (cov) {
+        ajax.post('/__zuul/coverage/client')
+        .send(cov)
+        .end(function(err, res) {
+            if (err) {
+                console.log('error in coverage reports');
+                console.log(err);
+            }
+        });
+    }
 
     post_message({
         type: 'test_end',
