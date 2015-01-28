@@ -30,7 +30,7 @@ program
 .option('--browser-version <browser version>', 'specficy the browser version to test an individual browser')
 .option('--browser-platform <browser platform>', 'specficy the browser platform to test an individual browser')
 .option('--concurrency <n>', 'specify the number of concurrent browsers to test')
-.option('--coverage', 'uses istanbul to provide a code coverage report')
+.option('--no-coverage', 'disable code coverage analysis with istanbul')
 .option('--open', 'open a browser automatically. only used when --local is specified')
 .parse(process.argv);
 
