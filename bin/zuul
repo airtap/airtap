@@ -106,6 +106,10 @@ if (program.browserName) {
     config = xtend(config, { browsers: [{ name: program.browserName, version: program.browserVersion, platform: program.browserPlatform }] });
 }
 
+if (typeof program.tunnel === 'string') {
+    config.tunnel.type = program.tunnel;
+}
+
 // optional additional local config or from $HOME/.zuulrc
 var local_config = find_nearest_file('.zuulrc') || path.join(osenv.home(), '.zuulrc');
 if (fs.existsSync(local_config)) {
