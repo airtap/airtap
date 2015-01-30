@@ -8,6 +8,8 @@ html, body {
     margin: 0;
     font-size: 14px;
     font-family: Helvetica, Arial, sans-serif;
+    height: 100%;
+    width: 100%;
 }
 
 .heading {
@@ -28,6 +30,37 @@ html, body {
     padding: 3px;
     text-align: right;
     font-size: 0.75em;
+}
+
+.tab.hidden {
+    display: none;
+}
+
+#tab-selector a {
+    float: left;
+    width: 50%;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    background-color: #fafafa;
+    color: black;
+    height: 30px;
+    line-height: 30px;
+}
+
+#tab-selector a.selected {
+    background-color: #e1e1e1;
+}
+
+#zuul, .tabs, .tab {
+    height: 100%;
+    width: 100%;
+}
+
+.tab iframe {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 .test {

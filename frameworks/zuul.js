@@ -79,10 +79,62 @@ var ZuulReporter = function(run_fn) {
     sub.innerHTML = navigator.userAgent;
     main_div.appendChild(sub);
 
+    // Add tab selector
+    var tab_selector = document.createElement('div');
+    tab_selector.id = 'tab-selector';
+    var results_selector = document.createElement('a');
+    results_selector.className = 'selected';
+    results_selector.href = '/__zuul';
+    results_selector.innerHTML = 'Test results';
+    results_selector.onclick = function(e) {
+      var selectors = document.querySelectorAll('#tab-selector a');
+      for (var i = 0; i < selectors.length; i++) {
+        selectors[i].className = ''
+      }
+
+      e.target.className = 'selected';
+
+      document.getElementById('test-results-tab').className = 'tab';
+      document.getElementById('code-coverage-tab').className = 'tab hidden';
+      e.preventDefault();
+    };
+    tab_selector.appendChild(results_selector);
+    var coverage_selector = document.createElement('a');
+    coverage_selector.href = '/__zuul/coverage';
+    coverage_selector.innerHTML = 'Code coverage';
+    coverage_selector.onclick = function(e) {
+      var selectors = document.querySelectorAll('#tab-selector a');
+      for (var i = 0; i < selectors.length; i++) {
+        selectors[i].className = ''
+      }
+
+      e.target.className = 'selected';
+
+      document.getElementById('test-results-tab').className = 'tab hidden';
+      document.getElementById('code-coverage-tab').className = 'tab';
+      e.preventDefault();
+    };
+    tab_selector.appendChild(coverage_selector);
+    main_div.appendChild(tab_selector);
+
+    // Add tabs and their content containers
+    var tabs = document.createElement('div');
+    tabs.className = 'tabs';
+    var test_results_tab = document.createElement('div');
+    test_results_tab.className = 'tab';
+    test_results_tab.id = 'test-results-tab';
+    tabs.appendChild(test_results_tab);
+    var code_coverage_tab = document.createElement('div');
+    code_coverage_tab.className = 'tab hidden';
+    code_coverage_tab.id = 'code-coverage-tab';
+    tabs.appendChild(code_coverage_tab);
+    main_div.appendChild(tabs);
+
     // status info
     var status = document.createElement('div');
 
-    self._current_container = document.body.appendChild(main_div);
+    document.body.appendChild(main_div);
+    self._current_container = test_results_tab;
 
     self._mapper = undefined;
 
@@ -150,9 +202,10 @@ ZuulReporter.prototype.done = function(err) {
         self.header.className += ' failed';
     }
 
-    // add coverage button
+    // add coverage tab content
     if (window.__coverage__) {
-        self.status.innerHTML += '<a class="btn" href="/__zuul/coverage">Coverage</a>';
+        var coverage_tab = document.getElementById('code-coverage-tab');
+        coverage_tab.innerHTML = '<iframe frameborder="0" src="/__zuul/coverage"></iframe>';
     }
 
     post_message({
