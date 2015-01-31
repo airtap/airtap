@@ -1,15 +1,10 @@
 # UNRELEASED
 
 * running tests on a browser on multiple platforms is now supported, e.g., `platform: [Linux, Windows 2012]`
-* zuul can now use other tunnels in addition to localtunnel through, e.g., `--tunnel ngrok`, which requires the `zuul-ngrok` module. see the [module page](https://github.com/rase-/zuul-ngrok) for more details
-* tunnel configuration can now be added in a `tunnel` key in .zuul.yml, e.g.:
-```
-tunnel:
-  type: ngrok
-  authtoken: nthn12t12
-  proto: tcp
-```
-* code coverage is now recorded through an istanbul integration, displayed in a separate tab, and can be disabled with the `--no-coverage` flag
+* zuul can now use other tunnels in addition to localtunnel through the `--tunnel` option
+  see the [module page](https://github.com/rase-/zuul-ngrok) for more details
+* tunnel configuration can now be added in a `tunnel` key in .zuul.yml
+* code coverage is now recorded through an istanbul integration
 
 # 1.16.5 (2015-01-18)
 
