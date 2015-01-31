@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.17.0 (2015-01-30)
 
 * running tests on a browser on multiple platforms is now supported, e.g., `platform: [Linux, Windows 2012]`
 * zuul can now use other tunnels in addition to localtunnel through the `--tunnel` option
