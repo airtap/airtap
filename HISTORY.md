@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.17.1 (2015-02-02)
 
 * `SauceBrowser` now properly uses the tunnel config option from .zuul.yml
 
