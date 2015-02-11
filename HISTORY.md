@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.17.2 (2015-02-11)
 
 * Browserify transform options can now be specified in .zuul.yml
 * The istanbul transform is now added after custom browserify transforms to avoid instrumentation issues
