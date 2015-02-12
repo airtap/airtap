@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.18.0 (2015-02-12)
 
 * Added support for jasmine2 with `--ui jasmine2`
 
