@@ -11,6 +11,8 @@ var reporter = ZuulReporter(run);
 var previous_test = undefined;
 var assertions = 0;
 var done = false;
+var got_test_num = false;
+var got_pass_num = false;
 
 var parse_stream = parser(function(results) {
     reporter.done();
@@ -38,7 +40,17 @@ console.log = function () {
     }
 
     parse_stream.write(msg + '\n');
-    if (/^# fail\s*\d+$/.test(msg) || /^# ok/.test(msg)) {
+
+    if (/^# tests( )*\d/.test(msg)) {
+      got_test_num = true;
+    }
+
+    if (/^# pass( )*\d/.test(msg)) {
+      originalLog.call(this, 'got', msg);
+      got_pass_num = true;
+    }
+
+    if ((/^# fail\s*\d+$/.test(msg) || /^# ok/.test(msg)) && got_test_num && got_pass_num) {
         parse_stream.end();
     }
 
