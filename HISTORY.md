@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.18.1 (2015-02-13)
 
 * tape: close stream only after full summary
 
