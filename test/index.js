@@ -164,6 +164,38 @@ test('mocha-qunit - sauce', function(done) {
     });
 });
 
+test('tape - phantom', function(done) {
+    done = after(3, done);
+
+    var config = {
+        ui: 'tape',
+        prj_dir: __dirname + '/tape',
+        phantom: true,
+        concurrency: 1,
+        files: [__dirname + '/tape/test.js']
+    };
+
+    var zuul = Zuul(config);
+
+    // each browser we test will emit as a browser
+    zuul.on('browser', function(browser) {
+        browser.on('init', function() {
+            done();
+        });
+
+        browser.on('done', function(results) {
+            assert.equal(results.passed, 3);
+            assert.equal(results.failed, 3);
+            done();
+        });
+    });
+
+    zuul.run(function(passed) {
+        assert.ok(!passed);
+        done();
+    });
+});
+
 test('capabilities config', function(done) {
     var config = {
         ui: 'mocha-bdd',
