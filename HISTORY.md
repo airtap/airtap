@@ -1,4 +1,4 @@
-# UNRELEASED
+# 1.19.0 (2015-02-18)
 
 * Fixes to corner cases of the tape test runner
 * Fixed failed browser count in console output
