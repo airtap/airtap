@@ -94,7 +94,7 @@ parse_stream.on('assert', function(assert) {
         result: assert.ok,
         expected: undefined,
         actual: undefined,
-        message: assert.name,
+        message: assert.name || 'unnamed assert',
         error: undefined,
         stack: undefined
     });
