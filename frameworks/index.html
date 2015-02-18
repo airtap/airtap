@@ -16,6 +16,9 @@
   <script src="{{this}}"></script>
   {{/each}}
 
+  <script>
+    var ZUUL = JSON.parse('{{{config}}}');
+  </script>
   <script src="/__zuul/framework.js"></script>
   <script src="/__zuul/client.js"></script>
 </body>
