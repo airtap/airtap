@@ -1,3 +1,9 @@
+# UNRELEASED
+
+* Fixes to corner cases of the tape test runner
+* Fixed failed browser count in console output
+* Exposed the support server port in tests through `ZUUL.port`
+
 # 1.18.1 (2015-02-13)
 
 * tape: close stream only after full summary
