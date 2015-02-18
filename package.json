@@ -22,7 +22,6 @@
     "highlight.js": "7.5.0",
     "istanbul-middleware": "0.2.0",
     "load-script": "0.0.5",
-    "zuul-localtunnel": "1.0.1",
     "lodash": "2.4.1",
     "opener": "1.4.0",
     "osenv": "0.0.3",
@@ -32,11 +31,12 @@
     "stacktrace-js": "defunctzombie/stacktrace.js#07e7b95",
     "superagent": "0.15.7",
     "superstack": "0.0.4",
-    "tap-parser": "0.4.1",
-    "tape": "2.3.2",
+    "tap-parser": "0.7.0",
+    "tape": "3.5.0",
     "wd": "0.3.11",
     "xtend": "2.1.2",
-    "yamljs": "0.1.4"
+    "yamljs": "0.1.4",
+    "zuul-localtunnel": "1.0.1"
   },
   "devDependencies": {
     "mocha": "~1.16.2",
