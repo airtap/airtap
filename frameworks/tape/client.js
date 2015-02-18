@@ -3,8 +3,8 @@ var inspect = require('util').inspect;
 
 var ZuulReporter = require('../zuul');
 
-if (typeof console === 'undefined') {
-    console = {};
+if (typeof global.console === 'undefined') {
+    global.console = {};
 }
 
 var reporter = ZuulReporter(run);
@@ -23,6 +23,8 @@ console.log = function () {
     var index = 1;
     var args = arguments;
     var msg = args[0];
+var originalLog = global.console.log;
+global.console.log = function () {
 
     if (!msg) {
         return;
