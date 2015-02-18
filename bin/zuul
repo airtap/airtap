@@ -204,8 +204,9 @@ scout_browser(function(err, all_browsers) {
         zuul.browser(info);
     });
 
-    var passed_count = 0;
-    var failed_count = 0;
+    var passed_tests_count = 0;
+    var failed_tests_count = 0;
+    var failed_browsers_count = 0;
 
     zuul.on('browser', function(browser) {
         var name = browser.toString();
@@ -249,8 +250,12 @@ scout_browser(function(err, all_browsers) {
         });
 
         browser.once('done', function(results) {
-            passed_count += results.passed;
-            failed_count += results.failed;
+            passed_tests_count += results.passed;
+            failed_tests_count += results.failed;
+
+            if (results.failed > 0) {
+                failed_browsers_count++;
+            }
 
             if (results.failed || results.passed === 0) {
                 console.log('- failed: %s (%d failed, %d passed)'.red, name,
@@ -267,17 +272,17 @@ scout_browser(function(err, all_browsers) {
     });
 
     zuul.run(function(passed) {
-        if (failed_count > 0) {
-            console.log('%d browser(s) failed'.red, failed_count);
+        if (failed_tests_count > 0) {
+            console.log('%d browser(s) failed'.red, failed_browsers_count);
         }
-        else if (passed_count === 0) {
+        else if (passed_tests_count === 0) {
             console.log('no tests ran'.yellow);
         }
         else {
             console.log('all browsers passed'.green);
         }
 
-        process.exit((passed_count > 0 && failed_count == 0) ? 0 : 1);
+        process.exit((passed_tests_count > 0 && failed_tests_count == 0) ? 0 : 1);
     });
 });
 
