@@ -1,3 +1,4 @@
+var finished = require('tap-finished');
 var parser = require('tap-parser');
 
 var ZuulReporter = require('../zuul');
@@ -10,8 +11,15 @@ var reporter = ZuulReporter(run);
 var previous_test = undefined;
 var assertions = 0;
 var done = false;
+var noMoreTests = false;
 
 var parse_stream = parser();
+
+var finished_stream = finished(function() {
+    done = true;
+    parse_stream.end();
+    reporter.done();
+});
 
 var originalLog = global.console.log;
 global.console.log = function () {
@@ -20,6 +28,7 @@ global.console.log = function () {
     // do not write in a closed WriteStream
     if (!done) {
         parse_stream.write(msg + '\n');
+        finished_stream.write(msg + '\n');
     }
 
     // transfer log to original console,
@@ -31,12 +40,12 @@ global.console.log = function () {
 };
 
 parse_stream.on('comment', function(comment) {
-    if (previous_test) {
-        reporter.test_end({
-            passed: assertions === 0,
-            name: previous_test.name
-        });
+    // if we received 'plan' then no need to go further
+    if (noMoreTests) {
+        return;
     }
+
+    endPreviousTestIfNeeded();
 
     previous_test = {
         name: comment
@@ -65,18 +74,19 @@ parse_stream.on('assert', function(assert) {
 });
 
 parse_stream.on('plan', function(plan) {
-    done = true;
+    // starting here, we know the full tape suite is finished
+    endPreviousTestIfNeeded();
+    noMoreTests = true;
+});
 
+function endPreviousTestIfNeeded() {
     if (previous_test) {
         reporter.test_end({
             passed: assertions === 0,
             name: previous_test.name
         });
     }
-
-    parse_stream.end();
-    reporter.done();
-});
+}
 
 function run() {
     // tape tests already start by default
