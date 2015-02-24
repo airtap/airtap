@@ -1,3 +1,11 @@
+# UNRELEASED
+
+* Fixed a bug in detecting the termination of tape test runs
+* Watchify is used to cache browerify bundles to accelerate local development with Zuul
+* Bumped browserify version to 9.0.3
+* Command line options now always trump .zuul.yml and .zuulrc configuration
+* Added a `--disable-tunnel` flag to disable any tunnel configuration set in the config files
+
 # 1.19.0 (2015-02-18)
 
 * Fixes to corner cases of the tape test runner
