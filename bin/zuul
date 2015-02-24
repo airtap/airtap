@@ -21,6 +21,7 @@ program
 .option('--ui <testing ui>', 'ui for tests (mocha-bdd, mocha-tdd, qunit, tape)')
 .option('--local [port]', 'port for manual testing in a local browser')
 .option('--tunnel [type]', 'establish a tunnel for outside access. only used when --local is specified')
+.option('--disable-tunnel', 'don\'t establish a tunnel for outside access. override any config in .zuul.yml and .zuulrc')
 .option('--phantom', 'run tests in phantomjs. PhantomJS must be installed separately.')
 .option('--tunnel-host <host url>', 'specify a localtunnel server to use for forwarding')
 .option('--sauce-connect [tunnel-identifier]', 'use saucelabs with sauce connect instead of localtunnel. Optionally specify the tunnel-identifier')
@@ -48,6 +49,13 @@ var config = {
     coverage: program.coverage,
     open: program.open
 };
+
+// Remove unspecified flags
+for (var key in config) {
+    if (typeof config[key] === 'undefined') {
+        delete config[key];
+    }
+}
 
 if(!process.stdout.isTTY){
     colors.setTheme({
@@ -100,7 +108,12 @@ if ((program.browserName || program.browserPlatform) && !program.browserVersion)
 var cfg_file = path.join(process.cwd(), '.zuul.yml');
 if (fs.existsSync(cfg_file)) {
     var zuulyml = yaml.parse(fs.readFileSync(cfg_file, 'utf-8'));
-    config = xtend(config, zuulyml);
+    config = xtend(zuulyml, config);
+
+    // Use .zuul.yml specified tunnel options when available and tunneling
+    if (zuulyml.tunnel && program.tunnel === true) {
+        config.tunnel = zuulyml.tunnel;
+    }
 }
 
 // Overwrite browsers from command line arguments
@@ -117,7 +130,18 @@ var local_config = find_nearest_file('.zuulrc') || path.join(osenv.home(), '.zuu
 if (fs.existsSync(local_config)) {
     var zuulrc = yaml.parse(fs.readFileSync(local_config, 'utf-8'));
     config = xtend(zuulrc, config);
+
+    // Use .zuulrc specified tunnel options when available and tunneling
+    if (zuulrc.tunnel && program.tunnel === true) {
+        config.tunnel = zuulrc.tunnel;
+    }
+
     config.tunnel_host = config.tunnel_host || zuulrc.tunnel_host;
+}
+
+// Overwrite tunnel option if --disable-tunnel specified
+if (program.disableTunnel) {
+    config.tunnel = false;
 }
 
 var sauce_username = process.env.SAUCE_USERNAME;
