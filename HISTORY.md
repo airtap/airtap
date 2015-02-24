@@ -1,4 +1,4 @@
-# UNRELEASED
+# 2.0.0 (2015-02-24)
 
 * Fixed a bug in detecting the termination of tape test runs
 * Watchify is used to cache browerify bundles to accelerate local development with Zuul
