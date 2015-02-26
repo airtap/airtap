@@ -10,6 +10,7 @@ var yaml = require('yamljs');
 var xtend = require('xtend');
 var osenv = require('osenv');
 var find_nearest_file = require('find-nearest-file');
+var _ = require('lodash');
 
 var Zuul = require('../lib/zuul');
 var scout_browser = require('../lib/scout_browser');
@@ -85,7 +86,29 @@ if (program.listAvailableBrowsers) {
             return process.exit(1);
         }
 
-        console.dir(all_browsers);
+        for (var browser in all_browsers) {
+            console.log(browser);
+            var versions = _.uniq(_.pluck(all_browsers[browser], 'version')).sort(function(a, b) {
+                var a_num = Number(a);
+                var b_num = Number(b);
+
+                if (a_num && !b_num) {
+                    return -1;
+                } else if (!a_num && b_num) {
+                    return 1;
+                } else if (a === b) {
+                    return 0;
+                } else if (a_num > b_num) {
+                    return 1;
+                }
+
+                return -1;
+            });
+            var platforms = _.sortBy(_.uniq(_.pluck(all_browsers[browser], 'platform')));
+
+            console.log('   Versions: ' + versions.join(', '));
+            console.log('   Platforms: ' + platforms.join(', '));
+        }
     });
     return;
 }
