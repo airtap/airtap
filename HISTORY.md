@@ -1,3 +1,14 @@
+# UNRELEASED
+
+* Fixed JS error on the zuul page in old IEs that don't have `JSON.parse`
+* The `--list-available-browsers` flag now produces nicer output
+* Increased SauceLabs timeouts and retries
+* Fixed a global leak possibly causing `Not running` errors
+* Forcing appium version to avoid possible mobile platform issues
+* Browser versions ending in `.0` now work without quotes, e.g., `8.0`
+* The `--phantom` flag accepts an optional port argument that forces phantomjs to use the specified port
+* SauceBrowser debug prints now have browser name and version available in the debug name
+
 # 2.0.0 (2015-02-24)
 
 * Fixed a bug in detecting the termination of tape test runs
