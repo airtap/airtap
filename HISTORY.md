@@ -1,4 +1,4 @@
-# UNRELEASED
+# 2.1.0 (2015-03-04)
 
 * Fixed JS error on the zuul page in old IEs that don't have `JSON.parse`
 * The `--list-available-browsers` flag now produces nicer output
