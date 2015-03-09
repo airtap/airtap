@@ -1,4 +1,4 @@
-# UNRELEASED
+# 2.1.1 (2015-03-09)
 
 * use `appium-version` 1.3.6, reduces mobile/safari startup fails
 
