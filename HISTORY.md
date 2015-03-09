@@ -1,3 +1,7 @@
+# 2.1.1 (2015-03-09)
+  
+  * use `appium-version` 1.3.6, reduces mobile/safari startup fails
+
 # 2.1.0 (2015-03-04)
 
 * Fixed JS error on the zuul page in old IEs that don't have `JSON.parse`
