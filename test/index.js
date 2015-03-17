@@ -4,6 +4,7 @@ var after = require('after');
 var auth = require('./auth');
 var Zuul = require('../');
 var scout_browser = require('../lib/scout_browser');
+var builderBrowserify = require('../lib/builder-browserify');
 
 test('mocha-bdd - phantom', function(done) {
     done = after(3, done);
@@ -239,4 +240,29 @@ test('capabilities config', function(done) {
     });
 
     browser.start();
+});
+
+// test ensures browserify configuration is applied in order
+// https://github.com/defunctzombie/zuul/issues/177
+// entry file in this test starts off as:
+//     console.log('foo');
+// if the configuration is applied in order, the result will be:
+//     console.log('qux');
+// if not, it will likely be
+//     console.log('bar');
+test('browserify builder', function(done) {
+    var builder = builderBrowserify();
+    var config = {
+        browserify: [
+            {transform: __dirname + '/builder-browserify/foo-to-bar-transform'},
+            {plugin: __dirname + '/builder-browserify/bar-to-baz-plugin'},
+            {transform: __dirname + '/builder-browserify/baz-to-qux-transform'}
+        ]
+    };
+    var files = [__dirname + '/builder-browserify/entry.js'];
+
+    builder(files, config, function(err, src, map) {
+        assert.ok(src.indexOf("console.log('qux');") !== -1);
+        done();
+    });
 });
