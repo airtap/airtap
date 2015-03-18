@@ -42,9 +42,10 @@
     "zuul-localtunnel": "1.1.0"
   },
   "devDependencies": {
-    "mocha": "~1.16.2",
     "after": "~0.8.1",
-    "phantomjs": "1.9.12"
+    "mocha": "~1.16.2",
+    "phantomjs": "1.9.12",
+    "through2": "0.6.3"
   },
   "repository": {
     "type": "git",
