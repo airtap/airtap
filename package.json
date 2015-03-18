@@ -45,7 +45,7 @@
     "after": "~0.8.1",
     "mocha": "~1.16.2",
     "phantomjs": "1.9.12",
-    "through2": "^0.6.3"
+    "through2": "0.6.3"
   },
   "repository": {
     "type": "git",
