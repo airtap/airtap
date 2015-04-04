@@ -128,16 +128,7 @@ if ((program.browserName || program.browserPlatform) && !program.browserVersion)
     return process.exit(1);
 }
 
-var cfg_file = path.join(process.cwd(), '.zuul.yml');
-if (fs.existsSync(cfg_file)) {
-    var zuulyml = yaml.parse(fs.readFileSync(cfg_file, 'utf-8'));
-    config = xtend(zuulyml, config);
-
-    // Use .zuul.yml specified tunnel options when available and tunneling
-    if (zuulyml.tunnel && program.tunnel === true) {
-        config.tunnel = zuulyml.tunnel;
-    }
-}
+config = readLocalConfig(config)
 
 // Overwrite browsers from command line arguments
 if (program.browserName) {
@@ -148,19 +139,7 @@ if (typeof program.tunnel === 'string') {
     config.tunnel.type = program.tunnel;
 }
 
-// optional additional local config or from $HOME/.zuulrc
-var local_config = find_nearest_file('.zuulrc') || path.join(osenv.home(), '.zuulrc');
-if (fs.existsSync(local_config)) {
-    var zuulrc = yaml.parse(fs.readFileSync(local_config, 'utf-8'));
-    config = xtend(zuulrc, config);
-
-    // Use .zuulrc specified tunnel options when available and tunneling
-    if (zuulrc.tunnel && program.tunnel === true) {
-        config.tunnel = zuulrc.tunnel;
-    }
-
-    config.tunnel_host = config.tunnel_host || zuulrc.tunnel_host;
-}
+config = readGlobalConfig(config)
 
 // Overwrite tunnel option if --disable-tunnel specified
 if (program.disableTunnel) {
@@ -332,5 +311,49 @@ scout_browser(function(err, all_browsers) {
         process.exit((passed_tests_count > 0 && failed_tests_count == 0) ? 0 : 1);
     });
 });
+
+function readLocalConfig(config) {
+    var yaml = path.join(process.cwd(), '.zuul.yml')
+    var js = path.join(process.cwd(), 'zuul.config.js')
+    var yamlExists = fs.existsSync(yaml)
+    var jsExists = fs.existsSync(js)
+    if (yamlExists && jsExists) {
+        console.error('both .zuul.yaml and zuul.config.js are found in the project directory, please choose one')
+        process.exit(1)
+    }
+    else if (yamlExists) {
+        return mergeConfig(config, readYAMLConfig(yaml))
+    }
+    else if (jsExists) {
+        return mergeConfig(config, require(js))
+    }
+    return config
+}
+
+function readGlobalConfig(config) {
+    var filename = find_nearest_file('.zuulrc') || path.join(osenv.home(), '.zuulrc')
+    if (fs.existsSync(filename)) {
+        var globalConfig;
+        try {
+            globalConfig = require(filename);
+        } catch(_err) {
+            globalConfig = readYAMLConfig(filename);
+        }
+        return mergeConfig(config, globalConfig);
+    }
+    return config
+}
+
+function readYAMLConfig(filename) {
+    return yaml.parse(fs.readFileSync(filename, 'utf-8'))
+}
+
+function mergeConfig(config, update) {
+    config = xtend(update, config)
+    if (update.tunnel && program.tunnel === true) {
+        config.tunnel = update.tunnel
+    }
+    return config
+}
 
 // vim: ft=javascript
