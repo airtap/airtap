@@ -251,7 +251,6 @@ test('capabilities config', function(done) {
 // if not, it will likely be
 //     console.log('bar');
 test('browserify builder', function(done) {
-    var builder = builderBrowserify();
     var config = {
         browserify: [
             {transform: __dirname + '/builder-browserify/foo-to-bar-transform'},
@@ -260,8 +259,9 @@ test('browserify builder', function(done) {
         ]
     };
     var files = [__dirname + '/builder-browserify/entry.js'];
+    var builder = builderBrowserify(files, config);
 
-    builder(files, config, function(err, src, map) {
+    builder(function(err, src, map) {
         assert.ok(src.indexOf("console.log('qux');") !== -1);
         done();
     });
