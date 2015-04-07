@@ -34,7 +34,6 @@
     "superstack": "0.0.4",
     "tap-finished": "0.0.1",
     "tap-parser": "0.7.0",
-    "tape": "3.5.0",
     "watchify": "2.3.0",
     "wd": "0.3.11",
     "xtend": "2.1.2",
@@ -45,7 +44,8 @@
     "after": "~0.8.1",
     "mocha": "~1.16.2",
     "phantomjs": "1.9.12",
-    "through2": "0.6.3"
+    "through2": "0.6.3",
+    "tape": "3.5.0"
   },
   "repository": {
     "type": "git",
