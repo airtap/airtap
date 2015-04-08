@@ -29,7 +29,7 @@
     "shallow-copy": "0.0.1",
     "shell-quote": "1.4.1",
     "stack-mapper": "0.2.2",
-    "stacktrace-js": "defunctzombie/stacktrace.js#07e7b95",
+    "stacktrace-js": "http://github.com/defunctzombie/stacktrace.js/tarball/07e7b9516f1449f5c209e4f67f11a43f738c1712",
     "superagent": "0.15.7",
     "superstack": "0.0.4",
     "tap-finished": "0.0.1",
