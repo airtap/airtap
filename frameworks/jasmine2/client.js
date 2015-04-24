@@ -29,7 +29,7 @@ ZuulJasmineReporter.prototype.getFullSpecName = function(spec, separator) {
     return getFullSuiteName(this.suite) + separator + spec.description;
 };
 
-ZuulJasmineReporter.prototype.suiteDone = function () {
+ZuulJasmineReporter.prototype.jasmineDone = function () {
     reporter.done();
 };
 
