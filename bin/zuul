@@ -24,6 +24,7 @@ program
 .option('--tunnel [type]', 'establish a tunnel for outside access. only used when --local is specified')
 .option('--disable-tunnel', 'don\'t establish a tunnel for outside access. override any config in .zuul.yml and .zuulrc')
 .option('--phantom [port]', 'run tests in phantomjs. PhantomJS must be installed separately.')
+.option('--electron', 'run tests in electron. electron must be installed separately.')
 .option('--tunnel-host <host url>', 'specify a localtunnel server to use for forwarding')
 .option('--sauce-connect [tunnel-identifier]', 'use saucelabs with sauce connect instead of localtunnel. Optionally specify the tunnel-identifier')
 .option('--server <the server script>', 'specify a server script to be run')
@@ -42,6 +43,7 @@ var config = {
     ui: program.ui,
     tunnel: program.tunnel,
     phantom: program.phantom,
+    electron: program.electron,
     prj_dir: process.cwd(),
     tunnel_host: program.tunnelHost,
     sauce_connect: program.sauceConnect,
@@ -200,7 +202,7 @@ if (config.local) {
     return zuul.run(function(passed) {
     });
 }
-else if (config.phantom) {
+else if (config.phantom || config.electron) {
     return zuul.run(function(passed) {
         process.exit(passed ? 0 : 1);
     });
