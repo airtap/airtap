@@ -22,7 +22,7 @@ function reportFirstSpecFailure(results) {
                 result: false,
                 actual: result.actual,
                 expected: result.expected,
-                message: result.trace.message,
+                message: result.message,
                 error: result.trace,
                 source: result.trace.stack
             });
