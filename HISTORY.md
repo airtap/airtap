@@ -1,4 +1,4 @@
-# UNRELEASED
+# 3.0.0 (2015-05-02)
 
 * Builder API change #182
 * Specify http tarball url for stacktracejs to be compatible with node 0.10 npms #188
