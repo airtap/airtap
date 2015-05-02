@@ -2,6 +2,10 @@
 
 * Builder API change #182
 * Specify http tarball url for stacktracejs to be compatible with node 0.10 npms #188
+* Add support for config through js (67980)
+* Fix jasmin client to report errors correctly
+* Add electron support (9d0468)
+* Add `wait` field to .zuul.yml for delayed user_server start (e093664)
 
 # 2.1.1 (2015-03-09)
 
