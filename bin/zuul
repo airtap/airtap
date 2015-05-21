@@ -300,6 +300,10 @@ scout_browser(function(err, all_browsers) {
     });
 
     zuul.run(function(passed) {
+        if (passed instanceof Error) {
+            throw passed;
+        }
+
         if (failed_tests_count > 0) {
             console.log('%d browser(s) failed'.red, failed_browsers_count);
         }
