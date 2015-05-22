@@ -33,7 +33,7 @@ test('flatten browser:simple', function(done) {
     done();
 });
 
-test.only('flatten browser:stable', function(done) {
+test('flatten browser:stable', function(done) {
     var request = [
         {name: 'chrome', version: '40..latest', platform: 'Windows 2012 R2'}
     ];
