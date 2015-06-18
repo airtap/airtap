@@ -281,13 +281,10 @@ scout_browser(function(err, all_browsers) {
             passed_tests_count += results.passed;
             failed_tests_count += results.failed;
 
-            if (results.failed > 0) {
-                failed_browsers_count++;
-            }
-
-            if (results.failed || results.passed === 0) {
+            if (results.failed > 0 || results.passed === 0) {
                 console.log('- failed: %s (%d failed, %d passed)'.red, name,
                     results.failed, results.passed);
+                failed_browsers_count++;
                 return;
             }
             console.log('- passed: %s'.green, name);
@@ -304,7 +301,7 @@ scout_browser(function(err, all_browsers) {
             throw passed;
         }
 
-        if (failed_tests_count > 0) {
+        if (failed_browsers_count > 0) {
             console.log('%d browser(s) failed'.red, failed_browsers_count);
         }
         else if (passed_tests_count === 0) {
@@ -314,7 +311,7 @@ scout_browser(function(err, all_browsers) {
             console.log('all browsers passed'.green);
         }
 
-        process.exit((passed_tests_count > 0 && failed_tests_count == 0) ? 0 : 1);
+        process.exit((passed_tests_count > 0 && failed_browsers_count == 0) ? 0 : 1);
     });
 });
 
