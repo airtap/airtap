@@ -1,3 +1,9 @@
+# UNRELEASED
+
+* improve speed of test reporting (ecb1aa)
+* expand file globs from CLI args (517bf0)
+* bump opensauce concurrency to 5 (da6e78c)
+
 # 3.0.0 (2015-05-02)
 
 * Builder API change #182
