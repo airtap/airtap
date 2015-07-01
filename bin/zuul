@@ -32,6 +32,8 @@ program
 .option('--browser-name <browser name>', 'specficy the browser name to test an individual browser')
 .option('--browser-version <browser version>', 'specficy the browser version to test an individual browser')
 .option('--browser-platform <browser platform>', 'specficy the browser platform to test an individual browser')
+.option('--browser-retries <retries>', 'number of retries allowed when trying to start a cloud browser, default to 6')
+.option('--browser-output-timeout <timeout>', 'how much time to wait between two test results, default to -1 (no timeout)')
 .option('--concurrency <n>', 'specify the number of concurrent browsers to test')
 .option('--no-coverage', 'disable code coverage analysis with istanbul')
 .option('--open', 'open a browser automatically. only used when --local is specified')
@@ -50,7 +52,9 @@ var config = {
     server: program.server,
     concurrency: program.concurrency,
     coverage: program.coverage,
-    open: program.open
+    open: program.open,
+    browser_retries: program.browserRetries && parseInt(program.browserRetries, 10),
+    browser_output_timeout: program.browserRetries && parseInt(program.browserOutputTimeout, 10)
 };
 
 // Remove unspecified flags
@@ -196,6 +200,8 @@ if (!config.username || !config.key) {
 }
 
 scout_browser(function(err, all_browsers) {
+    var browsers = [];
+
     if (err) {
         console.error('Unable to get available browsers for saucelabs'.red);
         console.error(err.stack);
@@ -237,6 +243,8 @@ scout_browser(function(err, all_browsers) {
     var failed_browsers_count = 0;
 
     zuul.on('browser', function(browser) {
+        browsers.push(browser);
+
         var name = browser.toString();
         var wait_interval;
 
@@ -296,6 +304,12 @@ scout_browser(function(err, all_browsers) {
         console.log('- restarting: %s'.red, name);
     });
 
+    zuul.on('error', function(err) {
+        shutdownAllBrowsers(function() {
+            throw err.message;
+        });
+    });
+
     zuul.run(function(passed) {
         if (passed instanceof Error) {
             throw passed;
@@ -313,6 +327,20 @@ scout_browser(function(err, all_browsers) {
 
         process.exit((passed_tests_count > 0 && failed_browsers_count == 0) ? 0 : 1);
     });
+
+    function shutdownAllBrowsers(done) {
+        var Batch = require('batch')
+        var batch = new Batch;
+
+        browsers.forEach(function(browser) {
+            batch.push(function(done) {
+                browser.shutdown();
+                browser.once('done', done);
+            });
+        });
+
+        batch.end(done);
+    }
 });
 
 function readLocalConfig(config) {
