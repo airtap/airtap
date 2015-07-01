@@ -3,6 +3,7 @@
 * add `browser_retries` option (default to 6)
 * add `browser_output_timeout` option (default to no timeout)
 * properly shutdown all browsers when an uncaught exception is thrown on main `zuul` instance
+* gzip content from the control app (your bundle will now be gzipped)
 
 # 3.1.0 (2015-06-23)
 
