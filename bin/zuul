@@ -147,14 +147,6 @@ if (typeof program.tunnel === 'string') {
 
 config = readGlobalConfig(config)
 
-if (config.browser_retries === undefined) {
-    config.browser_retries = 6;
-}
-
-if (config.browser_output_timeout === undefined) {
-    config.browser_output_timeout = -1;
-}
-
 // Overwrite tunnel option if --disable-tunnel specified
 if (program.disableTunnel) {
     config.tunnel = false;
