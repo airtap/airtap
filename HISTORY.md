@@ -2,6 +2,7 @@
 
 * add `browser_retries` option (default to 6)
 * add `browser_output_timeout` option (default to no timeout)
+* properly shutdown all browsers when an uncaught exception is thrown on main `zuul` instance
 
 # 3.1.0 (2015-06-23)
 

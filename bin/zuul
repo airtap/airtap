@@ -208,6 +208,8 @@ if (!config.username || !config.key) {
 }
 
 scout_browser(function(err, all_browsers) {
+    var browsers = [];
+
     if (err) {
         console.error('Unable to get available browsers for saucelabs'.red);
         console.error(err.stack);
@@ -249,6 +251,8 @@ scout_browser(function(err, all_browsers) {
     var failed_browsers_count = 0;
 
     zuul.on('browser', function(browser) {
+        browsers.push(browser);
+
         var name = browser.toString();
         var wait_interval;
 
@@ -308,6 +312,12 @@ scout_browser(function(err, all_browsers) {
         console.log('- restarting: %s'.red, name);
     });
 
+    zuul.on('error', function(err) {
+        shutdownAllBrowsers(function() {
+            throw err.message;
+        });
+    });
+
     zuul.run(function(passed) {
         if (passed instanceof Error) {
             throw passed;
@@ -325,6 +335,20 @@ scout_browser(function(err, all_browsers) {
 
         process.exit((passed_tests_count > 0 && failed_browsers_count == 0) ? 0 : 1);
     });
+
+    function shutdownAllBrowsers(done) {
+        var Batch = require('batch')
+        var batch = new Batch;
+
+        browsers.forEach(function(browser) {
+            batch.push(function(done) {
+                browser.shutdown();
+                browser.once('done', done);
+            });
+        });
+
+        batch.end(done);
+    }
 });
 
 function readLocalConfig(config) {
