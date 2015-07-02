@@ -12,6 +12,7 @@
     "char-split": "0.2.0",
     "colors": "0.6.2",
     "commander": "2.1.0",
+    "compression": "1.5.0",
     "convert-source-map": "1.0.0",
     "debug": "2.1.0",
     "express": "3.4.8",
