@@ -1,4 +1,4 @@
-# UNRELEASED
+# 3.2.0 (2015-07-01)
 
 * add `browser_retries` option (default to 6)
 * add `browser_output_timeout` option (default to no timeout)
