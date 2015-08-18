@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-require('superstack');
-
 var path = require('path');
 var fs = require('fs');
 

@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* remove superstack (causing problems on newer node)
+
 # 3.3.0 (2015-08-18)
 
 * update mocha to v2
