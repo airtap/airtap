@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* allow negative numbers in browser version ranges
+
 # 3.3.1 (2015-08-27)
 
 * remove superstack (causing problems on newer node)
