@@ -75,4 +75,4 @@ MIT
 
 ## Credits
 
-This probject is made possible by all the awesome modules it uses. See the `package.json` file for all the awesome.
+This project is made possible by all the awesome modules it uses. See the `package.json` file for all the awesome.
