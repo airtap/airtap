@@ -1,4 +1,4 @@
-# UNRELEASED
+# 3.5.0 (2015-09-13)
 
 * bump browserify to v11
 
