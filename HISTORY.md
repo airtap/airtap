@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* bump browserify to v11
+
 # 3.4.0 (2015-08-31)
 
 * allow negative numbers in browser version ranges
