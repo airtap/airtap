@@ -239,6 +239,7 @@ scout_browser(function(err, all_browsers) {
     var passed_tests_count = 0;
     var failed_tests_count = 0;
     var failed_browsers_count = 0;
+    var lastOutputName;
 
     zuul.on('browser', function(browser) {
         browsers.push(browser);
@@ -264,7 +265,11 @@ scout_browser(function(err, all_browsers) {
             });
 
             reporter.on('console', function(msg) {
-                console.log('%s console'.white, name);
+                if (lastOutputName !== name) {
+                    lastOutputName = name;
+                    console.log('%s console'.white, name);
+                }
+
                 console.log.apply(console, msg.args);
             });
 
