@@ -15,9 +15,8 @@ test('capabilities config', function(done) {
     var zuul = Zuul(config);
 
     zuul.browser({
-        name: 'chrome',
-        version: 'beta',
-        platform: 'Windows 2012 R2'
+        name: 'internet explorer',
+        version: '11'
     });
 
     var browser = zuul._browsers[0];
