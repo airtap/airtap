@@ -81,6 +81,28 @@ test('flatten browser:negative', function(done) {
     done();
 });
 
+test('flatten browser:negative with arrays', function(done) {
+    var request = [
+        {name: 'ipad', version: ['7.1', '-2..8.2', '-2..latest']},
+        {name: 'ipad', version: '-2..latest'}
+    ];
+
+    var expected = [
+        {name: 'ipad', version: '7.1', platform: 'Mac 10.9'},
+        {name: 'ipad', version: '8.0', platform: 'Mac 10.10'},
+        {name: 'ipad', version: '8.1', platform: 'Mac 10.10'},
+        {name: 'ipad', version: '8.2', platform: 'Mac 10.10'}
+    ];
+
+    assert.deepEqual(
+        flattenBrowser(request, allBrowsers),
+        expected,
+        'We found the browsers to test'
+    );
+
+    done();
+});
+
 test('flatten browser:oldest', function(done) {
     var request = [
         {name: 'chrome', version: 'oldest', platform: 'Windows 2012 R2'},
