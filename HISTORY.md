@@ -1,7 +1,7 @@
 # 3.6.0 (2015-09-20)
 
 * feat: add `browser_open_timeout` configuration, default to 120s (same as before)
-  - mostly because some browsers on saucelabs are really raking ages to start
+  - mostly because some browsers on saucelabs are really taking ages to start
 * fix: lower output by stacking browser names in console
 * fix: always return a uniq list of browser+version+platform
 * fix: typo in error message about browser output timeout
