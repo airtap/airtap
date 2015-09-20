@@ -52,7 +52,8 @@ var config = {
     coverage: program.coverage,
     open: program.open,
     browser_retries: program.browserRetries && parseInt(program.browserRetries, 10),
-    browser_output_timeout: program.browserRetries && parseInt(program.browserOutputTimeout, 10)
+    browser_output_timeout: program.browserOutputTimeout && parseInt(program.browserOutputTimeout, 10),
+    browser_open_timeout: program.browserOpenTimeout && parseInt(program.browserOpenTimeout, 10)
 };
 
 // Remove unspecified flags
