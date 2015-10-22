@@ -271,6 +271,11 @@ scout_browser(function(err, all_browsers) {
                     console.log('%s console'.white, name);
                 }
 
+                //When testing with microsoft edge:
+                //Adds length property to array-like object if not defined to execute console.log properly
+                if (msg.args.length === undefined) {
+                    msg.args.length = Object.keys(msg.args).length;
+                }
                 console.log.apply(console, msg.args);
             });
 
@@ -278,7 +283,13 @@ scout_browser(function(err, all_browsers) {
                 console.log();
                 console.log('%s %s'.red, name, current_test.name);
                 console.log('Error: %s'.red, assertion.message);
-                assertion.frames.forEach(function(frame) {
+
+                //When testing with microsoft edge:
+                //Adds length property to array-like object if not defined to execute forEach properly
+                if (assertion.frames.length === undefined) {
+                    assertion.frames.length = Object.keys(assertion.frames).length;
+                }
+                Array.prototype.forEach.call(assertion.frames, function(frame) {
                     console.log('    %s %s:%d'.grey, frame.func, frame.filename, frame.line);
                 });
                 console.log();
