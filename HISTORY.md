@@ -1,3 +1,8 @@
+# 3.7.0 (2015-10-22)
+
+* upgrade istanbul-middleware to 0.2.1
+* use http-proxy instead of bouncy (websocket issue)
+
 # 3.6.0 (2015-09-20)
 
 * feat: add `browser_open_timeout` configuration, default to 120s (same as before)
