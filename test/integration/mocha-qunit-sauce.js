@@ -22,7 +22,12 @@ test('mocha-qunit - sauce', function(done) {
         assert.ifError(err);
 
         var flattenBrowser = require('../../lib/flatten_browser');
-        var browsers = flattenBrowser(require('browzers').pullRequest, allBrowsers);
+        var browsersToTest = require('browzers').pullRequest;
+        browsersToTest.push({
+            name: 'microsoftedge',
+            version: 'latest'
+        });
+        var browsers = flattenBrowser(browsersToTest, allBrowsers);
         var total = browsers.length;
 
         browsers.forEach(zuul.browser.bind(zuul));
