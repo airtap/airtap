@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "after": "~0.8.1",
+    "browzers": "1.1.0",
     "bulk-require": "0.2.1",
     "mocha": "~1.16.2",
     "phantomjs": "1.9.12",
