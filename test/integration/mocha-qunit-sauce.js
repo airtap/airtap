@@ -29,6 +29,11 @@ test('mocha-qunit - sauce', function(done) {
                 return zuul.browser(list);
             }
 
+            list = list.filter(function(browser) {
+                // iphone 9.1 buggy in saucelabs, never really start (Oct 2015)
+                return browser.name !== 'iphone' && browser.name !== 'ipad' || browser.version !== '9.1'
+            });
+
             list.sort(function(a, b) {
                 return a.version - b.version;
             });
