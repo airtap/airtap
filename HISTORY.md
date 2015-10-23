@@ -1,3 +1,7 @@
+# 3.7.1 (2015-10-23)
+
+* fix microsoft edge support
+
 # 3.7.0 (2015-10-22)
 
 * upgrade istanbul-middleware to 0.2.1

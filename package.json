@@ -1,6 +1,6 @@
 {
   "name": "zuul",
-  "version": "3.7.0",
+  "version": "3.7.1",
   "description": "simple browser testing",
   "main": "lib/zuul.js",
   "dependencies": {
