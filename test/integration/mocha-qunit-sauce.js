@@ -23,10 +23,6 @@ test('mocha-qunit - sauce', function(done) {
 
         var flattenBrowser = require('../../lib/flatten_browser');
         var browsersToTest = require('browzers').pullRequest;
-        browsersToTest.push({
-            name: 'microsoftedge',
-            version: 'latest'
-        });
         var browsers = flattenBrowser(browsersToTest, allBrowsers);
         var total = browsers.length;
 
