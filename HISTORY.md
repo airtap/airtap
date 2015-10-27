@@ -1,3 +1,7 @@
+# 3.7.2 (2015-10-27)
+
+* revert updating istanbul-middleware, see https://github.com/defunctzombie/zuul/issues/245
+
 # 3.7.1 (2015-10-23)
 
 * fix microsoft edge support
