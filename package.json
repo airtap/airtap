@@ -23,7 +23,7 @@
     "highlight.js": "7.5.0",
     "http-proxy": "1.11.2",
     "humanize-duration": "2.4.0",
-    "istanbul-middleware": "0.2.1",
+    "istanbul-middleware": "0.2.0",
     "load-script": "0.0.5",
     "lodash": "2.4.1",
     "opener": "1.4.0",
