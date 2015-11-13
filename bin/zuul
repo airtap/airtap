@@ -281,7 +281,7 @@ scout_browser(function(err, all_browsers) {
 
             reporter.on('assertion', function(assertion) {
                 console.log();
-                console.log('%s %s'.red, name, current_test.name);
+                console.log('%s %s'.red, name, current_test ? current_test.name : 'undefined test');
                 console.log('Error: %s'.red, assertion.message);
 
                 //When testing with microsoft edge:
