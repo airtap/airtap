@@ -1,3 +1,7 @@
+# 3.7.3 (2015-11-19)
+
+* fix uncaught exception when current test was undefined (#249)
+
 # 3.7.2 (2015-10-27)
 
 * revert updating istanbul-middleware, see https://github.com/defunctzombie/zuul/issues/245
