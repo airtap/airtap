@@ -1,3 +1,9 @@
+# 3.8.0 (2015-12-02)
+
+* ignore canceled requests to the support server (#256)
+* easier phantomjs debugging (#254) 
+* update istanbul middleware (#253)
+
 # 3.7.3 (2015-11-19)
 
 * fix uncaught exception when current test was undefined (#249)
