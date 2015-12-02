@@ -14,9 +14,14 @@ var mocha_opt = {
 
 mocha.setup(mocha_opt);
 
+// whitelist the `msWDfn` global for Microsoft Edge
+if (/ Edge\/[1-9][0-9]\.[0-9]+$/.test(navigator.userAgent)) {
+  mocha.globals('msWDfn');
+}
+
 var reporter = ZuulReporter(run);
 
-function getTitle(item){
+function getTitle(item) {
   var title = item.title;
   if(item.parent.title){
     return getTitle(item.parent) + ' :: ' + title;
@@ -54,7 +59,7 @@ function run(err) {
 
   });
 
-  runner.on('pending', function(test){
+  runner.on('pending', function(test) {
     reporter.skippedTest({
       name: getTitle(test)
     });
@@ -98,4 +103,3 @@ function run(err) {
     reporter.done(err);
   });
 }
-
