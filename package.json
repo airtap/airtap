@@ -6,7 +6,7 @@
   "dependencies": {
     "JSON2": "0.1.0",
     "batch": "0.5.0",
-    "browserify": "11.1.0",
+    "browserify": "13.0.0",
     "browserify-istanbul": "0.1.5",
     "char-split": "0.2.0",
     "colors": "0.6.2",
