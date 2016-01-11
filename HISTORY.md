@@ -1,3 +1,11 @@
+# 3.9.0 (2016-01-11)
+
+* use browserify 13
+* use watchify 3.7.0
+* update lodash to 3.10.1
+* update phantomjs to 1.9.19
+* mocha: whitelist msWDfn global created by edge
+
 # 3.8.0 (2015-12-02)
 
 * ignore canceled requests to the support server (#256)
