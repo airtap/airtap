@@ -1,3 +1,8 @@
+# 3.10.0 (2016-03-08)
+
+* update phantomjs to 2 #267
+* force appium to 1.4 #270 #272
+
 # 3.9.0 (2016-01-11)
 
 * use browserify 13
