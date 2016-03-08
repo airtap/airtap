@@ -1,3 +1,7 @@
+# 3.10.1 (2016-03-08)
+
+* backward compat with users not having phantomjs-prebuilt
+
 # 3.10.0 (2016-03-08)
 
 * update phantomjs to 2 #267
