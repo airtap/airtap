@@ -11,7 +11,8 @@ test('mocha-qunit - phantom', function(done) {
         prj_dir: __dirname + '/../fixtures/mocha-qunit',
         phantom: true,
         concurrency: 1,
-        files: [__dirname + '/../fixtures/mocha-qunit/test.js']
+        files: [__dirname + '/../fixtures/mocha-qunit/test.js'],
+        tunnel: 'ngrok'
     };
     var zuul = Zuul(config);
 
