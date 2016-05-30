@@ -11,7 +11,8 @@ test('jasmine - phantom', function(done) {
         prj_dir: __dirname + '/../fixtures/jasmine',
         phantom: true,
         concurrency: 1,
-        files: [__dirname + '/../fixtures/jasmine/test.js']
+        files: [__dirname + '/../fixtures/jasmine/test.js'],
+        tunnel: 'ngrok'
     };
 
     var zuul = Zuul(config);

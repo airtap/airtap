@@ -48,7 +48,8 @@
     "mocha": "~1.16.2",
     "phantomjs-prebuilt": "2.1.4",
     "tape": "3.5.0",
-    "through2": "0.6.3"
+    "through2": "0.6.3",
+    "zuul-ngrok": "^4.0.0"
   },
   "repository": {
     "type": "git",

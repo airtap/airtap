@@ -9,7 +9,8 @@ test('capabilities config', function(done) {
             'custom-data': {
                 public: 'private'
             }
-        }
+        },
+        tunnel: 'ngrok'
     };
 
     var zuul = Zuul(config);

@@ -13,7 +13,8 @@ test('mocha-qunit - sauce', function(done) {
         files: [__dirname + '/../fixtures/mocha-qunit/test.js'],
         username: auth.username,
         concurrency: 5,
-        key: auth.key
+        key: auth.key,
+        tunnel: 'ngrok'
     };
 
     var zuul = Zuul(config);
