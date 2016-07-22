@@ -1,3 +1,7 @@
+# 3.10.2 (2016-07-22)
+
+* make electron >= 0.35 work
+
 # 3.10.1 (2016-03-08)
 
 * backward compat with users not having phantomjs-prebuilt
@@ -18,7 +22,7 @@
 # 3.8.0 (2015-12-02)
 
 * ignore canceled requests to the support server (#256)
-* easier phantomjs debugging (#254) 
+* easier phantomjs debugging (#254)
 * update istanbul middleware (#253)
 
 # 3.7.3 (2015-11-19)
@@ -231,4 +235,3 @@
   * don't crash for unknown platforms
   * use better method to get open ports
   * add firefox_profile config option
-
