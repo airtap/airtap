@@ -1,3 +1,7 @@
+# 3.10.3 (2016-07-27)
+
+* more electron fixes
+
 # 3.10.2 (2016-07-22)
 
 * make electron >= 0.35 work
