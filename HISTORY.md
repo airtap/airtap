@@ -1,4 +1,4 @@
-# UNRELEASED
+# 3.11.0 (2016-08-16)
 
 * add SAUCE_APPIUM_VERSION to specify appium version
 
