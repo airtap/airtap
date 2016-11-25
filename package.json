@@ -46,7 +46,7 @@
     "browzers": "1.2.0",
     "bulk-require": "0.2.1",
     "mocha": "~1.16.2",
-    "phantomjs-prebuilt": "2.1.4",
+    "phantomjs-prebuilt": "2.1.13",
     "tape": "3.5.0",
     "through2": "0.6.3",
     "zuul-ngrok": "^4.0.0"
