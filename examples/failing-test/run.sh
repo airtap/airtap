@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-node ../../bin/zuul test.js --local 3000
+node ../../bin/airtap test.js --local 3000

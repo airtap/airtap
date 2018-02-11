@@ -60,7 +60,7 @@ See the examples directory for some simple tests. Use the above knowledge to tes
 All of the examples can be tested locally by running the following command in each example directory.
 
 ```
-zuul --local 8080 -- test.js
+airtap --local 8080 -- test.js
 ```
 
 ## zuul.yml
