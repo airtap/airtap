@@ -63,9 +63,9 @@ All of the examples can be tested locally by running the following command in ea
 airtap --local 8080 -- test.js
 ```
 
-## zuul.yml
+## airtap.yml
 
-The zuul consumes a yaml config file. See the [zuul.yml](https://github.com/defunctzombie/zuul/wiki/zuul.yml) wiki page for all of the goodies this file provides.
+Airtap consumes a yaml config file. See the [zuul.yml](https://github.com/defunctzombie/zuul/wiki/zuul.yml) wiki page for all of the goodies this file provides.
 
 It includes advanced usage like how to run an additional server to support tests that make ajax requests.
 

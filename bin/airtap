@@ -20,7 +20,7 @@ program
 .option('--ui <testing ui>', 'ui for tests (mocha-bdd, mocha-tdd, qunit, tape)')
 .option('--local [port]', 'port for manual testing in a local browser')
 .option('--tunnel [type]', 'establish a tunnel for outside access. only used when --local is specified')
-.option('--disable-tunnel', 'don\'t establish a tunnel for outside access. override any config in .zuul.yml and .zuulrc')
+.option('--disable-tunnel', 'don\'t establish a tunnel for outside access. override any config in .airtap.yml and .airtaprc')
 .option('--phantom [port]', 'run tests in phantomjs. PhantomJS must be installed separately.')
 .option('--phantom-remote-debugger-port [port]', 'connect phantom to remote debugger')
 .option('--phantom-remote-debugger-autorun', 'run tests automatically when --phantom-remote-debugger-port is specified')
@@ -164,7 +164,7 @@ config.username = sauce_username || config.sauce_username;
 config.key = sauce_key || config.sauce_key;
 
 if (!config.ui) {
-    console.error('Error: `ui` must be configured in .zuul.yml or specified with the --ui flag');
+    console.error('Error: `ui` must be configured in .airtap.yml or specified with the --ui flag');
     return process.exit(1);
 }
 
@@ -219,7 +219,7 @@ scout_browser(function(err, all_browsers) {
     all_browsers.googlechrome = all_browsers.chrome;
 
     if (!config.browsers) {
-        console.error('no cloud browsers specified in .zuul.yml');
+        console.error('no cloud browsers specified in .airtap.yml');
         return process.exit(1);
     }
 
@@ -365,12 +365,12 @@ scout_browser(function(err, all_browsers) {
 });
 
 function readLocalConfig(config) {
-    var yaml = path.join(process.cwd(), '.zuul.yml')
-    var js = path.join(process.cwd(), 'zuul.config.js')
+    var yaml = path.join(process.cwd(), '.airtap.yml')
+    var js = path.join(process.cwd(), 'airtap.config.js')
     var yamlExists = fs.existsSync(yaml)
     var jsExists = fs.existsSync(js)
     if (yamlExists && jsExists) {
-        console.error('both .zuul.yaml and zuul.config.js are found in the project directory, please choose one')
+        console.error('both .airtap.yaml and airtap.config.js are found in the project directory, please choose one')
         process.exit(1)
     }
     else if (yamlExists) {
@@ -383,7 +383,7 @@ function readLocalConfig(config) {
 }
 
 function readGlobalConfig(config) {
-    var filename = find_nearest_file('.zuulrc') || path.join(osenv.home(), '.zuulrc')
+    var filename = find_nearest_file('.airtaprc') || path.join(osenv.home(), '.airtaprc')
     if (fs.existsSync(filename)) {
         var globalConfig;
         try {
