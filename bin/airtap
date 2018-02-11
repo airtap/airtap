@@ -173,7 +173,7 @@ try {
     pkg = require(process.cwd() + '/package.json');
 } catch (err) {}
 
-config.name = config.name || pkg.name || 'there is only zuul';
+config.name = config.name || pkg.name || 'airtap';
 
 if (config.builder) {
     // relative path will needs to be under project dir
@@ -198,7 +198,7 @@ else if (config.phantom || config.electron) {
 
 if (!config.username || !config.key) {
     console.error('Error:');
-    console.error('Zuul tried to run tests in saucelabs, however no saucelabs credentials were provided.');
+    console.error('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.');
     console.error('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.');
     process.exit(1);
     return;
