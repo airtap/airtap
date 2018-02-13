@@ -1,7 +1,7 @@
 {
-  "name": "zuul",
-  "version": "3.11.1",
-  "description": "simple browser testing",
+  "name": "airtap",
+  "version": "0.0.1",
+  "description": "JavaScript browser testing in the cloud",
   "main": "lib/zuul.js",
   "dependencies": {
     "JSON2": "0.1.0",
@@ -53,13 +53,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/defunctzombie/zuul.git"
+    "url": "git://github.com/airtap/airtap.git"
   },
   "bin": {
-    "zuul": "./bin/zuul"
+    "airtap": "./bin/airtap"
   },
   "keywords": [
-    "zuul",
+    "airtap",
     "testing",
     "browser",
     "qunit",
@@ -69,6 +69,6 @@
   "author": "Roman Shtylman <shtylman@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "DEBUG=zuul* mocha --ui qunit --timeout 0 --bail -- test/index.js"
+    "test": "DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js"
   }
 }
