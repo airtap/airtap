@@ -45,6 +45,7 @@
     "after": "~0.8.1",
     "browzers": "1.2.0",
     "bulk-require": "0.2.1",
+    "dependency-check": "^2.10.0",
     "mocha": "~1.16.2",
     "phantomjs-prebuilt": "2.1.13",
     "tape": "3.5.0",
@@ -69,6 +70,7 @@
   "author": "Roman Shtylman <shtylman@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js"
+    "test": "npm run dependency-check && DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js",
+    "dependency-check": "dependency-check package.json --missing --unused --entry test/index.js"
   }
 }
