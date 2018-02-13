@@ -71,6 +71,6 @@
   "license": "MIT",
   "scripts": {
     "test": "npm run dependency-check && DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js",
-    "dependency-check": "dependency-check package.json --missing --unused --entry test/index.js"
+    "dependency-check": "dependency-check package.json --missing --unused --entry test/index.js --entry test/unit/*.js"
   }
 }
