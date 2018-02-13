@@ -1,4 +1,8 @@
-# airtap [![Build Status](https://travis-ci.org/defunctzombie/zuul.svg)](https://travis-ci.org/defunctzombie/zuul)
+# airtap
+
+> Test your JavaScript in browsers.
+
+[![Build Status](https://travis-ci.org/airtap/airtap.svg?branch=master)](https://travis-ci.org/airtap/airtap)
 
 Airtap is an easy way to test your javascript in browsers. Start testing your code in seconds locally and move to cloud based browsers seamlessly for better coverage.
 
