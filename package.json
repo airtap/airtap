@@ -45,6 +45,7 @@
     "after": "~0.8.1",
     "browzers": "1.2.0",
     "bulk-require": "0.2.1",
+    "cross-env": "~5.1.3",
     "dependency-check": "^2.10.0",
     "electron-prebuilt": "^1.4.13",
     "mocha": "~1.16.2",
@@ -70,7 +71,7 @@
   "author": "Roman Shtylman <shtylman@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "npm run dependency-check && DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js",
-    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i mocha -i zuul-ngrok -i phantomjs -i electron --entry test/index.js --entry test/integration/*.js --entry test/fixtures/*/*.js --entry test/unit/*.js --entry frameworks/zuul.js --entry frameworks/tape/*.js"
+    "test": "npm run dependency-check && cross-env DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js",
+    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i mocha -i zuul-ngrok -i phantomjs -i electron -i cross-env --entry test/index.js --entry test/integration/*.js --entry test/fixtures/*/*.js --entry test/unit/*.js --entry frameworks/zuul.js --entry frameworks/tape/*.js"
   }
 }
