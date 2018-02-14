@@ -23,7 +23,7 @@ test('mocha-qunit - sauce', function(done) {
         assert.ifError(err);
 
         var flattenBrowser = require('../../lib/flatten_browser');
-        var browsersToTest = require('browzers').pullRequest;
+        var browsersToTest = require('airtap-browsers').pullRequest;
         var browsers = flattenBrowser(browsersToTest, allBrowsers);
         var total = browsers.length;
 
