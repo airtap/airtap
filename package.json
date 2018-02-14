@@ -45,11 +45,12 @@
     "after": "~0.8.1",
     "browzers": "1.2.0",
     "bulk-require": "0.2.1",
+    "dependency-check": "^2.10.0",
+    "electron-prebuilt": "^1.4.13",
     "mocha": "~1.16.2",
     "phantomjs-prebuilt": "2.1.13",
     "tape": "3.5.0",
-    "through2": "0.6.3",
-    "zuul-ngrok": "^4.0.0"
+    "through2": "0.6.3"
   },
   "repository": {
     "type": "git",
@@ -69,6 +70,7 @@
   "author": "Roman Shtylman <shtylman@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js"
+    "test": "npm run dependency-check && DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js",
+    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i mocha -i zuul-ngrok -i phantomjs -i electron --entry test/index.js --entry test/integration/*.js --entry test/fixtures/*/*.js --entry test/unit/*.js --entry frameworks/zuul.js --entry frameworks/tape/*.js"
   }
 }
