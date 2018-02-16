@@ -14,7 +14,7 @@ test('mocha-qunit - sauce', function(done) {
         username: auth.username,
         concurrency: 5,
         key: auth.key,
-        tunnel: 'ngrok'
+        sauce_connect: true
     };
 
     var zuul = Zuul(config);
