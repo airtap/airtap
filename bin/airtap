@@ -25,7 +25,6 @@ program
 .option('--phantom-remote-debugger-port [port]', 'connect phantom to remote debugger')
 .option('--phantom-remote-debugger-autorun', 'run tests automatically when --phantom-remote-debugger-port is specified')
 .option('--electron', 'run tests in electron. electron must be installed separately.')
-.option('--tunnel-host <host url>', 'specify a localtunnel server to use for forwarding')
 .option('--sauce-connect [tunnel-identifier]', 'use saucelabs with sauce connect instead of localtunnel. Optionally specify the tunnel-identifier')
 .option('--server <the server script>', 'specify a server script to be run')
 .option('--list-available-browsers', 'list available browsers and versions')
@@ -50,7 +49,6 @@ var config = {
     phantomRemoteDebuggerAutorun: program.phantomRemoteDebuggerAutorun,
     electron: program.electron,
     prj_dir: process.cwd(),
-    tunnel_host: program.tunnelHost,
     sauce_connect: program.sauceConnect,
     server: program.server,
     concurrency: program.concurrency,
