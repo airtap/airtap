@@ -1,6 +1,6 @@
 # Debugging Airtap
 
-**TLDR**: run `airtap --local 9000 --no-coverage test/mytest.js` and open up [http://localhost:9000/__REPLACEME](http://localhost:9000/__REPLACEME) in your browser of choice.
+**TLDR**: run `airtap --local 9000 --no-coverage test/mytest.js` and open up [http://localhost:9000/__zuul](http://localhost:9000/__zuul) in your browser of choice.
 
 By default, Airtap can be difficult to debug because your source code is transformed to enable easy code coverage tests. I.e. your code looks like this:
 
