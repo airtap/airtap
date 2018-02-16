@@ -23,7 +23,7 @@ module.exports = html;
 
 ### 2. write a test file
 
-I recommend using the `tdd` or `qunit` testing style for simplicity in your tests so that your tests can closer match the code you will write for examples. I also recommend using the default [assert](http://nodejs.org/api/assert.html) module as shown below; however, you are of course free to use the other styles or assertion frameworks and zuul with support them.
+I recommend using the `tdd` or `qunit` testing style for simplicity in your tests so that your tests can closer match the code you will write for examples. I also recommend using the default [assert](http://nodejs.org/api/assert.html) module as shown below; however, you are of course free to use the other styles or assertion frameworks and airtap with support them.
 
 `test.js` would contain something like the following:
 
@@ -50,22 +50,22 @@ test('should clear inner html', function() {
 });
 ```
 
-### 3. launch zuul
+### 3. launch airtap
 
-Now that we have written our tests, we are ready to launch zuul! Simply run the following command in the same directory as your two files.
+Now that we have written our tests, we are ready to launch airtap! Simply run the following command in the same directory as your two files.
 
 ```shell
-zuul --local 8080 --ui mocha-qunit -- test.js
+airtap --local 8080 --ui mocha-qunit -- test.js
 ```
 
 ### 4. open a browser
 
-The zuul command will print a url. Open this url in any local browser and your tests will run (and hopefully pass).
+The airtap command will print a url. Open this url in any local browser and your tests will run (and hopefully pass).
 
 ### 5. Rinse and repeat
 
-Make changes to your code and test files as needed. No need to restart zuul, just refresh your browser.
+Make changes to your code and test files as needed. No need to restart airtap, just refresh your browser.
 
 ## Done
 
-That's it, you have zuul running locally and all your tests are passing. You are now ready for some awesome [cloud testing](./cloud-testing.md)
+That's it, you have airtap running locally and all your tests are passing. You are now ready for some awesome [cloud testing](./cloud-testing.md)

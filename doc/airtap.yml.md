@@ -1,12 +1,12 @@
-# Zuul.yml
+# airtap.yml
 
-The `.zuul.yml` file lives in each project directory and contains per-project test settings.
+The `.airtap.yml` file lives in each project directory and contains per-project test settings.
 
 The following fields are supported
 
 ### ui (required)
 
-Identifies the testing framework zuul will use when orchestrating the test harness. Currently supported values: qunit, mocha-tdd, mocha-qunit, mocha-bdd, tape, jasmine, jasmine2
+Identifies the testing framework airtap will use when orchestrating the test harness. Currently supported values: qunit, mocha-tdd, mocha-qunit, mocha-bdd, tape, jasmine, jasmine2
 
 ```
 ui: qunit
@@ -153,24 +153,24 @@ browserify:
 
 ### server (optional)
 
-This field can point to an optional shell command or javascript file to run as a testing support server. This is used to make testing with real ajax and websocket requests possible. Your command will be run with the `ZUUL_PORT` environment variable set to a port number you MUST use. If your server does not listen on this PORT then your test requests won't be able to reach it.
+This field can point to an optional shell command or javascript file to run as a testing support server. This is used to make testing with real ajax and websocket requests possible. Your command will be run with the `AIRTAP_PORT` environment variable set to a port number you MUST use. If your server does not listen on this PORT then your test requests won't be able to reach it.
 
 ```yaml
 server: ./test/support/server.js
 ```
 
-I recommend writing simple support servers using [expressjs](http://expressjs.com/). However, any shell command will be run so servers in ruby, python, etc are also supported. $ZUUL_PORT can also be used as part of the arguments, enabling the use of command-line http servers:
+I recommend writing simple support servers using [expressjs](http://expressjs.com/). However, any shell command will be run so servers in ruby, python, etc are also supported. $AIRTAP_PORT can also be used as part of the arguments, enabling the use of command-line http servers:
 
 ```yaml
 # Assuming python is installed
-server: "python -m SimpleHTTPServer $ZUUL_PORT"
+server: "python -m SimpleHTTPServer $AIRTAP_PORT"
 # If http-server is available, e.g. npm install -g http-server
-server: "http-server -p $ZUUL_PORT"
+server: "http-server -p $AIRTAP_PORT"
 ```
 
 ### firefox_profile (optional)
 
-Selenium (and Sauce Labs) support running Firefox instances with custom user profiles. This allows you to configure anything you can change in `about:config` programmatically for a test run. In `zuul`, you can set these options in `.zuul.yml` with a section under any Firefox browser entry. For instance:
+Selenium (and Sauce Labs) support running Firefox instances with custom user profiles. This allows you to configure anything you can change in `about:config` programmatically for a test run. In `airtap`, you can set these options in `.airtap.yml` with a section under any Firefox browser entry. For instance:
 
 ```yaml
 browsers:

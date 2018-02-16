@@ -1,20 +1,20 @@
-# using zuul with travis matrix
+# using airtap with travis matrix
 
-To set up Travis using the matrix feature with Zuul, you can take advantage of the command line flags to launch tests for an individual browser. Here is an example of usage: `zuul --browser-name chrome --browser-version 29 --browser-platform="Windows 2008" test/index.js`. When using the browser flags, all other configuration is read from the `.zuul.yml` config.
+To set up Travis using the matrix feature with Airtap, you can take advantage of the command line flags to launch tests for an individual browser. Here is an example of usage: `airtap --browser-name chrome --browser-version 29 --browser-platform="Windows 2008" test/index.js`. When using the browser flags, all other configuration is read from the `.airtap.yml` config.
 
-To use the flags in your `.travis.yml` file, you can set up a simple configuration with environmental variables. Below is the relevant piece of a Makefile `test` task that runs node tests if the `BROWSER_NAME` variable is not defined. Otherwise it runs tests with Zuul using the individual browser represented by the `BROWSER_NAME` and `BROWSER_VERSION` variables.
+To use the flags in your `.travis.yml` file, you can set up a simple configuration with environmental variables. Below is the relevant piece of a Makefile `test` task that runs node tests if the `BROWSER_NAME` variable is not defined. Otherwise it runs tests with Airtap using the individual browser represented by the `BROWSER_NAME` and `BROWSER_VERSION` variables.
 
 ```
 test:
-	@if [ "x$(BROWSER_NAME)" = "x" ]; then make test-node; else make test-zuul; fi
+	@if [ "x$(BROWSER_NAME)" = "x" ]; then make test-node; else make test-airtap; fi
 
 test-node:
 	@./node_modules/.bin/mocha \
 		--reporter $(REPORTER) \
 		test/index.js
 
-test-zuul:
-	@./node_modules/zuul/bin/zuul \
+test-airtap:
+	@./node_modules/airtap/bin/airtap \
 			--browser-name $(BROWSER_NAME) \
 			--browser-version $(BROWSER_VERSION) \
 			test/index.js

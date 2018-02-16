@@ -1,6 +1,6 @@
 # Travis ci
 
-Once you have your tests running and passing in the cloud, it is time to setup zuul to run in a continuous integration server. For this we will use [travis-ci](https://travis-ci.org/) but any of your favorite CI services will work with zuul.
+Once you have your tests running and passing in the cloud, it is time to setup airtap to run in a continuous integration server. For this we will use [travis-ci](https://travis-ci.org/) but any of your favorite CI services will work with airtap.
 
 ### 1. getting started
 
@@ -12,7 +12,7 @@ Visit your [travis profile](https://travis-ci.org/profile) page and make sure th
 
 ### 3. create a travis.yml config file
 
-Similar to the `.zuul.yml` config file we created for zuul, we need to create a simple file for travis. In your project directory, open `.travis.yml` with your editor
+Similar to the `.airtap.yml` config file we created for airtap, we need to create a simple file for travis. In your project directory, open `.travis.yml` with your editor
 
 ```yaml
 language: node_js
@@ -24,16 +24,16 @@ Copy and paste the above into that file. Yes, we still write node_js even tho ou
 
 ### 4. create a package.json file
 
-In order for the above travis configuration to work, we need to create a file with some meta information about our project. This file is called the `package.json` file and will contain our project name, and how to run zuul. Create and edit the `package.json` file in your project directory.
+In order for the above travis configuration to work, we need to create a file with some meta information about our project. This file is called the `package.json` file and will contain our project name, and how to run airtap. Create and edit the `package.json` file in your project directory.
 
 ```json
 {
     "name": "<put your project name here>",
     "devDependencies": {
-        "zuul": "3.0.0"
+        "airtap": "3.0.0"
     },
     "scripts": {
-        "test": "zuul -- test.js"
+        "test": "airtap -- test.js"
     }
 }
 ```
@@ -45,7 +45,7 @@ That's it! Lets look at the important lines.
 
 ### 5. final step
 
-The final step is very important. Remember how we configured the `.zuulrc` file in our local home directory with our sauce username and key? Well, we need to somehow get those keys to travis. Again we *don't want to commit cleartext keys* into our repo. Luckily travis has an awesome feature called [secure environment variables](http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables). This lets us encrypt those environment variables and make them available to our build on travis.
+The final step is very important. Remember how we configured the `.airtaprc` file in our local home directory with our sauce username and key? Well, we need to somehow get those keys to travis. Again we *don't want to commit cleartext keys* into our repo. Luckily travis has an awesome feature called [secure environment variables](http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables). This lets us encrypt those environment variables and make them available to our build on travis.
 
 First, install the travis rubygem which will create the encrypted variables. (Alternatively, you can use the [travis-encrypt](https://www.npmjs.com/package/travis-encrypt) if you haven't rubygem).
 
@@ -74,7 +74,7 @@ env:
 
 ### Done
 
-Make sure to `git add .zuul.yml .travis.yml package.json`, commit and push your repo. If everything was done right, travis will be notified of your commit, clone your repo, install zuul, run zuul, and finally tell you if your tests passed or failed!
+Make sure to `git add .airtap.yml .travis.yml package.json`, commit and push your repo. If everything was done right, travis will be notified of your commit, clone your repo, install airtap, run airtap, and finally tell you if your tests passed or failed!
 
 ### Further instructions
 Check [this](./using-with-travis-matrix.md) document for an example set up using the matrix feature.
