@@ -16,4 +16,4 @@ Once you have installed zuul, verify it works by going to one of the examples (i
 zuul --local 8080 -- test
 ```
 
-Open the url zuul shows and see the tests run. That's it! You are now ready for the [[quickstart]] guide to write your first tests.
+Open the url zuul shows and see the tests run. That's it! You are now ready for the [quickstart](./quickstart.md) guide to write your first tests.

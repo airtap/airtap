@@ -68,4 +68,4 @@ Make changes to your code and test files as needed. No need to restart zuul, jus
 
 ## Done
 
-That's it, you have zuul running locally and all your tests are passing. You are now ready for some awesome [[cloud testing]]
+That's it, you have zuul running locally and all your tests are passing. You are now ready for some awesome [cloud testing](./cloud-testing.md)

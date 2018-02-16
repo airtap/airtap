@@ -12,7 +12,7 @@ Open source projects can use the awesome [free for open source](https://saucelab
 
 ### 2. educate zuul
 
-To run your tests in the cloud, zuul needs to know your saucelabs credentials (username and api key). Obviously you don't want to expose these in your repo so zuul has a better way: a [config file](zuulrc) in your home directory.
+To run your tests in the cloud, zuul needs to know your saucelabs credentials (username and api key). Obviously you don't want to expose these in your repo so zuul has a better way: a [config file](./zuulrc.md) in your home directory.
 
 Open `~/.zuulrc` with your favorite editor and make it look like the following:
 
@@ -21,7 +21,7 @@ sauce_username: my_awesome_username
 sauce_key: 550e8400-e29b-41d4-a716-446655440000
 ```
 
-Obviously replace with your name and key from your account. See the [[zuulrc]] wiki page for more more details about this file.
+Obviously replace with your name and key from your account. See [zuulrc](./zuulrc.md) for more more details about this file.
 
 ### 3. select browsers to test
 
@@ -45,7 +45,7 @@ For chrome and firefox, you can also use `version: 39..dev` to even test stable,
 An available list of browsers can be found here https://saucelabs.com/docs/platforms and the JSON
 zuul reads is here: https://saucelabs.com/rest/v1/info/browsers/webdriver. You can also list the browsers directly on the command line with the `--list-available-browsers` flag.
 
-See the [[zuul.yml]] page for other valid fields and examples.
+See [zuul.yml](./zuul.yml.md) for other valid fields and examples.
 
 See the available browsers by using:
 
@@ -65,4 +65,4 @@ Zuul will create a server, establish a tunnel so saucelabs can find our tests, a
 
 ## Done
 
-Once you are happy with your saucelabs tests (all passing I hope), you are ready to hook up the last piece: [[travis-ci]].
+Once you are happy with your saucelabs tests (all passing I hope), you are ready to hook up the last piece: [travis-ci](./travis-ci.md).
