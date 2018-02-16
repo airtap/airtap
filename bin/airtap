@@ -24,6 +24,7 @@ program
 .option('--phantom-remote-debugger-autorun', 'run tests automatically when --phantom-remote-debugger-port is specified')
 .option('--electron', 'run tests in electron. electron must be installed separately.')
 .option('--sauce-connect [tunnel-identifier]', 'establish a tunnel with sauce connect. Optionally specify the tunnel-identifier')
+.option('--loopback <host name>', 'hostname to use instead of localhost, to accomodate Safari and Edge with Sauce Connect. Must resolve to 127.0.0.1')
 .option('--server <the server script>', 'specify a server script to be run')
 .option('--list-available-browsers', 'list available browsers and versions')
 .option('--browser-name <browser name>', 'specficy the browser name to test an individual browser')
@@ -47,6 +48,7 @@ var config = {
     electron: program.electron,
     prj_dir: process.cwd(),
     sauce_connect: program.sauceConnect,
+    loopback: program.loopback,
     server: program.server,
     concurrency: program.concurrency,
     coverage: program.coverage,

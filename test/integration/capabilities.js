@@ -13,7 +13,8 @@ test('capabilities config', function(done) {
         },
         username: auth.username,
         key: auth.key,
-        sauce_connect: true
+        sauce_connect: true,
+        loopback: 'airtap.local'
     };
 
     var zuul = Zuul(config);

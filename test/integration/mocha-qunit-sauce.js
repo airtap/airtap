@@ -14,7 +14,8 @@ test('mocha-qunit - sauce', function(done) {
         username: auth.username,
         concurrency: 5,
         key: auth.key,
-        sauce_connect: true
+        sauce_connect: true,
+        loopback: 'airtap.local'
     };
 
     var zuul = Zuul(config);

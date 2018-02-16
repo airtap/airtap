@@ -3,6 +3,8 @@ sudo: false
 
 addons:
   sauce_connect: true
+  hosts:
+    - airtap.local
 
 language: node_js
 
