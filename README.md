@@ -18,7 +18,15 @@ Airtap works out of the box with a few commonly used javascript frameworks (quni
 
 Airtap has 3 modes of operation: locally, cloud browsers, and continuous integration. You should make sure that airtap is working locally before you try to run the other two.
 
-Once you have [installed](./doc/install.md) airtap proceed to the [quickstart](./doc/quickstart.md) to write your first test.
+## Install
+
+With [npm](https://npmjs.org) do:
+
+```
+npm install airtap --save-dev
+```
+
+That's it! You are now ready for the [quickstart](./doc/quickstart.md) guide to write your first tests.
 
 Airtap will do all the hard work of setting up your test harness, support files, and cloud browser integration so you can just focus on writing your tests.
 
