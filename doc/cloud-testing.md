@@ -1,0 +1,68 @@
+# Cloud testing
+
+Once you have your tests running locally in your browser, it is time to run them across a range of other browsers and systems. This way you can be sure your code works in the browsers you wish to support.
+
+For our cloud testing we will leverage [saucelabs](https://saucelabs.com/home) to run our same tests in the browser.
+
+### 1. get a saucelabs account
+
+If you already have a saucelabs account you can skip this step.
+
+Open source projects can use the awesome [free for open source](https://saucelabs.com/opensauce) version of saucelabs. If you want to use saucelabs for company projects, please consider getting one of their paid accounts.
+
+### 2. educate zuul
+
+To run your tests in the cloud, zuul needs to know your saucelabs credentials (username and api key). Obviously you don't want to expose these in your repo so zuul has a better way: a [config file](zuulrc) in your home directory.
+
+Open `~/.zuulrc` with your favorite editor and make it look like the following:
+
+```yaml
+sauce_username: my_awesome_username
+sauce_key: 550e8400-e29b-41d4-a716-446655440000
+```
+
+Obviously replace with your name and key from your account. See the [[zuulrc]] wiki page for more more details about this file.
+
+### 3. select browsers to test
+
+Back in your project directory (not your home directory where we put the zuulrc file), add the following file `.zuul.yml`
+
+```yaml
+ui: mocha-qunit
+browsers:
+  - name: chrome
+    version: 27..latest
+  - name: ie
+    version: latest
+  - name: iphone
+    version: 6.1
+```
+
+This will run our tests on `chrome`, `iphone`, and `internet explore` browsers. Take note of how versions can be specified. You can specify a specific number (safari example), use the special keyword `latest` to test the latest version (zuul will auto detect it), or specify a range using `..` to test all available versions including the range bounds. When using float version numbers that end in `.0` or that involve ranges you should add single quotes around them, like so: `version: '6.0'` or `version: '6.1..7.1'`.
+
+For chrome and firefox, you can also use `version: 39..dev` to even test stable, beta and dev channels.
+
+An available list of browsers can be found here https://saucelabs.com/docs/platforms and the JSON
+zuul reads is here: https://saucelabs.com/rest/v1/info/browsers/webdriver. You can also list the browsers directly on the command line with the `--list-available-browsers` flag.
+
+See the [[zuul.yml]] page for other valid fields and examples.
+
+See the available browsers by using:
+
+```shell
+zuul --list-available-browsers
+```
+
+### 4. run zuul
+
+We are now ready to run our tests in the cloud. Simply run zuul without the `--local` flag.
+
+```shell
+zuul -- test
+```
+
+Zuul will create a server, establish a tunnel so saucelabs can find our tests, and then ask saucelabs to run your tests. You can open your [saucelabs dashboard](https://saucelabs.com/account) to see tests being run and their results. Zuul will exit when all tests are done.
+
+## Done
+
+Once you are happy with your saucelabs tests (all passing I hope), you are ready to hook up the last piece: [[travis-ci]].
