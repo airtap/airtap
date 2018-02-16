@@ -18,7 +18,9 @@ Airtap works out of the box with a few commonly used javascript frameworks (quni
 
 Airtap has 3 modes of operation: locally, cloud browsers, and continuous integration. You should make sure that airtap is working locally before you try to run the other two.
 
-Once you have [installed](https://github.com/defunctzombie/zuul/wiki/installation) airtap proceed to the [quickstart](https://github.com/defunctzombie/zuul/wiki/quickstart) to write your first test.
+Once you have [installed](./doc/install.md) airtap proceed to the [quickstart](./doc/quickstart.md) to write your first test.
+
+Airtap will do all the hard work of setting up your test harness, support files, and cloud browser integration so you can just focus on writing your tests.
 
 ### Running locally
 
