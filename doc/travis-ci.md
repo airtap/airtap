@@ -77,4 +77,4 @@ env:
 Make sure to `git add .zuul.yml .travis.yml package.json`, commit and push your repo. If everything was done right, travis will be notified of your commit, clone your repo, install zuul, run zuul, and finally tell you if your tests passed or failed!
 
 ### Further instructions
-Check [this](https://github.com/defunctzombie/zuul/wiki/using-zuul-with-travis-matrix) page for an example set up using the matrix feature.
+Check [this](./using-with-travis-matrix.md) document for an example set up using the matrix feature.
