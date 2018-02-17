@@ -48,7 +48,11 @@ The reason we go through all this trouble in the first place is to seamlessly ru
 
 ![testing in the cloud](https://raw.github.com/defunctzombie/zuul/gh-pages/double-check-with-sauce.png)
 
-See the [Cloud Testing](./doc/cloud-testing.md) guide to get your tests running in the cloud.
+See the [Cloud Testing](./doc/cloud-testing.md) guide to get your tests running in the cloud. TLDR: [save your credentials to `~/.airtaprc`](./doc/airtaprc.md), [add browsers to `.airtap.yml`](./doc/airtap.yml.md) and issue:
+
+```
+airtap test.js
+```
 
 ### Continuous Integration
 
