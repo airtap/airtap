@@ -12,8 +12,7 @@ test('tape - phantom', function(done) {
         prj_dir: __dirname + '/../fixtures/tape',
         phantom: true,
         concurrency: 1,
-        files: [__dirname + '/../fixtures/tape/test.js'],
-        tunnel: 'ngrok'
+        files: [__dirname + '/../fixtures/tape/test.js']
     };
 
     var zuul = Zuul(config);

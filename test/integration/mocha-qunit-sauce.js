@@ -14,7 +14,8 @@ test('mocha-qunit - sauce', function(done) {
         username: auth.username,
         concurrency: 5,
         key: auth.key,
-        tunnel: 'ngrok'
+        sauce_connect: true,
+        loopback: 'airtap.local'
     };
 
     var zuul = Zuul(config);
@@ -23,7 +24,7 @@ test('mocha-qunit - sauce', function(done) {
         assert.ifError(err);
 
         var flattenBrowser = require('../../lib/flatten_browser');
-        var browsersToTest = require('browzers').pullRequest;
+        var browsersToTest = require('airtap-browsers').pullRequest;
         var browsers = flattenBrowser(browsersToTest, allBrowsers);
         var total = browsers.length;
 

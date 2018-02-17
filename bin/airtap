@@ -19,14 +19,12 @@ program
 .usage('[options] <files | dir>')
 .option('--ui <testing ui>', 'ui for tests (mocha-bdd, mocha-tdd, qunit, tape)')
 .option('--local [port]', 'port for manual testing in a local browser')
-.option('--tunnel [type]', 'establish a tunnel for outside access. only used when --local is specified')
-.option('--disable-tunnel', 'don\'t establish a tunnel for outside access. override any config in .airtap.yml and .airtaprc')
 .option('--phantom [port]', 'run tests in phantomjs. PhantomJS must be installed separately.')
 .option('--phantom-remote-debugger-port [port]', 'connect phantom to remote debugger')
 .option('--phantom-remote-debugger-autorun', 'run tests automatically when --phantom-remote-debugger-port is specified')
 .option('--electron', 'run tests in electron. electron must be installed separately.')
-.option('--tunnel-host <host url>', 'specify a localtunnel server to use for forwarding')
-.option('--sauce-connect [tunnel-identifier]', 'use saucelabs with sauce connect instead of localtunnel. Optionally specify the tunnel-identifier')
+.option('--sauce-connect [tunnel-identifier]', 'establish a tunnel with sauce connect. Optionally specify the tunnel-identifier')
+.option('--loopback <host name>', 'hostname to use instead of localhost, to accomodate Safari and Edge with Sauce Connect. Must resolve to 127.0.0.1')
 .option('--server <the server script>', 'specify a server script to be run')
 .option('--list-available-browsers', 'list available browsers and versions')
 .option('--browser-name <browser name>', 'specficy the browser name to test an individual browser')
@@ -44,14 +42,13 @@ var config = {
     files: program.args,
     local: program.local,
     ui: program.ui,
-    tunnel: program.tunnel,
     phantom: program.phantom,
     phantomRemoteDebuggerPort: program.phantomRemoteDebuggerPort,
     phantomRemoteDebuggerAutorun: program.phantomRemoteDebuggerAutorun,
     electron: program.electron,
     prj_dir: process.cwd(),
-    tunnel_host: program.tunnelHost,
     sauce_connect: program.sauceConnect,
+    loopback: program.loopback,
     server: program.server,
     concurrency: program.concurrency,
     coverage: program.coverage,
@@ -146,16 +143,7 @@ if (program.browserName) {
     config = xtend(config, { browsers: [{ name: program.browserName, version: program.browserVersion, platform: program.browserPlatform }] });
 }
 
-if (typeof program.tunnel === 'string') {
-    config.tunnel.type = program.tunnel;
-}
-
 config = readGlobalConfig(config)
-
-// Overwrite tunnel option if --disable-tunnel specified
-if (program.disableTunnel) {
-    config.tunnel = false;
-}
 
 var sauce_username = process.env.SAUCE_USERNAME;
 var sauce_key = process.env.SAUCE_ACCESS_KEY;
@@ -402,9 +390,6 @@ function readYAMLConfig(filename) {
 
 function mergeConfig(config, update) {
     config = xtend(update, config)
-    if (update.tunnel && program.tunnel === true) {
-        config.tunnel = update.tunnel
-    }
     return config
 }
 

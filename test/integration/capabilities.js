@@ -1,6 +1,7 @@
 var Zuul = require('../../');
 
 var assert = require('assert');
+var auth = require('../auth');
 
 test('capabilities config', function(done) {
     var config = {
@@ -10,7 +11,10 @@ test('capabilities config', function(done) {
                 public: 'private'
             }
         },
-        tunnel: 'ngrok'
+        username: auth.username,
+        key: auth.key,
+        sauce_connect: true,
+        loopback: 'airtap.local'
     };
 
     var zuul = Zuul(config);
