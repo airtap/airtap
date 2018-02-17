@@ -2,17 +2,17 @@
 
 The `.airtap.yml` file lives in each project directory and contains per-project test settings.
 
-The following fields are supported
+## fields
 
 ### ui (required)
 
-Identifies the testing framework airtap will use when orchestrating the test harness. Currently supported values: qunit, mocha-tdd, mocha-qunit, mocha-bdd, tape, jasmine, jasmine2
+Identifies the testing framework airtap will use when orchestrating the test harness. Currently supported values: qunit, mocha-tdd, mocha-qunit, mocha-bdd, tape, jasmine, jasmine2.
 
-```
+```yaml
 ui: qunit
 ```
 
-```
+```yaml
 ui: mocha-tdd
 ```
 
@@ -86,7 +86,7 @@ Float version numbers should be quoted.
 
 The `html` field allows you to inject custom html into the page. This is useful for testing app frameworks where you might want to specify some custom template logic. The html is inserted at the start of the body. See the [emberjs example](https://github.com/airtap/airtap/tree/master/examples/ember_w_qunit).
 
-```
+```yaml
 html: ./test/templates.html
 ```
 

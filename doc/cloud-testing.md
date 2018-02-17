@@ -2,17 +2,17 @@
 
 Once you have your tests running locally in your browser, it is time to run them across a range of other browsers and systems. This way you can be sure your code works in the browsers you wish to support.
 
-For our cloud testing we will leverage [saucelabs](https://saucelabs.com/home) to run our same tests in the browser.
+For our cloud testing we will leverage [Sauce Labs](https://saucelabs.com/home) to run our same tests in the browser.
 
-### 1. get a saucelabs account
+### 1. get a Sauce Labs account
 
-If you already have a saucelabs account you can skip this step.
+If you already have a Sauce Labs account you can skip this step.
 
-Open source projects can use the awesome [free for open source](https://saucelabs.com/opensauce) version of saucelabs. If you want to use saucelabs for company projects, please consider getting one of their paid accounts.
+Open source projects can use the awesome [free for open source](https://saucelabs.com/opensauce) version of Sauce Labs. If your project is backed by a company, please consider getting one of their paid accounts. Closed source projects always require a paid account.
 
 ### 2. educate airtap
 
-To run your tests in the cloud, airtap needs to know your saucelabs credentials (username and api key). Obviously you don't want to expose these in your repo so airtap has a better way: a [config file](./airtaprc.md) in your home directory.
+To run your tests in the cloud, airtap needs to know your Sauce Labs credentials (username and api key). Obviously you don't want to expose these in your repo so airtap has a better way: a [config file](./airtaprc.md) in your home directory.
 
 Open `~/.airtaprc` with your favorite editor and make it look like the following:
 
@@ -61,8 +61,8 @@ We are now ready to run our tests in the cloud. Simply run airtap without the `-
 airtap -- test
 ```
 
-Airtap will create a server, establish a tunnel so saucelabs can find our tests, and then ask saucelabs to run your tests. You can open your [saucelabs dashboard](https://saucelabs.com/account) to see tests being run and their results. Airtap will exit when all tests are done.
+Airtap will create a server, establish a tunnel so Sauce Labs can find our tests, and then ask Sauce Labs to run your tests. You can open your [Sauce Labs dashboard](https://saucelabs.com/account) to see tests being run and their results. Airtap will exit when all tests are done.
 
 ## Done
 
-Once you are happy with your saucelabs tests (all passing I hope), you are ready to hook up the last piece: [travis-ci](./travis-ci.md).
+Once you are happy with your Sauce Labs tests (all passing I hope), you are ready to hook up the last piece: [Travis CI](./travis-ci.md).

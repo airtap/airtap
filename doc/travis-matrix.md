@@ -1,4 +1,4 @@
-# using airtap with travis matrix
+# Using a Travis matrix
 
 To set up Travis using the matrix feature with Airtap, you can take advantage of the command line flags to launch tests for an individual browser. Here is an example of usage: `airtap --browser-name chrome --browser-version 29 --browser-platform="Windows 2008" test/index.js`. When using the browser flags, all other configuration is read from the `.airtap.yml` config.
 
