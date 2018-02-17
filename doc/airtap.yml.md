@@ -1,4 +1,4 @@
-# airtap.yml
+# .airtap.yml
 
 The `.airtap.yml` file lives in each project directory and contains per-project test settings.
 
@@ -30,7 +30,7 @@ browsers:
     version: latest
 ```
 
-Specific version of a browser on a specific platform
+#### Specific version of a browser on a specific platform
 
 ```yaml
 browsers:
@@ -39,7 +39,7 @@ browsers:
     platform: Windows XP
 ```
 
-Range of versions of a browser
+#### Range of versions of a browser
 
 ```yaml
 browsers:
@@ -47,7 +47,9 @@ browsers:
     version: 14..latest
 ```
 
-Range of versions with negative start index
+#### Range of versions with negative start index.
+
+This example would test the latest three stable versions of Firefox (latest - 2, latest - 1, latest).
 
 ``` yaml
 browsers:
@@ -55,16 +57,16 @@ browsers:
     version: -2..latest
 ```
 
-This example would test the latest three stable versions of Firefox (latest - 2, latest - 1, latest).
+#### Disjoint versions
 
-Disjoint versions
 ```yaml
 browsers:
   - name: firefox
     version: [19, 20]
 ```
 
-Disjoint with ranges
+#### Disjoint with ranges
+
 ```yaml
 browsers:
   - name: firefox
@@ -73,7 +75,8 @@ browsers:
     version: [-1..latest, beta]
 ```
 
-Float version numbers
+#### Float version numbers
+
 ```yaml
 browsers:
   - name: iPhone
@@ -159,7 +162,7 @@ This field can point to an optional shell command or javascript file to run as a
 server: ./test/support/server.js
 ```
 
-I recommend writing simple support servers using [expressjs](http://expressjs.com/). However, any shell command will be run so servers in ruby, python, etc are also supported. $AIRTAP_PORT can also be used as part of the arguments, enabling the use of command-line http servers:
+We recommend writing simple support servers using [expressjs](http://expressjs.com/). However, any shell command will be run so servers in ruby, python, etc are also supported. $AIRTAP_PORT can also be used as part of the arguments, enabling the use of command-line http servers:
 
 ```yaml
 # Assuming python is installed

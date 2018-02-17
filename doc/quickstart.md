@@ -4,7 +4,7 @@ This walkthrough will show you how to write some tests for a very basic "module"
 
 Start off by writing some code you want to test.
 
-### 1. write some code
+### 1. Write some code
 
 In our case, we will be testing the following commonjs style module. Your code does not have to use commonjs, but it is recommended for clarity between multiple files in your project. Commonjs modules are simple, just set the `module.exports` object to any value you want exposed outside the file. Files are "modules".
 
@@ -21,9 +21,9 @@ function html(el, html) {
 module.exports = html;
 ```
 
-### 2. write a test file
+### 2. Write a test file
 
-I recommend using the `tdd` or `qunit` testing style for simplicity in your tests so that your tests can closer match the code you will write for examples. I also recommend using the default [assert](http://nodejs.org/api/assert.html) module as shown below; however, you are of course free to use the other styles or assertion frameworks and airtap with support them.
+We recommend using the `tdd` or `qunit` testing style for simplicity in your tests so that your tests can closer match the code you will write for examples. We also recommend using the default [assert](http://nodejs.org/api/assert.html) module as shown below; however, you are of course free to use the other styles or assertion frameworks and airtap with support them.
 
 `test.js` would contain something like the following:
 
@@ -50,7 +50,7 @@ test('should clear inner html', function() {
 });
 ```
 
-### 3. launch airtap
+### 3. Launch airtap
 
 Now that we have written our tests, we are ready to launch airtap! Simply run the following command in the same directory as your two files.
 
@@ -58,7 +58,7 @@ Now that we have written our tests, we are ready to launch airtap! Simply run th
 airtap --local 8080 --ui mocha-qunit -- test.js
 ```
 
-### 4. open a browser
+### 4. Open a browser
 
 The airtap command will print a url. Open this url in any local browser and your tests will run (and hopefully pass).
 

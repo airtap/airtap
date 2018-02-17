@@ -4,13 +4,13 @@ Once you have your tests running locally in your browser, it is time to run them
 
 For our cloud testing we will leverage [Sauce Labs](https://saucelabs.com/home) to run our same tests in the browser.
 
-### 1. get a Sauce Labs account
+### 1. Get a Sauce Labs account
 
 If you already have a Sauce Labs account you can skip this step.
 
 Open source projects can use the awesome [free for open source](https://saucelabs.com/opensauce) version of Sauce Labs. If your project is backed by a company, please consider getting one of their paid accounts. Closed source projects always require a paid account.
 
-### 2. educate airtap
+### 2. Educate airtap
 
 To run your tests in the cloud, airtap needs to know your Sauce Labs credentials (username and api key). Obviously you don't want to expose these in your repo so airtap has a better way: a [config file](./airtaprc.md) in your home directory.
 
@@ -23,7 +23,7 @@ sauce_key: 550e8400-e29b-41d4-a716-446655440000
 
 Obviously replace with your name and key from your account. See [airtaprc](./airtaprc.md) for more more details about this file.
 
-### 3. select browsers to test
+### 3. Select browsers to test
 
 Back in your project directory (not your home directory where we put the airtaprc file), add the following file `.airtap.yml`
 
@@ -53,7 +53,7 @@ See the available browsers by using:
 airtap --list-available-browsers
 ```
 
-### 4. run airtap
+### 4. Run airtap
 
 We are now ready to run our tests in the cloud. Simply run airtap without the `--local` flag.
 

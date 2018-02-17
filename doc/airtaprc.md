@@ -1,4 +1,4 @@
-# airtaprc
+# .airtaprc
 
 The `.airtaprc` file contains airtap configuration you don't wish to make public.
 

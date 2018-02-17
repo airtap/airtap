@@ -25,10 +25,10 @@ When `npm test` is configured to run `make test`, your matrix configuration can 
 ```
 matrix:
   include:
-  - node_js: '0.10'
+  - node_js: '8'
     env: BROWSER_NAME=chrome BROWSER_VERSION=36
-  - node_js: '0.10'
+  - node_js: '8'
     env: BROWSER_NAME=safari BROWSER_VERSION=latest
-  - node_js: '0.10'
+  - node_js: '8'
     env: BROWSER_NAME=ie BROWSER_VERSION=6
 ```
