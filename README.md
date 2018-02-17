@@ -1,10 +1,10 @@
 # airtap
 
-> Test your JavaScript in browsers.
+> Test your JavaScript in 800+ browsers.
 
 [![Build Status](https://travis-ci.org/airtap/airtap.svg?branch=master)](https://travis-ci.org/airtap/airtap)
 
-Airtap is an easy way to test your javascript in browsers. Start testing your code in seconds locally and move to cloud based browsers seamlessly for better coverage.
+Airtap is an easy way to test your JavaScript in browsers. Start testing your code locally in seconds and seamlessly move to cloud based browsers powered by [Sauce Labs](https://saucelabs.com/) for better coverage.
 
 Airtap is different than other cross browser test runners in its simplicity and ability to easily run your test suite in many browsers without having them installed locally. It lets you iterate quickly during development and provide good browser coverage before release without worrying about missing a supported browser.
 
@@ -36,9 +36,9 @@ When iterating on your tests during development, simply use `--local` mode to se
 
 See the [Quickstart](./doc/quickstart.md) guide to write your first tests.
 
-### Cross browser testing via Saucelabs
+### Cross browser testing via Sauce Labs
 
-The reason we go through all this trouble in the first place is to seamlessly run our tests against all those browsers we don't have installed. Luckily, [saucelabs](https://saucelabs.com/) runs some browsers and we can easily task airtap to test on those.
+The reason we go through all this trouble in the first place is to seamlessly run our tests against all those browsers we don't have installed. Luckily, [Sauce Labs](https://saucelabs.com/) runs quite a few browsers and we can easily task airtap to test on those.
 
 ![testing in the cloud](https://raw.github.com/defunctzombie/zuul/gh-pages/double-check-with-sauce.png)
 
@@ -81,10 +81,12 @@ Airtap consumes a yaml config file. See the [airtap.yml](./doc/airtap.yml.md) gu
 
 It includes advanced usage like how to run an additional server to support tests that make ajax requests.
 
+## Big Thanks
+
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com).
+
+![Sauce Labs logo](./sauce-labs-logo.png)
+
 ## License
 
 MIT
-
-## Credits
-
-This project is made possible by all the awesome modules it uses. See the `package.json` file for all the awesome.
