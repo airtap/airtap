@@ -20,8 +20,6 @@ With [npm](https://npmjs.org) do:
 npm install airtap --save-dev
 ```
 
-That's it! You are now ready for the [Quickstart](./doc/quickstart.md) guide to write your first tests.
-
 Airtap will do all the hard work of setting up your test harness, support files, and cloud browser integration so you can just focus on writing your tests.
 
 ## Workflow
@@ -36,7 +34,7 @@ When iterating on your tests during development, simply use `--local` mode to se
 
 ![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/develop-tests-locally.png)
 
-See the [Quickstart](./doc/quickstart.md) guide for more details.
+See the [Quickstart](./doc/quickstart.md) guide to write your first tests.
 
 ### Cross browser testing via Saucelabs
 
