@@ -66,7 +66,7 @@ All of the examples can be tested locally by running the following command in ea
 airtap --local 8080 -- test.js
 ```
 
-## airtap.yml
+## Configuration
 
 Airtap consumes a YAML config file. See the [airtap.yml](./doc/airtap.yml.md) guide for all of the goodies this file provides.
 
