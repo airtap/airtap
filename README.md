@@ -30,11 +30,17 @@ Airtap will do all the hard work of setting up your test harness, support files,
 
 ### Running locally
 
-When iterating on your tests during development, simply use `--local` mode to see your tests run in a browser.
+All you need is an entry point for your tests like `test.js`. When iterating on your tests during development, simply use `--local` mode to see your tests run in a browser.
+
+See the included [example](./example) for a simple test. Run it by issuing the following command in the example directory:
+
+```
+airtap --local 8080 -- test.js
+```
+
+It will print a URL that can you can open in any local browser to run the tests. Make changes to the code as needed. No need to restart airtap, just refresh your browser.
 
 ![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/develop-tests-locally.png)
-
-See the [Quickstart](./doc/quickstart.md) guide to write your first tests.
 
 ### Cross browser testing via Sauce Labs
 
@@ -51,20 +57,6 @@ No testing setup would be complete without a badge for passing or failing tests.
 ![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/finalize-with-travis.png)
 
 See the [Travis CI](./doc/travis-ci.md) guide.
-
-### Examples
-
-See the examples directory for some simple tests. Use the above knowledge to test the examples with your install of airtap.
-
-* [quickstart](https://github.com/airtap/airtap/tree/master/examples/quickstart) - from the [Quickstart](./doc/quickstart.md) guide
-* [emberjs with qunit](https://github.com/airtap/airtap/tree/master/examples/ember_w_qunit) - basic ember.js app with qunit tests
-* [jasmine](https://github.com/airtap/airtap/tree/master/examples/jasmine) - basic jasmine example.
-
-All of the examples can be tested locally by running the following command in each example directory.
-
-```
-airtap --local 8080 -- test.js
-```
 
 ## Configuration
 
