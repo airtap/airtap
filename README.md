@@ -12,12 +12,6 @@ Don't just claim your js supports "all browsers", prove it with tests!
 
 ![zuul](https://f.cloud.github.com/assets/71256/1669799/fb463296-5c81-11e3-818a-26776dc7a256.jpg)
 
-## Workflow
-
-Airtap works out of the box with a few commonly used javascript frameworks (qunit, mocha, tape, jasmine). If you are already testing using these, airtap setup will be trivial.
-
-Airtap has 3 modes of operation: locally, cloud browsers, and continuous integration. You should make sure that airtap is working locally before you try to run the other two.
-
 ## Install
 
 With [npm](https://npmjs.org) do:
@@ -29,6 +23,12 @@ npm install airtap --save-dev
 That's it! You are now ready for the [Quickstart](./doc/quickstart.md) guide to write your first tests.
 
 Airtap will do all the hard work of setting up your test harness, support files, and cloud browser integration so you can just focus on writing your tests.
+
+## Workflow
+
+Airtap works out of the box with a few commonly used javascript frameworks (qunit, mocha, tape, jasmine). If you are already testing using these, airtap setup will be trivial.
+
+Airtap has 3 modes of operation: locally, cloud browsers, and continuous integration. You should make sure that airtap is working locally before you try to run the other two.
 
 ### Running locally
 
