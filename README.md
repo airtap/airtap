@@ -2,7 +2,9 @@
 
 > Test your JavaScript in 800+ browsers.
 
+[![npm status](http://img.shields.io/npm/v/airtap.svg)](https://www.npmjs.org/package/airtap) [![node](https://img.shields.io/node/v/airtap.svg)](https://www.npmjs.org/package/airtap)
 [![Build Status](https://travis-ci.org/airtap/airtap.svg?branch=master)](https://travis-ci.org/airtap/airtap)
+[![Dependency status](https://img.shields.io/david/airtap/airtap.svg)](https://david-dm.org/airtap/airtap)
 
 Airtap is an easy way to test your JavaScript in browsers, using a TAP-producing harness like `tap` or `tape`. Start testing your code locally in seconds and seamlessly move to cloud based browsers powered by [Sauce Labs](https://saucelabs.com/) for better coverage.
 
