@@ -8,7 +8,7 @@ Airtap is an easy way to test your JavaScript in browsers, using a TAP-producing
 
 Airtap is different than other cross browser test runners in its simplicity and ability to easily run your test suite in many browsers without having them installed locally. It lets you iterate quickly during development and provide good browser coverage before release without worrying about missing a supported browser.
 
-Don't just claim your js supports "all browsers", prove it with tests!
+Don't just claim your JavaScript supports "all browsers", prove it with tests!
 
 *This project is a fork of the amazing [Zuul](https://github.com/defunctzombie/zuul). Please note that our API is currently unstable and some documentation may be out of date. Anyone is welcome and encouraged to contribute towards 1.0.0 via a pull request.*
 
@@ -44,9 +44,9 @@ The reason we go through all this trouble in the first place is to seamlessly ru
 
 See the [Cloud Testing](./doc/cloud-testing.md) guide to get your tests running in the cloud.
 
-### Continuous integration
+### Continuous Integration
 
-No testing setup would be complete without a badge for passing or failing tests. After making sure your tests all pass in the cloud from your local machine, we will configure our tests to pass from travis-ci when we commit changes.
+No testing setup would be complete without a badge for passing or failing tests. After making sure your tests all pass in the cloud from your local machine, we will configure our tests to pass from Travis when we commit changes.
 
 ![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/finalize-with-travis.png)
 
@@ -68,7 +68,7 @@ airtap --local 8080 -- test.js
 
 ## airtap.yml
 
-Airtap consumes a yaml config file. See the [airtap.yml](./doc/airtap.yml.md) guide for all of the goodies this file provides.
+Airtap consumes a YAML config file. See the [airtap.yml](./doc/airtap.yml.md) guide for all of the goodies this file provides.
 
 It includes advanced usage like how to run an additional server to support tests that make ajax requests.
 
