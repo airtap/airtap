@@ -22,7 +22,7 @@ npm install airtap --save-dev
 
 ## Workflow
 
-Airtap works out of the box with a few commonly used javascript frameworks (qunit, mocha, tape, jasmine). If you are already testing using these, airtap setup will be trivial.
+Airtap works out of the box with `tap` and `tape`. If you're already using these, setup will be trivial.
 
 Airtap has 3 modes of operation: locally, cloud browsers, and continuous integration. You should make sure that airtap is working locally before you try to run the other two.
 
@@ -51,15 +51,6 @@ No testing setup would be complete without a badge for passing or failing tests.
 ![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/finalize-with-travis.png)
 
 See the [Travis CI](./doc/travis-ci.md) guide.
-
-## Frameworks
-
-The following frameworks are supported:
-
-* mocha (tdd, qunit, and bdd flavors)
-* tape
-* qunit
-* jasmine
 
 ### Examples
 
