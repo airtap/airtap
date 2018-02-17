@@ -26,7 +26,7 @@ With [npm](https://npmjs.org) do:
 npm install airtap --save-dev
 ```
 
-That's it! You are now ready for the [quickstart](./doc/quickstart.md) guide to write your first tests.
+That's it! You are now ready for the [Quickstart](./doc/quickstart.md) guide to write your first tests.
 
 Airtap will do all the hard work of setting up your test harness, support files, and cloud browser integration so you can just focus on writing your tests.
 
@@ -36,7 +36,7 @@ When iterating on your tests during development, simply use `--local` mode to se
 
 ![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/develop-tests-locally.png)
 
-See the [quickstart](https://github.com/defunctzombie/zuul/wiki/quickstart) page on the wiki for more details.
+See the [Quickstart](./doc/quickstart.md) guide for more details.
 
 ### Cross browser testing via Saucelabs
 
@@ -44,7 +44,7 @@ The reason we go through all this trouble in the first place is to seamlessly ru
 
 ![testing in the cloud](https://raw.github.com/defunctzombie/zuul/gh-pages/double-check-with-sauce.png)
 
-See the [cooking with sauce](https://github.com/defunctzombie/zuul/wiki/cloud-testing) wiki page to get your tests running in the cloud.
+See the [Cloud Testing](./doc/cloud-testing.md) guide to get your tests running in the cloud.
 
 ### Continuous integration
 
@@ -52,7 +52,7 @@ No testing setup would be complete without a badge for passing or failing tests.
 
 ![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/finalize-with-travis.png)
 
-See the [travis-ci integration](https://github.com/defunctzombie/zuul/wiki/travis-ci) wiki page.
+See the [Travis CI](./doc/travis-ci.md) guide.
 
 ## Frameworks
 
@@ -67,9 +67,9 @@ The following frameworks are supported:
 
 See the examples directory for some simple tests. Use the above knowledge to test the examples with your install of airtap.
 
-* [quickstart](https://github.com/defunctzombie/zuul/tree/master/examples/quickstart) - from the [quickstart](https://github.com/defunctzombie/zuul/wiki/Quickstart) wiki tutorial
-* [emberjs with qunit](https://github.com/defunctzombie/zuul/tree/master/examples/ember_w_qunit) - basic ember.js app with qunit tests
-* [jasmine](https://github.com/defunctzombie/zuul/tree/master/examples/jasmine) - basic jasmine example
+* [quickstart](https://github.com/airtap/airtap/tree/master/examples/quickstart) - from the [Quickstart](./doc/quickstart.md) guide
+* [emberjs with qunit](https://github.com/airtap/airtap/tree/master/examples/ember_w_qunit) - basic ember.js app with qunit tests
+* [jasmine](https://github.com/airtap/airtap/tree/master/examples/jasmine) - basic jasmine example.
 
 All of the examples can be tested locally by running the following command in each example directory.
 
@@ -79,7 +79,7 @@ airtap --local 8080 -- test.js
 
 ## airtap.yml
 
-Airtap consumes a yaml config file. See the [zuul.yml](https://github.com/defunctzombie/zuul/wiki/zuul.yml) wiki page for all of the goodies this file provides.
+Airtap consumes a yaml config file. See the [airtap.yml](./doc/airtap.yml.md) guide for all of the goodies this file provides.
 
 It includes advanced usage like how to run an additional server to support tests that make ajax requests.
 
