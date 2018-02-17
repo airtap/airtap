@@ -20,13 +20,13 @@ With [npm](https://npmjs.org) do:
 npm install airtap --save-dev
 ```
 
-Airtap will do all the hard work of setting up your test harness, support files, and cloud browser integration so you can just focus on writing your tests.
-
 ## Workflow
 
 Airtap works out of the box with a few commonly used javascript frameworks (qunit, mocha, tape, jasmine). If you are already testing using these, airtap setup will be trivial.
 
 Airtap has 3 modes of operation: locally, cloud browsers, and continuous integration. You should make sure that airtap is working locally before you try to run the other two.
+
+Airtap will do all the hard work of setting up your test harness, support files, and cloud browser integration so you can just focus on writing your tests.
 
 ### Running locally
 
