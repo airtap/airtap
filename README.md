@@ -2,7 +2,8 @@
 
 > Test your JavaScript in 800+ browsers.
 
-[![npm status](http://img.shields.io/npm/v/airtap.svg)](https://www.npmjs.org/package/airtap) [![node](https://img.shields.io/node/v/airtap.svg)](https://www.npmjs.org/package/airtap)
+[![npm status](http://img.shields.io/npm/v/airtap.svg)](https://www.npmjs.org/package/airtap)
+[![node](https://img.shields.io/node/v/airtap.svg)](https://www.npmjs.org/package/airtap)
 [![Build Status](https://travis-ci.org/airtap/airtap.svg?branch=master)](https://travis-ci.org/airtap/airtap)
 [![Dependency status](https://img.shields.io/david/airtap/airtap.svg)](https://david-dm.org/airtap/airtap)
 
