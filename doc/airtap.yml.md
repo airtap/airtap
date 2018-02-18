@@ -4,18 +4,6 @@ The `.airtap.yml` file lives in each project directory and contains per-project 
 
 ## fields
 
-### ui (required)
-
-Identifies the testing framework airtap will use when orchestrating the test harness. Currently supported values: qunit, mocha-tdd, mocha-qunit, mocha-bdd, tape, jasmine, jasmine2.
-
-```yaml
-ui: qunit
-```
-
-```yaml
-ui: mocha-tdd
-```
-
 ### browsers (required)
 
 List of browsers to test in the cloud. Each entry starts with a `- name` field and must contain a `version` field and an optional `platform` field. If the platform field is omitted, a default platform will be selected.
