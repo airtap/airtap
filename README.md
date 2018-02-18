@@ -42,13 +42,11 @@ airtap --local 8080 -- test.js
 
 It will print a URL that can you can open in any local browser to run the tests. Make changes to the code as needed. No need to restart airtap, just refresh your browser.
 
-![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/develop-tests-locally.png)
+![local screenshot](./doc/images/local-screenshot.png)
 
 ### Cross browser testing via Sauce Labs
 
 The reason we go through all this trouble in the first place is to seamlessly run our tests against all those browsers we don't have installed. Luckily, [Sauce Labs](https://saucelabs.com/) runs quite a few browsers and we can easily task airtap to test on those.
-
-![testing in the cloud](https://raw.github.com/defunctzombie/zuul/gh-pages/double-check-with-sauce.png)
 
 See the [Cloud Testing](./doc/cloud-testing.md) guide to get your tests running in the cloud. TLDR: [save your credentials to `~/.airtaprc`](./doc/airtaprc.md), [add browsers to `.airtap.yml`](./doc/airtap.yml.md) and issue:
 
@@ -56,13 +54,15 @@ See the [Cloud Testing](./doc/cloud-testing.md) guide to get your tests running 
 airtap test.js
 ```
 
+Airtap itself is also tested in Sauce Labs.
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/airtap-ci.svg)](https://saucelabs.com/u/airtap-ci)
+
 ### Continuous Integration
 
-No testing setup would be complete without a badge for passing or failing tests. After making sure your tests all pass in the cloud from your local machine, we will configure our tests to pass from Travis when we commit changes.
+No testing setup would be complete without a badge for passing or failing tests. After making sure your tests all pass in the cloud from your local machine, we will configure our tests to pass from Travis when we commit changes. See the [Travis CI](./doc/travis-ci.md) guide.
 
-![local zuul](https://raw.github.com/defunctzombie/zuul/gh-pages/finalize-with-travis.png)
-
-See the [Travis CI](./doc/travis-ci.md) guide.
+![travis screenshot](./doc/images/travis-screenshot.png)
 
 ## Configuration
 
@@ -74,7 +74,7 @@ It includes advanced usage like how to run an additional server to support tests
 
 Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com).
 
-![Sauce Labs logo](./sauce-labs-logo.png)
+![Sauce Labs logo](./doc/images/sauce-labs-logo.png)
 
 ## License
 
