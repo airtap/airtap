@@ -28,7 +28,6 @@ Obviously replace with your name and key from your account. See [airtaprc](./air
 Back in your project directory (not your home directory where we put the airtaprc file), add the following file `.airtap.yml`
 
 ```yaml
-ui: mocha-qunit
 browsers:
   - name: chrome
     version: 27..latest
@@ -58,7 +57,7 @@ airtap --list-available-browsers
 We are now ready to run our tests in the cloud. Simply run airtap without the `--local` flag.
 
 ```shell
-airtap -- test
+airtap test.js
 ```
 
 Airtap will create a server, establish a tunnel so Sauce Labs can find our tests, and then ask Sauce Labs to run your tests. You can open your [Sauce Labs dashboard](https://saucelabs.com/account) to see tests being run and their results. Airtap will exit when all tests are done.

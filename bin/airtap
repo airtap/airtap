@@ -151,10 +151,8 @@ var sauce_key = process.env.SAUCE_ACCESS_KEY;
 config.username = sauce_username || config.sauce_username;
 config.key = sauce_key || config.sauce_key;
 
-if (!config.ui) {
-    console.error('Error: `ui` must be configured in .airtap.yml or specified with the --ui flag');
-    return process.exit(1);
-}
+// Default to tape, as we intend to remove others.
+config.ui = config.ui || 'tape';
 
 var pkg = {};
 try {

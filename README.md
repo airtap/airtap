@@ -38,7 +38,7 @@ All you need is an entry point for your tests like `test.js`. When iterating on 
 See the included [example](./example) for a simple test. Run it by issuing the following command in the example directory:
 
 ```
-airtap --local 8080 -- test.js
+airtap --local 8080 test.js
 ```
 
 It will print a URL that can you can open in any local browser to run the tests. Make changes to the code as needed. No need to restart airtap, just refresh your browser.

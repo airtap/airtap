@@ -1,5 +1,4 @@
 name: example
-ui: tape
 browsers:
   - name: firefox
     platform: linux
