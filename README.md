@@ -23,6 +23,8 @@ With [npm](https://npmjs.org) do:
 npm install airtap --save-dev
 ```
 
+If you are upgrading or migrating from zuul: please see the [upgrade guide](./UPGRADING.md).
+
 ## Workflow
 
 Airtap works out of the box with `tap` and `tape`. If you're already using these, setup will be trivial.
