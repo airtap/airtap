@@ -17,7 +17,7 @@
     "express": "3.4.8",
     "express-state": "1.0.3",
     "find-nearest-file": "~1.1.0",
-    "firefox-profile": "0.2.7",
+    "firefox-profile": "~1.1.0",
     "globs-to-files": "1.0.0",
     "hbs": "2.4.0",
     "highlight.js": "7.5.0",
