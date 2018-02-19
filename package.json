@@ -19,7 +19,7 @@
     "find-nearest-file": "~1.1.0",
     "firefox-profile": "~1.1.0",
     "globs-to-files": "1.0.0",
-    "hbs": "2.4.0",
+    "hbs": "~4.0.1",
     "highlight.js": "7.5.0",
     "http-proxy": "~1.16.2",
     "humanize-duration": "2.4.0",
