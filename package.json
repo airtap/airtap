@@ -15,7 +15,7 @@
     "convert-source-map": "~1.5.1",
     "debug": "~3.1.0",
     "express": "3.4.8",
-    "express-state": "1.0.3",
+    "express-state": "~1.4.0",
     "find-nearest-file": "~1.1.0",
     "firefox-profile": "~1.1.0",
     "globs-to-files": "~1.0.0",
