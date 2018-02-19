@@ -1,6 +1,5 @@
 'use strict';
 
-// var hljs = require('./hl.js');
 var hljs = require('highlight.js');
 
 function getCode(sources, frame) {
