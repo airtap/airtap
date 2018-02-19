@@ -13,7 +13,7 @@
     "commander": "~2.14.1",
     "compression": "~1.7.1",
     "convert-source-map": "1.0.0",
-    "debug": "2.1.0",
+    "debug": "~3.1.0",
     "express": "3.4.8",
     "express-state": "1.0.3",
     "find-nearest-file": "1.0.0",
