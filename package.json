@@ -24,7 +24,7 @@
     "http-proxy": "~1.16.2",
     "humanize-duration": "2.4.0",
     "istanbul-middleware": "0.2.2",
-    "load-script": "0.0.5",
+    "load-script": "~1.0.0",
     "lodash": "~4.17.5",
     "opener": "1.4.0",
     "osenv": "~0.1.5",
