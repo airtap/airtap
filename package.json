@@ -27,7 +27,7 @@
     "load-script": "0.0.5",
     "lodash": "3.10.1",
     "opener": "1.4.0",
-    "osenv": "0.0.3",
+    "osenv": "~0.1.5",
     "shallow-copy": "0.0.1",
     "shell-quote": "1.4.1",
     "stack-mapper": "0.2.2",
