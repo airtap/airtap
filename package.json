@@ -37,7 +37,7 @@
     "tap-parser": "0.7.0",
     "watchify": "3.7.0",
     "wd": "0.3.11",
-    "xtend": "2.1.2",
+    "xtend": "~4.0.1",
     "yamljs": "0.2.8"
   },
   "devDependencies": {
