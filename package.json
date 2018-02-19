@@ -20,7 +20,7 @@
     "firefox-profile": "~1.1.0",
     "globs-to-files": "~1.0.0",
     "hbs": "~4.0.1",
-    "highlight.js": "7.5.0",
+    "highlight.js": "~9.12.0",
     "http-proxy": "~1.16.2",
     "humanize-duration": "~3.12.1",
     "istanbul-middleware": "~0.2.2",
