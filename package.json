@@ -48,7 +48,7 @@
     "dependency-check": "^2.10.0",
     "electron-prebuilt": "^1.4.13",
     "mocha": "~1.16.2",
-    "phantomjs-prebuilt": "2.1.13",
+    "phantomjs-prebuilt": "^2.1.16",
     "tape": "^4.8.0",
     "through2": "^2.0.3"
   },
