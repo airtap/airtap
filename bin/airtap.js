@@ -200,16 +200,14 @@ if (config.local) {
     var to_test = flatten_browser(config.browsers, all_browsers)
 
     // pretty prints which browsers we will test on what platforms
-    {
-      var by_os = {}
-      to_test.forEach(function (browser) {
-        var key = browser.name + ' @ ' + browser.platform;
-        (by_os[key] = by_os[key] || []).push(browser.version)
-      })
+    var by_os = {}
+    to_test.forEach(function (browser) {
+      var key = browser.name + ' @ ' + browser.platform;
+      (by_os[key] = by_os[key] || []).push(browser.version)
+    })
 
-      for (var item in by_os) {
-        console.log('- testing: %s: %s'.grey, item, by_os[item].join(' '))
-      }
+    for (var item in by_os) {
+      console.log('- testing: %s: %s'.grey, item, by_os[item].join(' '))
     }
 
     to_test.forEach(function (info) {
