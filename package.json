@@ -75,6 +75,17 @@
     "test": "npm run lint && npm run dependency-check && cross-env DEBUG=airtap* mocha --ui qunit --timeout 0 --bail -- test/index.js",
     "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i mocha -i phantomjs -i electron -i cross-env -i standard --entry test/index.js --entry test/integration/*.js --entry test/fixtures/*/*.js --entry test/unit/*.js --entry frameworks/zuul.js --entry frameworks/tape/*.js"
   },
+  "standard": {
+    "ignore": [
+      "*electron*",
+      "*jasmine*",
+      "*mocha*",
+      "*phantom*",
+      "*qunit*",
+      "hl.js",
+      "test/fixtures/**/*.js"
+    ]
+  },
   "engines": {
     "node": ">=4"
   }
