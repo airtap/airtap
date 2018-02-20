@@ -57,7 +57,7 @@
     "url": "git://github.com/airtap/airtap.git"
   },
   "bin": {
-    "airtap": "./bin/airtap"
+    "airtap": "./bin/airtap.js"
   },
   "keywords": [
     "airtap",
