@@ -5,7 +5,6 @@ var fs = require('fs')
 var colors = require('colors')
 var program = require('commander')
 var yaml = require('yamljs')
-var xtend = require('xtend')
 var osenv = require('osenv')
 var findNearestFile = require('find-nearest-file')
 var _ = require('lodash')
@@ -133,7 +132,7 @@ config = readLocalConfig(config)
 
 // Overwrite browsers from command line arguments
 if (program.browserName) {
-  config = xtend(config, { browsers: [{ name: program.browserName, version: program.browserVersion, platform: program.browserPlatform }] })
+  Object.assign(config, { browsers: [{ name: program.browserName, version: program.browserVersion, platform: program.browserPlatform }] })
 }
 
 config = readGlobalConfig(config)
@@ -363,7 +362,7 @@ function readYAMLConfig (filename) {
 }
 
 function mergeConfig (config, update) {
-  config = xtend(update, config)
+  config = Object.assign({}, update, config)
   return config
 }
 
