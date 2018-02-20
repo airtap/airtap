@@ -7,12 +7,12 @@ var program = require('commander')
 var yaml = require('yamljs')
 var xtend = require('xtend')
 var osenv = require('osenv')
-var find_nearest_file = require('find-nearest-file')
+var findNearestFile = require('find-nearest-file')
 var _ = require('lodash')
 
 var Zuul = require('../lib/zuul')
-var scout_browser = require('../lib/scout_browser')
-var flatten_browser = require('../lib/flatten_browser')
+var scoutBrowser = require('../lib/scout_browser')
+var flattenBrowser = require('../lib/flatten_browser')
 
 program
   .version(require('../package.json').version)
@@ -87,32 +87,32 @@ if (!process.stdout.isTTY) {
 }
 
 if (program.listAvailableBrowsers) {
-  scout_browser(function (err, all_browsers) {
+  scoutBrowser(function (err, allBrowsers) {
     if (err) {
       console.error('Unable to get available browsers for saucelabs'.red)
       console.error(err.stack)
       return process.exit(1)
     }
 
-    for (var browser in all_browsers) {
+    for (var browser in allBrowsers) {
       console.log(browser)
-      var versions = _.uniq(_.pluck(all_browsers[browser], 'version')).sort(function (a, b) {
-        var a_num = Number(a)
-        var b_num = Number(b)
+      var versions = _.uniq(_.pluck(allBrowsers[browser], 'version')).sort(function (a, b) {
+        var aNum = Number(a)
+        var bNum = Number(b)
 
-        if (a_num && !b_num) {
+        if (aNum && !bNum) {
           return -1
-        } else if (!a_num && b_num) {
+        } else if (!aNum && bNum) {
           return 1
         } else if (a === b) {
           return 0
-        } else if (a_num > b_num) {
+        } else if (aNum > bNum) {
           return 1
         }
 
         return -1
       })
-      var platforms = _.sortBy(_.uniq(_.pluck(all_browsers[browser], 'platform')))
+      var platforms = _.sortBy(_.uniq(_.pluck(allBrowsers[browser], 'platform')))
 
       console.log('   Versions: ' + versions.join(', '))
       console.log('   Platforms: ' + platforms.join(', '))
@@ -137,12 +137,8 @@ if (program.browserName) {
 }
 
 config = readGlobalConfig(config)
-
-var sauce_username = process.env.SAUCE_USERNAME
-var sauce_key = process.env.SAUCE_ACCESS_KEY
-
-config.username = sauce_username || config.sauce_username
-config.key = sauce_key || config.sauce_key
+config.username = process.env.SAUCE_USERNAME || config.sauce_username
+config.key = process.env.SAUCE_ACCESS_KEY || config.sauce_key
 
 // Default to tape, as we intend to remove others.
 config.ui = config.ui || 'tape'
@@ -177,7 +173,7 @@ if (config.local) {
   console.error('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.')
   process.exit(1)
 } else {
-  scout_browser(function (err, all_browsers) {
+  scoutBrowser(function (err, allBrowsers) {
     var browsers = []
 
     if (err) {
@@ -187,9 +183,9 @@ if (config.local) {
     }
 
     // common mappings for some of us senile folks
-    all_browsers.iexplore = all_browsers['internet explorer']
-    all_browsers.ie = all_browsers['internet explorer']
-    all_browsers.googlechrome = all_browsers.chrome
+    allBrowsers.iexplore = allBrowsers['internet explorer']
+    allBrowsers.ie = allBrowsers['internet explorer']
+    allBrowsers.googlechrome = allBrowsers.chrome
 
     if (!config.browsers) {
       console.error('no cloud browsers specified in .airtap.yml')
@@ -197,33 +193,32 @@ if (config.local) {
     }
 
     // flatten into list of testable browsers
-    var to_test = flatten_browser(config.browsers, all_browsers)
+    var toTest = flattenBrowser(config.browsers, allBrowsers)
 
     // pretty prints which browsers we will test on what platforms
-    var by_os = {}
-    to_test.forEach(function (browser) {
+    var byOs = {}
+    toTest.forEach(function (browser) {
       var key = browser.name + ' @ ' + browser.platform;
-      (by_os[key] = by_os[key] || []).push(browser.version)
+      (byOs[key] = byOs[key] || []).push(browser.version)
     })
 
-    for (var item in by_os) {
-      console.log('- testing: %s: %s'.grey, item, by_os[item].join(' '))
+    for (var item in byOs) {
+      console.log('- testing: %s: %s'.grey, item, byOs[item].join(' '))
     }
 
-    to_test.forEach(function (info) {
+    toTest.forEach(function (info) {
       zuul.browser(info)
     })
 
-    var passed_tests_count = 0
-    var failed_tests_count = 0
-    var failed_browsers_count = 0
+    var passedTestsCount = 0
+    var failedBrowsersCount = 0
     var lastOutputName
 
     zuul.on('browser', function (browser) {
       browsers.push(browser)
 
       var name = browser.toString()
-      var wait_interval
+      var waitInterval
 
       browser.once('init', function () {
         console.log('- queuing: %s'.grey, name)
@@ -232,14 +227,14 @@ if (config.local) {
       browser.on('start', function (reporter) {
         console.log('- starting: %s'.white, name)
 
-        clearInterval(wait_interval)
-        wait_interval = setInterval(function () {
+        clearInterval(waitInterval)
+        waitInterval = setInterval(function () {
           console.log('- waiting: %s'.yellow, name)
         }, 1000 * 30)
 
-        var current_test = undefined
+        var currentTest
         reporter.on('test', function (test) {
-          current_test = test
+          currentTest = test
         })
 
         reporter.on('console', function (msg) {
@@ -258,7 +253,7 @@ if (config.local) {
 
         reporter.on('assertion', function (assertion) {
           console.log()
-          console.log('%s %s'.red, name, current_test ? current_test.name : 'undefined test')
+          console.log('%s %s'.red, name, currentTest ? currentTest.name : 'undefined test')
           console.log('Error: %s'.red, assertion.message)
 
           // When testing with microsoft edge:
@@ -273,18 +268,17 @@ if (config.local) {
         })
 
         reporter.once('done', function () {
-          clearInterval(wait_interval)
+          clearInterval(waitInterval)
         })
       })
 
       browser.once('done', function (results) {
-        passed_tests_count += results.passed
-        failed_tests_count += results.failed
+        passedTestsCount += results.passed
 
         if (results.failed > 0 || results.passed === 0) {
           console.log('- failed: %s (%d failed, %d passed)'.red, name,
             results.failed, results.passed)
-          failed_browsers_count++
+          failedBrowsersCount++
           return
         }
         console.log('- passed: %s'.green, name)
@@ -307,15 +301,15 @@ if (config.local) {
         throw passed
       }
 
-      if (failed_browsers_count > 0) {
-        console.log('%d browser(s) failed'.red, failed_browsers_count)
-      } else if (passed_tests_count === 0) {
+      if (failedBrowsersCount > 0) {
+        console.log('%d browser(s) failed'.red, failedBrowsersCount)
+      } else if (passedTestsCount === 0) {
         console.log('no tests ran'.yellow)
       } else {
         console.log('all browsers passed'.green)
       }
 
-      process.exit((passed_tests_count > 0 && failed_browsers_count == 0) ? 0 : 1)
+      process.exit((passedTestsCount > 0 && failedBrowsersCount === 0) ? 0 : 1)
     })
 
     function shutdownAllBrowsers (done) {
@@ -351,7 +345,7 @@ function readLocalConfig (config) {
 }
 
 function readGlobalConfig (config) {
-  var filename = find_nearest_file('.airtaprc') || path.join(osenv.home(), '.airtaprc')
+  var filename = findNearestFile('.airtaprc') || path.join(osenv.home(), '.airtaprc')
   if (fs.existsSync(filename)) {
     var globalConfig
     try {
