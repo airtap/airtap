@@ -10,8 +10,6 @@ window.onerror = function (msg, file, line) {
   // document.body.appendChild(item);
 }
 
-global.JSON = global.JSON || require('JSON2')
-
 var load = require('load-script')
 var stacktrace = require('stacktrace-js')
 var ajax = require('superagent')
