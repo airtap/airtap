@@ -34,7 +34,7 @@
     "stacktrace-js": "~2.0.0",
     "superagent": "~3.8.2",
     "tap-finished": "~0.0.1",
-    "tap-parser": "0.7.0",
+    "tap-parser": "~5.4.0",
     "watchify": "~3.10.0",
     "wd": "~1.5.0",
     "xtend": "~4.0.1",
