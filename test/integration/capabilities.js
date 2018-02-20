@@ -1,42 +1,42 @@
-var Zuul = require('../../');
+var Zuul = require('../../')
 
-var assert = require('assert');
-var auth = require('../auth');
+var assert = require('assert')
+var auth = require('../auth')
 
-test('capabilities config', function(done) {
-    var config = {
-        ui: 'mocha-bdd',
-        capabilities: {
-            'custom-data': {
-                public: 'private'
-            }
-        },
-        username: auth.username,
-        key: auth.key,
-        sauce_connect: true,
-        loopback: 'airtap.local'
-    };
+test('capabilities config', function (done) {
+  var config = {
+    ui: 'mocha-bdd',
+    capabilities: {
+      'custom-data': {
+        public: 'private'
+      }
+    },
+    username: auth.username,
+    key: auth.key,
+    sauce_connect: true,
+    loopback: 'airtap.local'
+  }
 
-    var zuul = Zuul(config);
+  var zuul = Zuul(config)
 
-    zuul.browser({
-        name: 'internet explorer',
-        version: '11'
-    });
+  zuul.browser({
+    name: 'internet explorer',
+    version: '11'
+  })
 
-    var browser = zuul._browsers[0];
+  var browser = zuul._browsers[0]
 
-    browser.on('init', function(browserConfig){
-        assert.ok(browserConfig.capabilities);
-        assert.equal(browserConfig.capabilities['custom-data'].public, 'private');
-        browser.shutdown();
-    });
+  browser.on('init', function (browserConfig) {
+    assert.ok(browserConfig.capabilities)
+    assert.equal(browserConfig.capabilities['custom-data'].public, 'private')
+    browser.shutdown()
+  })
 
-    browser.on('done', function(/*stats*/) {
-        done();
-    });
+  browser.on('done', function (/* stats */) {
+    done()
+  })
 
-    browser.on('error', done);
+  browser.on('error', done)
 
-    browser.start();
-});
+  browser.start()
+})
