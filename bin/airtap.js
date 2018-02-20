@@ -118,22 +118,15 @@ if (program.listAvailableBrowsers) {
             console.log('   Platforms: ' + platforms.join(', '));
         }
     });
-    return;
-}
-
-if (config.files.length === 0) {
-    console.error('at least one `js` test file must be specified');
-    return process.exit(1);
-}
-
-if ((program.browserVersion || program.browserPlatform) && !program.browserName) {
-    console.error('the browser name needs to be specified (via --browser-name)');
-    return process.exit(1);
-}
-
-if ((program.browserName || program.browserPlatform) && !program.browserVersion) {
-    console.error('the browser version needs to be specified (via --browser-version)');
-    return process.exit(1);
+} else if (config.files.length === 0) {
+  console.error('at least one `js` test file must be specified');
+  process.exit(1);
+} else if ((program.browserVersion || program.browserPlatform) && !program.browserName) {
+  console.error('the browser name needs to be specified (via --browser-name)');
+  process.exit(1);
+} else if ((program.browserName || program.browserPlatform) && !program.browserVersion) {
+  console.error('the browser version needs to be specified (via --browser-version)');
+  process.exit(1);
 }
 
 config = readLocalConfig(config)
@@ -173,30 +166,24 @@ if (config.builder) {
 var zuul = Zuul(config);
 
 if (config.local) {
-    return zuul.run(function(passed) {
-    });
-}
-else if (config.phantom || config.electron) {
-    return zuul.run(function(passed) {
-        process.exit(passed ? 0 : 1);
-    });
-}
-
-if (!config.username || !config.key) {
-    console.error('Error:');
-    console.error('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.');
-    console.error('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.');
-    process.exit(1);
-    return;
-}
-
-scout_browser(function(err, all_browsers) {
+  zuul.run(function(passed) {});
+} else if (config.phantom || config.electron) {
+  zuul.run(function(passed) {
+    process.exit(passed ? 0 : 1);
+  });
+} else if (!config.username || !config.key) {
+  console.error('Error:');
+  console.error('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.');
+  console.error('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.');
+  process.exit(1);
+} else {
+  scout_browser(function(err, all_browsers) {
     var browsers = [];
 
     if (err) {
-        console.error('Unable to get available browsers for saucelabs'.red);
-        console.error(err.stack);
-        return process.exit(1);
+      console.error('Unable to get available browsers for saucelabs'.red);
+      console.error(err.stack);
+      return process.exit(1);
     }
 
     // common mappings for some of us senile folks
@@ -205,8 +192,8 @@ scout_browser(function(err, all_browsers) {
     all_browsers.googlechrome = all_browsers.chrome;
 
     if (!config.browsers) {
-        console.error('no cloud browsers specified in .airtap.yml');
-        return process.exit(1);
+      console.error('no cloud browsers specified in .airtap.yml');
+      return process.exit(1);
     }
 
     // flatten into list of testable browsers
@@ -214,19 +201,19 @@ scout_browser(function(err, all_browsers) {
 
     // pretty prints which browsers we will test on what platforms
     {
-        var by_os = {};
-        to_test.forEach(function(browser) {
-            var key = browser.name + ' @ ' + browser.platform;
-            (by_os[key] = by_os[key] || []).push(browser.version);
-        });
+      var by_os = {};
+      to_test.forEach(function(browser) {
+        var key = browser.name + ' @ ' + browser.platform;
+        (by_os[key] = by_os[key] || []).push(browser.version);
+      });
 
-        for (var item in by_os) {
-            console.log('- testing: %s: %s'.grey, item, by_os[item].join(' '));
-        }
+      for (var item in by_os) {
+        console.log('- testing: %s: %s'.grey, item, by_os[item].join(' '));
+      }
     }
 
     to_test.forEach(function(info) {
-        zuul.browser(info);
+      zuul.browser(info);
     });
 
     var passed_tests_count = 0;
@@ -235,120 +222,121 @@ scout_browser(function(err, all_browsers) {
     var lastOutputName;
 
     zuul.on('browser', function(browser) {
-        browsers.push(browser);
+      browsers.push(browser);
 
-        var name = browser.toString();
-        var wait_interval;
+      var name = browser.toString();
+      var wait_interval;
 
-        browser.once('init', function() {
-            console.log('- queuing: %s'.grey, name);
+      browser.once('init', function() {
+        console.log('- queuing: %s'.grey, name);
+      });
+
+      browser.on('start', function(reporter) {
+        console.log('- starting: %s'.white, name);
+
+        clearInterval(wait_interval);
+        wait_interval = setInterval(function() {
+          console.log('- waiting: %s'.yellow, name);
+        }, 1000 * 30);
+
+        var current_test = undefined;
+        reporter.on('test', function(test) {
+          current_test = test;
         });
 
-        browser.on('start', function(reporter) {
-            console.log('- starting: %s'.white, name);
+        reporter.on('console', function(msg) {
+          if (lastOutputName !== name) {
+            lastOutputName = name;
+            console.log('%s console'.white, name);
+          }
 
-            clearInterval(wait_interval);
-            wait_interval = setInterval(function() {
-                console.log('- waiting: %s'.yellow, name);
-            }, 1000 * 30);
-
-            var current_test = undefined;
-            reporter.on('test', function(test) {
-                current_test = test;
-            });
-
-            reporter.on('console', function(msg) {
-                if (lastOutputName !== name) {
-                    lastOutputName = name;
-                    console.log('%s console'.white, name);
-                }
-
-                //When testing with microsoft edge:
-                //Adds length property to array-like object if not defined to execute console.log properly
-                if (msg.args.length === undefined) {
-                    msg.args.length = Object.keys(msg.args).length;
-                }
-                console.log.apply(console, msg.args);
-            });
-
-            reporter.on('assertion', function(assertion) {
-                console.log();
-                console.log('%s %s'.red, name, current_test ? current_test.name : 'undefined test');
-                console.log('Error: %s'.red, assertion.message);
-
-                //When testing with microsoft edge:
-                //Adds length property to array-like object if not defined to execute forEach properly
-                if (assertion.frames.length === undefined) {
-                    assertion.frames.length = Object.keys(assertion.frames).length;
-                }
-                Array.prototype.forEach.call(assertion.frames, function(frame) {
-                    console.log('    %s %s:%d'.grey, frame.func, frame.filename, frame.line);
-                });
-                console.log();
-            });
-
-            reporter.once('done', function() {
-                clearInterval(wait_interval);
-            });
+          //When testing with microsoft edge:
+          //Adds length property to array-like object if not defined to execute console.log properly
+          if (msg.args.length === undefined) {
+            msg.args.length = Object.keys(msg.args).length;
+          }
+          console.log.apply(console, msg.args);
         });
 
-        browser.once('done', function(results) {
-            passed_tests_count += results.passed;
-            failed_tests_count += results.failed;
+        reporter.on('assertion', function(assertion) {
+          console.log();
+          console.log('%s %s'.red, name, current_test ? current_test.name : 'undefined test');
+          console.log('Error: %s'.red, assertion.message);
 
-            if (results.failed > 0 || results.passed === 0) {
-                console.log('- failed: %s (%d failed, %d passed)'.red, name,
-                    results.failed, results.passed);
-                failed_browsers_count++;
-                return;
-            }
-            console.log('- passed: %s'.green, name);
+          //When testing with microsoft edge:
+          //Adds length property to array-like object if not defined to execute forEach properly
+          if (assertion.frames.length === undefined) {
+            assertion.frames.length = Object.keys(assertion.frames).length;
+          }
+          Array.prototype.forEach.call(assertion.frames, function(frame) {
+            console.log('    %s %s:%d'.grey, frame.func, frame.filename, frame.line);
+          });
+          console.log();
         });
+
+        reporter.once('done', function() {
+          clearInterval(wait_interval);
+        });
+      });
+
+      browser.once('done', function(results) {
+        passed_tests_count += results.passed;
+        failed_tests_count += results.failed;
+
+        if (results.failed > 0 || results.passed === 0) {
+          console.log('- failed: %s (%d failed, %d passed)'.red, name,
+                      results.failed, results.passed);
+          failed_browsers_count++;
+          return;
+        }
+        console.log('- passed: %s'.green, name);
+      });
     });
 
     zuul.on('restart', function(browser) {
-        var name = browser.toString();
-        console.log('- restarting: %s'.red, name);
+      var name = browser.toString();
+      console.log('- restarting: %s'.red, name);
     });
 
     zuul.on('error', function(err) {
-        shutdownAllBrowsers(function() {
-            throw err.message;
-        });
+      shutdownAllBrowsers(function() {
+        throw err.message;
+      });
     });
 
     zuul.run(function(passed) {
-        if (passed instanceof Error) {
-            throw passed;
-        }
+      if (passed instanceof Error) {
+        throw passed;
+      }
 
-        if (failed_browsers_count > 0) {
-            console.log('%d browser(s) failed'.red, failed_browsers_count);
-        }
-        else if (passed_tests_count === 0) {
-            console.log('no tests ran'.yellow);
-        }
-        else {
-            console.log('all browsers passed'.green);
-        }
+      if (failed_browsers_count > 0) {
+        console.log('%d browser(s) failed'.red, failed_browsers_count);
+      }
+      else if (passed_tests_count === 0) {
+        console.log('no tests ran'.yellow);
+      }
+      else {
+        console.log('all browsers passed'.green);
+      }
 
-        process.exit((passed_tests_count > 0 && failed_browsers_count == 0) ? 0 : 1);
+      process.exit((passed_tests_count > 0 && failed_browsers_count == 0) ? 0 : 1);
     });
 
     function shutdownAllBrowsers(done) {
-        var Batch = require('batch')
-        var batch = new Batch;
+      var Batch = require('batch')
+      var batch = new Batch;
 
-        browsers.forEach(function(browser) {
-            batch.push(function(done) {
-                browser.shutdown();
-                browser.once('done', done);
-            });
+      browsers.forEach(function(browser) {
+        batch.push(function(done) {
+          browser.shutdown();
+          browser.once('done', done);
         });
+      });
 
-        batch.end(done);
+      batch.end(done);
     }
-});
+  });
+}
 
 function readLocalConfig(config) {
     var yaml = path.join(process.cwd(), '.airtap.yml')
