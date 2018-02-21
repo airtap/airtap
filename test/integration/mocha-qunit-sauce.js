@@ -48,7 +48,8 @@ test('mocha-qunit - sauce', function (done) {
       done(err)
     })
 
-    zuul.run(function (passed) {
+    zuul.run(function (err, passed) {
+      assert.strictEqual(err, null, 'no error')
       assert.ok(!passed)
       done()
     })
