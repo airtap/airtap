@@ -161,9 +161,12 @@ if (config.builder) {
 var zuul = Zuul(config)
 
 if (config.local) {
-  zuul.run(function (passed) {})
+  zuul.run(function (err, passed) {
+    if (err) throw err
+  })
 } else if (config.phantom || config.electron) {
-  zuul.run(function (passed) {
+  zuul.run(function (err, passed) {
+    if (err) throw err
     process.exit(passed ? 0 : 1)
   })
 } else if (!config.username || !config.key) {
@@ -295,10 +298,8 @@ if (config.local) {
       })
     })
 
-    zuul.run(function (passed) {
-      if (passed instanceof Error) {
-        throw passed
-      }
+    zuul.run(function (err, passed) {
+      if (err) throw err
 
       if (failedBrowsersCount > 0) {
         console.log('%d browser(s) failed'.red, failedBrowsersCount)

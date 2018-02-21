@@ -29,7 +29,8 @@ test('jasmine - phantom', function(done) {
         });
     });
 
-    zuul.run(function(passed) {
+    zuul.run(function(err, passed) {
+        assert.strictEqual(err, null, 'no error')
         assert.ok(!passed);
         done();
     });
