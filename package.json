@@ -68,6 +68,7 @@
   "scripts": {
     "lint": "standard || exit 0",
     "test": "npm run lint && npm run dependency-check && cross-env DEBUG=airtap* tape test",
+    "test-local-phantom": "cross-env DEBUG=airtap* tape test/integration/tape-phantom.js",
     "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i mocha -i phantomjs -i electron -i cross-env -i standard --entry test/index.js --entry test/integration/*.js --entry test/fixtures/*/*.js --entry test/unit/*.js --entry frameworks/zuul.js --entry frameworks/tape/*.js"
   },
   "standard": {
