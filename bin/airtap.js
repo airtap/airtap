@@ -5,7 +5,7 @@ var fs = require('fs')
 var colors = require('colors')
 var program = require('commander')
 var yaml = require('yamljs')
-var osenv = require('osenv')
+var os = require('os');
 var findNearestFile = require('find-nearest-file')
 var _ = require('lodash')
 
@@ -345,7 +345,7 @@ function readLocalConfig (config) {
 }
 
 function readGlobalConfig (config) {
-  var filename = findNearestFile('.airtaprc') || path.join(osenv.home(), '.airtaprc')
+  var filename = findNearestFile('.airtaprc') || path.join(os.homedir(), '.airtaprc')
   if (fs.existsSync(filename)) {
     var globalConfig
     try {
