@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+## [0.0.2] - 2018-02-21
+
+### Added
+* Add `standard` for linting but only print warnings for now (@feross)
+* Add Open Open Source `CONTRIBUTING.md` (@ralphtheninja)
+
+### Changed
+* Update [dependencies](https://github.com/airtap/airtap/pull/41) (@ralphtheninja)
+* Rename `bin/airtap` to `bin/airtap.js` + fix standard (@ralphtheninja)
+* README: fix typo (@0xflotus)
+* Replace `xtend` and `shallow-copy` with `Object.assign` (@ralphtheninja)
+* Replace `osenv` usage with `os.homedir()` (@yeskunall)
+* Make callback in `zuul.run(cb)` call with `cb(err, result)` (@ralphtheninja)
+
+### Removed
+* Remove `JSON2` (@ralphtheninja)
+
+**Historical Note** We didn't update `browserify` to the latest version because it doesn't support IE9 or IE10. Nor did we update `tap-parser` to the latest since it doesn't work with `PhantomJS`.
+
 ## [0.0.1] - 2018-02-18
 
 First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/zuul), so this changelog entry lists the differences from `zuul`.
@@ -34,5 +53,6 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/airtap/airtap/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/airtap/airtap/compare/v0.0.0...v0.0.1
