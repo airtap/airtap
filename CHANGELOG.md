@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.0.2] - 2018-02-21
+
 ### Added
 * Add `standard` for linting but only print warnings for now (@feross)
 * Add Open Open Source `CONTRIBUTING.md` (@ralphtheninja)
@@ -51,5 +53,6 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/airtap/airtap/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/airtap/airtap/compare/v0.0.0...v0.0.1
