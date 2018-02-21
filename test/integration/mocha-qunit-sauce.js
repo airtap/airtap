@@ -20,17 +20,12 @@ test('mocha-qunit - sauce', function (t) {
   var zuul = Zuul(config)
 
   getBrowsers(function (err, allBrowsers) {
+    t.error(err, 'no error')
+
     var browsers = flattenBrowser(browsersToTest, allBrowsers)
     browsers.forEach(zuul.browser.bind(zuul))
 
-    t.plan(browsers.length * 3 + 3)
-    t.error(err, 'no error')
-
     zuul.on('browser', function (browser) {
-      browser.on('init', function () {
-        t.pass('init called')
-      })
-
       browser.on('done', function (results) {
         t.is(results.passed, 1, 'one test passed')
         t.is(results.failed, 1, 'one test failed')
@@ -44,6 +39,7 @@ test('mocha-qunit - sauce', function (t) {
     zuul.run(function (err, passed) {
       t.error(err, 'no error')
       t.is(passed, false, 'test should not pass')
+      t.end()
     })
   })
 })
