@@ -1,12 +1,13 @@
+var test = require('tape')
 var Zuul = require('../../')
 var after = require('after')
-var assert = require('assert')
 var auth = require('../auth')
-var scout_browser = require('../../lib/scout_browser')
+var getBrowsers = require('../../lib/scout_browser')
+var flattenBrowser = require('../../lib/flatten_browser')
+var browsersToTest = require('airtap-browsers').pullRequest
 
-test('mocha-qunit - sauce', function (done) {
+test('mocha-qunit - sauce', function (t) {
   var config = {
-    ui: 'mocha-qunit',
     prj_dir: __dirname + '/../fixtures/mocha-qunit',
     files: [__dirname + '/../fixtures/mocha-qunit/test.js'],
     username: auth.username,
@@ -18,40 +19,31 @@ test('mocha-qunit - sauce', function (done) {
 
   var zuul = Zuul(config)
 
-  scout_browser(function (err, allBrowsers) {
-    assert.ifError(err)
-
-    var flattenBrowser = require('../../lib/flatten_browser')
-    var browsersToTest = require('airtap-browsers').pullRequest
+  getBrowsers(function (err, allBrowsers) {
     var browsers = flattenBrowser(browsersToTest, allBrowsers)
-    var total = browsers.length
-
     browsers.forEach(zuul.browser.bind(zuul))
 
-    // N times per browser and once for all done
-    done = after(total * 2 + 1, done)
+    t.plan(browsers.length * 3 + 3)
+    t.error(err, 'no error')
 
-    // each browser we test will emit as a browser
     zuul.on('browser', function (browser) {
       browser.on('init', function () {
-        done()
+        t.pass('init called')
       })
 
       browser.on('done', function (results) {
-        assert.equal(results.passed, 1)
-        assert.equal(results.failed, 1)
-        done()
+        t.is(results.passed, 1, 'one test passed')
+        t.is(results.failed, 1, 'one test failed')
       })
     })
 
     zuul.on('error', function (err) {
-      done(err)
+      t.fail(err.message)
     })
 
     zuul.run(function (err, passed) {
-      assert.strictEqual(err, null, 'no error')
-      assert.ok(!passed)
-      done()
+      t.error(err, 'no error')
+      t.is(passed, false, 'test should not pass')
     })
   })
 })
