@@ -10,7 +10,7 @@
 
 ### Changed
 * Update [dependencies](https://github.com/airtap/airtap/pull/41) (@ralphtheninja)
-* Renamed `bin/airtap` to `bin/airtap.js` + fix standard (@ralphtheninja)
+* Rename `bin/airtap` to `bin/airtap.js` + fix standard (@ralphtheninja)
 * README: fix typo (@0xflotus)
 * Replace `xtend` and `shallow-copy` with `Object.assign` (@ralphtheninja)
 * Replace `osenv` usage with `os.homedir()` (@yeskunall)
