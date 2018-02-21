@@ -5,7 +5,7 @@ var fs = require('fs')
 var colors = require('colors')
 var program = require('commander')
 var yaml = require('yamljs')
-var os = require('os');
+var os = require('os')
 var findNearestFile = require('find-nearest-file')
 var _ = require('lodash')
 

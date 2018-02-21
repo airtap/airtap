@@ -1,4 +1,4 @@
-var os = require('os');
+var os = require('os')
 var path = require('path')
 var fs = require('fs')
 var yaml = require('yamljs')
