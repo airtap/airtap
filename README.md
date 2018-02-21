@@ -67,6 +67,14 @@ No testing setup would be complete without a badge for passing or failing tests.
 
 ![travis screenshot](./doc/images/travis-screenshot.png)
 
+## Contributing
+
+Airtap is an **OPEN Open Source Project**. This means that:
+
+> Individuals making significant and valuable contributions are given commit-access to the project to contribute as they see fit. This project is more like an open wiki than a standard guarded open source project.
+
+See the [contribution guide](CONTRIBUTING.md) for more details.
+
 ## Configuration
 
 Airtap consumes a YAML config file. See the [airtap.yml](./doc/airtap.yml.md) guide for all of the goodies this file provides.
