@@ -43,7 +43,7 @@ See the included [example](./example) for a simple test. Run it by issuing the f
 airtap --local 8080 test.js
 ```
 
-It will print a URL that can you can open in any local browser to run the tests. Make changes to the code as needed. No need to restart airtap, just refresh your browser.
+It will print a URL that you can open in any local browser to run the tests. Make changes to the code as needed. No need to restart airtap, just refresh your browser.
 
 ![local screenshot](./doc/images/local-screenshot.png)
 
