@@ -4,7 +4,7 @@ var assert = require('assert')
 var auth = require('../auth')
 var scout_browser = require('../../lib/scout_browser')
 
-test('mocha-qunit - sauce', function(done) {
+test('mocha-qunit - sauce', function (done) {
   var config = {
     ui: 'mocha-qunit',
     prj_dir: __dirname + '/../fixtures/mocha-qunit',
@@ -18,7 +18,7 @@ test('mocha-qunit - sauce', function(done) {
 
   var zuul = Zuul(config)
 
-  scout_browser(function(err, allBrowsers) {
+  scout_browser(function (err, allBrowsers) {
     assert.ifError(err)
 
     var flattenBrowser = require('../../lib/flatten_browser')
@@ -32,23 +32,23 @@ test('mocha-qunit - sauce', function(done) {
     done = after(total * 2 + 1, done)
 
     // each browser we test will emit as a browser
-    zuul.on('browser', function(browser) {
-      browser.on('init', function() {
+    zuul.on('browser', function (browser) {
+      browser.on('init', function () {
         done()
       })
 
-      browser.on('done', function(results) {
+      browser.on('done', function (results) {
         assert.equal(results.passed, 1)
         assert.equal(results.failed, 1)
         done()
       })
     })
 
-    zuul.on('error', function(err) {
+    zuul.on('error', function (err) {
       done(err)
     })
 
-    zuul.run(function(passed) {
+    zuul.run(function (passed) {
       assert.ok(!passed)
       done()
     })
