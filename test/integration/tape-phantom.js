@@ -1,14 +1,10 @@
+var test = require('tape')
 var Zuul = require('../../')
-
 var after = require('after')
 var assert = require('assert')
 
-test('tape - phantom', function (done) {
-  done = after(3, done)
-  var consoleOutput = []
-
+test('tape - phantom', function (t) {
   var config = {
-    ui: 'tape',
     prj_dir: __dirname + '/../fixtures/tape',
     phantom: true,
     concurrency: 1,
@@ -17,16 +13,13 @@ test('tape - phantom', function (done) {
 
   var zuul = Zuul(config)
 
-  // each browser we test will emit as a browser
   zuul.on('browser', function (browser) {
+    var consoleOutput = []
+
     browser.on('start', function (reporter) {
       reporter.on('console', function (msg) {
         consoleOutput.push(msg.args)
       })
-    })
-
-    browser.on('init', function () {
-      done()
     })
 
     browser.on('done', function (results) {
@@ -34,22 +27,21 @@ test('tape - phantom', function (done) {
 
       // check that we did output untill the end of the test suite
       // this is the number of asserts in tape
-      assert.deepEqual(endOfOutput[0], ['1..9'])
-      assert.deepEqual(endOfOutput[1], ['# tests 9'])
-      assert.deepEqual(endOfOutput[2], ['# pass  5'])
-      assert.deepEqual(endOfOutput[3], ['# fail  4'])
-      assert.deepEqual(endOfOutput[4], [''])
+      t.deepEqual(endOfOutput[0], ['1..9'])
+      t.deepEqual(endOfOutput[1], ['# tests 9'])
+      t.deepEqual(endOfOutput[2], ['# pass  5'])
+      t.deepEqual(endOfOutput[3], ['# fail  4'])
+      t.deepEqual(endOfOutput[4], [''])
 
       // this is the number of passed/failed test() in tape
-      assert.equal(results.passed, 3)
-      assert.equal(results.failed, 3)
-      done()
+      t.is(results.passed, 3)
+      t.is(results.failed, 3)
     })
   })
 
   zuul.run(function (err, passed) {
-    assert.strictEqual(err, null, 'no error')
-    assert.ok(!passed)
-    done()
+    t.error(err, 'no error')
+    t.is(passed, false, 'test should not pass')
+    t.end()
   })
 })
