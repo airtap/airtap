@@ -1,4 +1,4 @@
-var assert = require('assert')
+var test = require('tape')
 
 // test ensures browserify configuration is applied in order
 // https://github.com/defunctzombie/zuul/issues/177
@@ -8,7 +8,7 @@ var assert = require('assert')
 //     console.log('qux')
 // if not, it will likely be
 //     console.log('bar')
-test('browserify builder', function (done) {
+test('browserify builder', function (t) {
   var builderBrowserify = require('../../lib/builder-browserify')
 
   var config = {
@@ -22,7 +22,8 @@ test('browserify builder', function (done) {
   var builder = builderBrowserify(files, config)
 
   builder(function (_, src) {
-    assert.ok(src.indexOf("console.log('qux');") !== -1)
-    done()
+    t.notEqual(src.indexOf("console.log('qux');"), -1)
+    builder.close()
+    t.end()
   })
 })
