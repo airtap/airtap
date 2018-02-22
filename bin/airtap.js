@@ -9,7 +9,7 @@ var os = require('os')
 var findNearestFile = require('find-nearest-file')
 var _ = require('lodash')
 
-var Zuul = require('../lib/zuul')
+var Zuul = require('../lib/airtap')
 var scoutBrowser = require('../lib/scout_browser')
 var flattenBrowser = require('../lib/flatten_browser')
 
