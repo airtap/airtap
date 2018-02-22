@@ -67,6 +67,16 @@ No testing setup would be complete without a badge for passing or failing tests.
 
 ![travis screenshot](./doc/images/travis-screenshot.png)
 
+## Who Uses Airtap?
+
+**Lots of folks!** Collectively, packages that depend on Airtap get 10's of millions of downloads per month!
+
+- [`memdown`](https://github.com/Level/memdown)
+- [`webtorrent`](https://github.com/webtorrent/webtorrent) (and dependencies)
+- [`simple-peer`](https://github.com/feross/simple-peer)
+- [`buffer`](https://github.com/feross/buffer)
+- *Send a PR to add your package to the list!*
+
 ## Contributing
 
 Airtap is an **OPEN Open Source Project**. This means that:
