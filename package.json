@@ -2,7 +2,7 @@
   "name": "airtap",
   "version": "0.0.2",
   "description": "JavaScript browser testing in the cloud",
-  "main": "lib/zuul.js",
+  "main": "lib/airtap.js",
   "dependencies": {
     "batch": "~0.6.1",
     "browserify": "~13.3.0",
