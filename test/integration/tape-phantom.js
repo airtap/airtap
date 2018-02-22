@@ -6,9 +6,9 @@ var assert = require('assert')
 test('tape - phantom', function (t) {
   var config = {
     prj_dir: __dirname + '/../fixtures/tape',
+    files: [__dirname + '/../fixtures/tape/test.js'],
     phantom: true,
-    concurrency: 1,
-    files: [__dirname + '/../fixtures/tape/test.js']
+    concurrency: 1
   }
 
   var zuul = Zuul(config)
@@ -37,6 +37,10 @@ test('tape - phantom', function (t) {
       t.is(results.passed, 3)
       t.is(results.failed, 3)
     })
+  })
+
+  zuul.on('error', function (err) {
+    t.fail(err.message)
   })
 
   zuul.run(function (err, passed) {
