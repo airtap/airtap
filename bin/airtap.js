@@ -366,5 +366,3 @@ function mergeConfig (config, update) {
   config = Object.assign({}, update, config)
   return config
 }
-
-// vim: ft=javascript
