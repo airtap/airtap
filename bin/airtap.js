@@ -2,7 +2,7 @@
 var path = require('path')
 var fs = require('fs')
 
-var colors = require('colors')
+var chalk = require('chalk')
 var program = require('commander')
 var yaml = require('yamljs')
 var os = require('os')
@@ -65,35 +65,16 @@ for (var key in config) {
   }
 }
 
-if (!process.stdout.isTTY) {
-  colors.setTheme({
-    bold: 'stripColors',
-    italic: 'stripColors',
-    underline: 'stripColors',
-    inverse: 'stripColors',
-    yellow: 'stripColors',
-    cyan: 'stripColors',
-    white: 'stripColors',
-    magenta: 'stripColors',
-    green: 'stripColors',
-    red: 'stripColors',
-    grey: 'stripColors',
-    blue: 'stripColors',
-    rainbow: 'stripColors',
-    zebra: 'stripColors',
-    random: 'stripColors'
-  })
-}
-
 if (program.listAvailableBrowsers) {
   scoutBrowser(function (err, allBrowsers) {
     if (err) {
-      console.error('Unable to get available browsers for saucelabs'.red)
-      console.error(err.stack)
+      console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
+      console.error(chalk.red(err.stack))
       return process.exit(1)
     }
 
     for (var browser in allBrowsers) {
+      // TODO: Debug log?
       console.log(browser)
       var versions = _.uniq(_.pluck(allBrowsers[browser], 'version')).sort(function (a, b) {
         var aNum = Number(a)
@@ -118,13 +99,13 @@ if (program.listAvailableBrowsers) {
     }
   })
 } else if (config.files.length === 0) {
-  console.error('at least one `js` test file must be specified')
+  console.error(chalk.red('at least one `js` test file must be specified'))
   process.exit(1)
 } else if ((program.browserVersion || program.browserPlatform) && !program.browserName) {
-  console.error('the browser name needs to be specified (via --browser-name)')
+  console.error(chalk.red('the browser name needs to be specified (via --browser-name)'))
   process.exit(1)
 } else if ((program.browserName || program.browserPlatform) && !program.browserVersion) {
-  console.error('the browser version needs to be specified (via --browser-version)')
+  console.error(chalk.red('the browser version needs to be specified (via --browser-version)'))
   process.exit(1)
 }
 
@@ -170,17 +151,17 @@ if (config.local) {
     process.exit(passed ? 0 : 1)
   })
 } else if (!config.username || !config.key) {
-  console.error('Error:')
-  console.error('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.')
-  console.error('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.')
+  console.error(chalk.red('Error:'))
+  console.error(chalk.red('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.'))
+  console.log(chalk.cyan('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.'))
   process.exit(1)
 } else {
   scoutBrowser(function (err, allBrowsers) {
     var browsers = []
 
     if (err) {
-      console.error('Unable to get available browsers for saucelabs'.red)
-      console.error(err.stack)
+      console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
+      console.error(chalk.red(err.stack))
       return process.exit(1)
     }
 
@@ -190,7 +171,7 @@ if (config.local) {
     allBrowsers.googlechrome = allBrowsers.chrome
 
     if (!config.browsers) {
-      console.error('no cloud browsers specified in .airtap.yml')
+      console.error(chalk.red('No cloud browsers specified in .airtap.yml'))
       return process.exit(1)
     }
 
@@ -205,7 +186,7 @@ if (config.local) {
     })
 
     for (var item in byOs) {
-      console.log('- testing: %s: %s'.grey, item, byOs[item].join(' '))
+      console.log(chalk`{gray - testing: ${ item }: ${ byOs[item].join(' ') }}`)
     }
 
     toTest.forEach(function (info) {
@@ -223,15 +204,15 @@ if (config.local) {
       var waitInterval
 
       browser.once('init', function () {
-        console.log('- queuing: %s'.grey, name)
+        console.log(chalk`{gray - queuing: ${ name }}`)
       })
 
       browser.on('start', function (reporter) {
-        console.log('- starting: %s'.white, name)
+        console.log(chalk`{white - starting: ${ name }}`)
 
         clearInterval(waitInterval)
         waitInterval = setInterval(function () {
-          console.log('- waiting: %s'.yellow, name)
+          console.log(chalk`{yellow - waiting:} ${ name }`)
         }, 1000 * 30)
 
         var currentTest
@@ -242,7 +223,7 @@ if (config.local) {
         reporter.on('console', function (msg) {
           if (lastOutputName !== name) {
             lastOutputName = name
-            console.log('%s console'.white, name)
+            console.log(chalk`{white ${ name } console}`)
           }
 
           // When testing with microsoft edge:
@@ -255,8 +236,8 @@ if (config.local) {
 
         reporter.on('assertion', function (assertion) {
           console.log()
-          console.log('%s %s'.red, name, currentTest ? currentTest.name : 'undefined test')
-          console.log('Error: %s'.red, assertion.message)
+          console.log(chalk`{red ${ name } ${ currentTest ? currentTest.name : 'undefined test' }}`)
+          console.log(chalk`{red Error: ${ assertion.message }}`)
 
           // When testing with microsoft edge:
           // Adds length property to array-like object if not defined to execute forEach properly
@@ -264,7 +245,8 @@ if (config.local) {
             assertion.frames.length = Object.keys(assertion.frames).length
           }
           Array.prototype.forEach.call(assertion.frames, function (frame) {
-            console.log('    %s %s:%d'.grey, frame.func, frame.filename, frame.line)
+            console.log()
+            console.log(chalk`{gray ${ frame.func } ${ frame.filename }:${ frame.line }}`)
           })
           console.log()
         })
@@ -278,18 +260,17 @@ if (config.local) {
         passedTestsCount += results.passed
 
         if (results.failed > 0 || results.passed === 0) {
-          console.log('- failed: %s (%d failed, %d passed)'.red, name,
-            results.failed, results.passed)
+          console.log(chalk`{red - failed: ${ name }, (${ results.failed }, ${ results.passed })}`)
           failedBrowsersCount++
           return
         }
-        console.log('- passed: %s'.green, name)
+        console.log(chalk`{green - passed: ${ name }}`)
       })
     })
 
     zuul.on('restart', function (browser) {
       var name = browser.toString()
-      console.log('- restarting: %s'.red, name)
+      console.log(chalk`{red - restarting: ${ name }}`)
     })
 
     zuul.on('error', function (err) {
@@ -302,11 +283,11 @@ if (config.local) {
       if (err) throw err
 
       if (failedBrowsersCount > 0) {
-        console.log('%d browser(s) failed'.red, failedBrowsersCount)
+        console.log(chalk`{red ${ failedBrowsersCount } browser(s) failed}`)
       } else if (passedTestsCount === 0) {
-        console.log('no tests ran'.yellow)
+        console.log(chalk.yellow('No tests ran'))
       } else {
-        console.log('all browsers passed'.green)
+        console.log(chalk.green('All browsers passed'))
       }
 
       process.exit((passedTestsCount > 0 && failedBrowsersCount === 0) ? 0 : 1)
@@ -334,7 +315,7 @@ function readLocalConfig (config) {
   var yamlExists = fs.existsSync(yaml)
   var jsExists = fs.existsSync(js)
   if (yamlExists && jsExists) {
-    console.error('both .airtap.yaml and airtap.config.js are found in the project directory, please choose one')
+    console.error(chalk.red('Both `.airtap.yaml` and `airtap.config.js` are found in the project directory, please choose one'))
     process.exit(1)
   } else if (yamlExists) {
     return mergeConfig(config, readYAMLConfig(yaml))
