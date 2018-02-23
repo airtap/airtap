@@ -16,7 +16,6 @@ var flattenBrowser = require('../lib/flatten_browser')
 program
   .version(require('../package.json').version)
   .usage('[options] <files | dir>')
-  .option('--ui <testing ui>', 'ui for tests (mocha-bdd, mocha-tdd, qunit, tape)')
   .option('--local [port]', 'port for manual testing in a local browser')
   .option('--phantom [port]', 'run tests in phantomjs. PhantomJS must be installed separately.')
   .option('--phantom-remote-debugger-port [port]', 'connect phantom to remote debugger')
@@ -40,7 +39,6 @@ program
 var config = {
   files: program.args,
   local: program.local,
-  ui: program.ui,
   phantom: program.phantom,
   phantomRemoteDebuggerPort: program.phantomRemoteDebuggerPort,
   phantomRemoteDebuggerAutorun: program.phantomRemoteDebuggerAutorun,
@@ -119,9 +117,6 @@ if (program.browserName) {
 config = readGlobalConfig(config)
 config.username = process.env.SAUCE_USERNAME || config.sauce_username
 config.key = process.env.SAUCE_ACCESS_KEY || config.sauce_key
-
-// Default to tape, as we intend to remove others.
-config.ui = config.ui || 'tape'
 
 var pkg = {}
 try {
