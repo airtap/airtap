@@ -1,9 +1,8 @@
-var assert = require('assert')
-
+var test = require('tape')
 var allBrowsers = require('../fixtures/all-browsers.js')
 var flattenBrowser = require('../../lib/flatten_browser')
 
-test('flatten browser:simple', function (done) {
+test('flatten browser:simple', function (t) {
   var request = [
     {name: 'iphone', version: '7.0..latest'},
     {name: 'android', version: '4.1'},
@@ -24,16 +23,15 @@ test('flatten browser:simple', function (done) {
     {name: 'ipad', version: '8.2', platform: 'Mac 10.10'}
   ]
 
-  assert.deepEqual(
+  t.same(
     flattenBrowser(request, allBrowsers),
     expected,
     'We found the browsers to test'
   )
-
-  done()
+  t.end()
 })
 
-test('flatten browser:stable', function (done) {
+test('flatten browser:stable', function (t) {
   var request = [
     {name: 'chrome', version: '40..latest', platform: 'Windows 2012 R2'}
   ]
@@ -44,16 +42,15 @@ test('flatten browser:stable', function (done) {
     {name: 'chrome', version: '42', platform: 'Windows 2012 R2'}
   ]
 
-  assert.deepEqual(
+  t.same(
     flattenBrowser(request, allBrowsers),
     expected,
     'We found the browsers to test'
   )
-
-  done()
+  t.end()
 })
 
-test('flatten browser:negative', function (done) {
+test('flatten browser:negative', function (t) {
   var request = [
     {name: 'chrome', version: '-3..latest', platform: 'Windows 2012 R2'},
     {name: 'safari', version: '-1..latest'},
@@ -72,16 +69,15 @@ test('flatten browser:negative', function (done) {
     {name: 'ipad', version: '8.1', platform: 'Mac 10.10'}
   ]
 
-  assert.deepEqual(
+  t.same(
     flattenBrowser(request, allBrowsers),
     expected,
     'We found the browsers to test'
   )
-
-  done()
+  t.end()
 })
 
-test('flatten browser:negative with arrays', function (done) {
+test('flatten browser:negative with arrays', function (t) {
   var request = [
     {name: 'ipad', version: ['7.1', '-2..8.2', '-2..latest']},
     {name: 'ipad', version: '-2..latest'}
@@ -94,16 +90,15 @@ test('flatten browser:negative with arrays', function (done) {
     {name: 'ipad', version: '8.2', platform: 'Mac 10.10'}
   ]
 
-  assert.deepEqual(
+  t.same(
     flattenBrowser(request, allBrowsers),
     expected,
     'We found the browsers to test'
   )
-
-  done()
+  t.end()
 })
 
-test('flatten browser:oldest', function (done) {
+test('flatten browser:oldest', function (t) {
   var request = [
     {name: 'chrome', version: 'oldest', platform: 'Windows 2012 R2'},
     {name: 'firefox', version: 'oldest..4', platform: 'Windows 2012 R2'}
@@ -117,11 +112,10 @@ test('flatten browser:oldest', function (done) {
     {name: 'firefox', version: '4', platform: 'Windows 2012 R2'}
   ]
 
-  assert.deepEqual(
+  t.same(
     flattenBrowser(request, allBrowsers),
     expected,
     'We found the browsers to test'
   )
-
-  done()
+  t.end()
 })

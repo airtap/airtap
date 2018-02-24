@@ -1,11 +1,10 @@
+var test = require('tape')
 var Zuul = require('../../')
-
 var assert = require('assert')
 var auth = require('../auth')
 
-test('capabilities config', function (done) {
+test('capabilities config', function (t) {
   var config = {
-    ui: 'mocha-bdd',
     capabilities: {
       'custom-data': {
         public: 'private'
@@ -25,18 +24,6 @@ test('capabilities config', function (done) {
   })
 
   var browser = zuul._browsers[0]
-
-  browser.on('init', function (browserConfig) {
-    assert.ok(browserConfig.capabilities)
-    assert.equal(browserConfig.capabilities['custom-data'].public, 'private')
-    browser.shutdown()
-  })
-
-  browser.on('done', function (/* stats */) {
-    done()
-  })
-
-  browser.on('error', done)
-
-  browser.start()
+  t.same(browser._conf.capabilities, config.capabilities)
+  t.end()
 })
