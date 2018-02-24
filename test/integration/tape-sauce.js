@@ -1,4 +1,5 @@
 var test = require('tape')
+var path = require('path')
 var Zuul = require('../../')
 var auth = require('../auth')
 var getBrowsers = require('../../lib/get-saucelabs-browsers')
@@ -8,8 +9,8 @@ var verify = require('./verify-common')
 
 test('tape - sauce', function (t) {
   var config = {
-    prj_dir: __dirname + '/../fixtures/tape',
-    files: [__dirname + '/../fixtures/tape/test.js'],
+    prj_dir: path.resolve(__dirname, '../fixtures/tape'),
+    files: [ path.resolve(__dirname, '../fixtures/tape/test.js') ],
     username: auth.username,
     concurrency: 5,
     key: auth.key,
