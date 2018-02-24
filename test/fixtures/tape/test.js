@@ -28,7 +28,7 @@ test('plan', function (t) {
   t.plan(1)
 
   setTimeout(function () {
-    t.ok(true === true, 'true is true AWESOME')
+    t.equal(true, true, 'true is true AWESOME')
   }, 10)
 })
 
