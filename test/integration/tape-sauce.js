@@ -2,8 +2,8 @@ var test = require('tape')
 var Zuul = require('../../')
 var after = require('after')
 var auth = require('../auth')
-var getBrowsers = require('../../lib/scout_browser')
-var flattenBrowser = require('../../lib/flatten_browser')
+var getBrowsers = require('../../lib/scout-browserlist')
+var flattenBrowser = require('../../lib/flatten-browserlist')
 var browsersToTest = require('airtap-browsers').pullRequest
 var verify = require('./verify-common')
 

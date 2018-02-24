@@ -9,8 +9,8 @@ var os = require('os')
 var findNearestFile = require('find-nearest-file')
 
 var Zuul = require('../lib/airtap')
-var scoutBrowser = require('../lib/scout_browser')
-var flattenBrowser = require('../lib/flatten_browser')
+var scoutBrowser = require('../lib/scout-browserlist')
+var flattenBrowser = require('../lib/flatten-browserlist')
 var aggregate = require('../lib/aggregate-browsers')
 
 program
