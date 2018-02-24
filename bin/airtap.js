@@ -7,7 +7,6 @@ var program = require('commander')
 var yaml = require('yamljs')
 var os = require('os')
 var findNearestFile = require('find-nearest-file')
-var _ = require('lodash')
 
 var Zuul = require('../lib/airtap')
 var scoutBrowser = require('../lib/scout_browser')
@@ -161,7 +160,7 @@ if (program.listBrowsers) {
       })
 
       for (var item in byOs) {
-        console.log(chalk`{gray - testing: ${ item }: ${ byOs[item].join(' ') }}`)
+        console.log(chalk`{gray - testing: ${item}: ${byOs[item].join(' ')}}`)
       }
 
       toTest.forEach(function (info) {
@@ -179,15 +178,15 @@ if (program.listBrowsers) {
         var waitInterval
 
         browser.once('init', function () {
-          console.log(chalk`{gray - queuing: ${ name }}`)
+          console.log(chalk`{gray - queuing: ${name}}`)
         })
 
         browser.on('start', function (reporter) {
-          console.log(chalk`{white - starting: ${ name }}`)
+          console.log(chalk`{white - starting: ${name}}`)
 
           clearInterval(waitInterval)
           waitInterval = setInterval(function () {
-            console.log(chalk`{yellow - waiting:} ${ name }`)
+            console.log(chalk`{yellow - waiting:} ${name}`)
           }, 1000 * 30)
 
           var currentTest
@@ -198,7 +197,7 @@ if (program.listBrowsers) {
           reporter.on('console', function (msg) {
             if (lastOutputName !== name) {
               lastOutputName = name
-              console.log(chalk`{white ${ name } console}`)
+              console.log(chalk`{white ${name} console}`)
             }
 
             // When testing with microsoft edge:
@@ -211,8 +210,8 @@ if (program.listBrowsers) {
 
           reporter.on('assertion', function (assertion) {
             console.log()
-            console.log(chalk`{red ${ name } ${ currentTest ? currentTest.name : 'undefined test' }}`)
-            console.log(chalk`{red Error: ${ assertion.message }}`)
+            console.log(chalk`{red ${name} ${currentTest ? currentTest.name : 'undefined test'}}`)
+            console.log(chalk`{red Error: ${assertion.message}}`)
 
             // When testing with microsoft edge:
             // Adds length property to array-like object if not defined to execute forEach properly
@@ -221,7 +220,7 @@ if (program.listBrowsers) {
             }
             Array.prototype.forEach.call(assertion.frames, function (frame) {
               console.log()
-              console.log(chalk`{gray ${ frame.func } ${ frame.filename }:${ frame.line }}`)
+              console.log(chalk`{gray ${frame.func} ${frame.filename}:${frame.line}}`)
             })
             console.log()
           })
@@ -235,17 +234,17 @@ if (program.listBrowsers) {
           passedTestsCount += results.passed
 
           if (results.failed > 0 || results.passed === 0) {
-            console.log(chalk`{red - failed: ${ name }, (${ results.failed }, ${ results.passed })}`)
+            console.log(chalk`{red - failed: ${name}, (${results.failed}, ${results.passed})}`)
             failedBrowsersCount++
             return
           }
-          console.log(chalk`{green - passed: ${ name }}`)
+          console.log(chalk`{green - passed: ${name}}`)
         })
       })
 
       zuul.on('restart', function (browser) {
         var name = browser.toString()
-        console.log(chalk`{red - restarting: ${ name }}`)
+        console.log(chalk`{red - restarting: ${name}}`)
       })
 
       zuul.on('error', function (err) {
@@ -258,7 +257,7 @@ if (program.listBrowsers) {
         if (err) throw err
 
         if (failedBrowsersCount > 0) {
-          console.log(chalk`{red ${ failedBrowsersCount } browser(s) failed}`)
+          console.log(chalk`{red ${failedBrowsersCount} browser(s) failed}`)
         } else if (passedTestsCount === 0) {
           console.log(chalk.yellow('No tests ran'))
         } else {
