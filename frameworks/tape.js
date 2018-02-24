@@ -8,7 +8,7 @@ if (typeof global.console === 'undefined') {
 }
 
 var reporter = ZuulReporter(run)
-var previous_test = undefined
+var previous_test
 var assertions = 0
 var done = false
 var noMoreTests = false
