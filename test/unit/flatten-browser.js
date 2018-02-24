@@ -1,5 +1,5 @@
 var test = require('tape')
-var allBrowsers = require('../fixtures/all-browsers.js')
+var allBrowsers = require('../fixtures/all-browsers.json')
 var flattenBrowser = require('../../lib/flatten_browser')
 
 test('flatten browser:simple', function (t) {
