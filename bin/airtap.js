@@ -74,7 +74,7 @@ if (program.listAvailableBrowsers) {
     for (var browser in allBrowsers) {
       // TODO: Debug log?
       console.log(browser)
-      var versions = _.uniq(_.pluck(allBrowsers[browser], 'version')).sort(function (a, b) {
+      var versions = _.uniq(_.map(allBrowsers[browser], 'version')).sort(function (a, b) {
         var aNum = Number(a)
         var bNum = Number(b)
 
@@ -90,7 +90,7 @@ if (program.listAvailableBrowsers) {
 
         return -1
       })
-      var platforms = _.sortBy(_.uniq(_.pluck(allBrowsers[browser], 'platform')))
+      var platforms = _.sortBy(_.uniq(_.map(allBrowsers[browser], 'platform')))
 
       console.log('   Versions: ' + versions.join(', '))
       console.log('   Platforms: ' + platforms.join(', '))
@@ -105,203 +105,203 @@ if (program.listAvailableBrowsers) {
 } else if ((program.browserName || program.browserPlatform) && !program.browserVersion) {
   console.error(chalk.red('the browser version needs to be specified (via --browser-version)'))
   process.exit(1)
-}
+} else {
+  config = readLocalConfig(config)
 
-config = readLocalConfig(config)
-
-// Overwrite browsers from command line arguments
-if (program.browserName) {
-  Object.assign(config, { browsers: [{ name: program.browserName, version: program.browserVersion, platform: program.browserPlatform }] })
-}
-
-config = readGlobalConfig(config)
-config.username = process.env.SAUCE_USERNAME || config.sauce_username
-config.key = process.env.SAUCE_ACCESS_KEY || config.sauce_key
-
-var pkg = {}
-try {
-  pkg = require(process.cwd() + '/package.json')
-} catch (err) {}
-
-config.name = config.name || pkg.name || 'airtap'
-
-if (config.builder) {
-  // relative path will needs to be under project dir
-  if (config.builder[0] === '.') {
-    config.builder = path.resolve(config.prj_dir, config.builder)
+  // Overwrite browsers from command line arguments
+  if (program.browserName) {
+    Object.assign(config, { browsers: [{ name: program.browserName, version: program.browserVersion, platform: program.browserPlatform }] })
   }
 
-  config.builder = require.resolve(config.builder)
-}
+  config = readGlobalConfig(config)
+  config.username = process.env.SAUCE_USERNAME || config.sauce_username
+  config.key = process.env.SAUCE_ACCESS_KEY || config.sauce_key
 
-var zuul = Zuul(config)
+  var pkg = {}
+  try {
+    pkg = require(process.cwd() + '/package.json')
+  } catch (err) {}
 
-if (config.local) {
-  zuul.run(function (err, passed) {
-    if (err) throw err
-  })
-} else if (config.phantom || config.electron) {
-  zuul.run(function (err, passed) {
-    if (err) throw err
-    process.exit(passed ? 0 : 1)
-  })
-} else if (!config.username || !config.key) {
-  console.error(chalk.red('Error:'))
-  console.error(chalk.red('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.'))
-  console.log(chalk.cyan('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.'))
-  process.exit(1)
-} else {
-  scoutBrowser(function (err, allBrowsers) {
-    var browsers = []
+  config.name = config.name || pkg.name || 'airtap'
 
-    if (err) {
-      console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
-      console.error(chalk.red(err.stack))
-      return process.exit(1)
+  if (config.builder) {
+    // relative path will needs to be under project dir
+    if (config.builder[0] === '.') {
+      config.builder = path.resolve(config.prj_dir, config.builder)
     }
 
-    // common mappings for some of us senile folks
-    allBrowsers.iexplore = allBrowsers['internet explorer']
-    allBrowsers.ie = allBrowsers['internet explorer']
-    allBrowsers.googlechrome = allBrowsers.chrome
+    config.builder = require.resolve(config.builder)
+  }
 
-    if (!config.browsers) {
-      console.error(chalk.red('No cloud browsers specified in .airtap.yml'))
-      return process.exit(1)
-    }
+  var zuul = Zuul(config)
 
-    // flatten into list of testable browsers
-    var toTest = flattenBrowser(config.browsers, allBrowsers)
-
-    // pretty prints which browsers we will test on what platforms
-    var byOs = {}
-    toTest.forEach(function (browser) {
-      var key = browser.name + ' @ ' + browser.platform;
-      (byOs[key] = byOs[key] || []).push(browser.version)
-    })
-
-    for (var item in byOs) {
-      console.log(chalk`{gray - testing: ${ item }: ${ byOs[item].join(' ') }}`)
-    }
-
-    toTest.forEach(function (info) {
-      zuul.browser(info)
-    })
-
-    var passedTestsCount = 0
-    var failedBrowsersCount = 0
-    var lastOutputName
-
-    zuul.on('browser', function (browser) {
-      browsers.push(browser)
-
-      var name = browser.toString()
-      var waitInterval
-
-      browser.once('init', function () {
-        console.log(chalk`{gray - queuing: ${ name }}`)
-      })
-
-      browser.on('start', function (reporter) {
-        console.log(chalk`{white - starting: ${ name }}`)
-
-        clearInterval(waitInterval)
-        waitInterval = setInterval(function () {
-          console.log(chalk`{yellow - waiting:} ${ name }`)
-        }, 1000 * 30)
-
-        var currentTest
-        reporter.on('test', function (test) {
-          currentTest = test
-        })
-
-        reporter.on('console', function (msg) {
-          if (lastOutputName !== name) {
-            lastOutputName = name
-            console.log(chalk`{white ${ name } console}`)
-          }
-
-          // When testing with microsoft edge:
-          // Adds length property to array-like object if not defined to execute console.log properly
-          if (msg.args.length === undefined) {
-            msg.args.length = Object.keys(msg.args).length
-          }
-          console.log.apply(console, msg.args)
-        })
-
-        reporter.on('assertion', function (assertion) {
-          console.log()
-          console.log(chalk`{red ${ name } ${ currentTest ? currentTest.name : 'undefined test' }}`)
-          console.log(chalk`{red Error: ${ assertion.message }}`)
-
-          // When testing with microsoft edge:
-          // Adds length property to array-like object if not defined to execute forEach properly
-          if (assertion.frames.length === undefined) {
-            assertion.frames.length = Object.keys(assertion.frames).length
-          }
-          Array.prototype.forEach.call(assertion.frames, function (frame) {
-            console.log()
-            console.log(chalk`{gray ${ frame.func } ${ frame.filename }:${ frame.line }}`)
-          })
-          console.log()
-        })
-
-        reporter.once('done', function () {
-          clearInterval(waitInterval)
-        })
-      })
-
-      browser.once('done', function (results) {
-        passedTestsCount += results.passed
-
-        if (results.failed > 0 || results.passed === 0) {
-          console.log(chalk`{red - failed: ${ name }, (${ results.failed }, ${ results.passed })}`)
-          failedBrowsersCount++
-          return
-        }
-        console.log(chalk`{green - passed: ${ name }}`)
-      })
-    })
-
-    zuul.on('restart', function (browser) {
-      var name = browser.toString()
-      console.log(chalk`{red - restarting: ${ name }}`)
-    })
-
-    zuul.on('error', function (err) {
-      shutdownAllBrowsers(function () {
-        throw err.message
-      })
-    })
-
+  if (config.local) {
     zuul.run(function (err, passed) {
       if (err) throw err
+    })
+  } else if (config.phantom || config.electron) {
+    zuul.run(function (err, passed) {
+      if (err) throw err
+      process.exit(passed ? 0 : 1)
+    })
+  } else if (!config.username || !config.key) {
+    console.error(chalk.red('Error:'))
+    console.error(chalk.red('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.'))
+    console.log(chalk.cyan('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.'))
+    process.exit(1)
+  } else {
+    scoutBrowser(function (err, allBrowsers) {
+      var browsers = []
 
-      if (failedBrowsersCount > 0) {
-        console.log(chalk`{red ${ failedBrowsersCount } browser(s) failed}`)
-      } else if (passedTestsCount === 0) {
-        console.log(chalk.yellow('No tests ran'))
-      } else {
-        console.log(chalk.green('All browsers passed'))
+      if (err) {
+        console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
+        console.error(chalk.red(err.stack))
+        return process.exit(1)
       }
 
-      process.exit((passedTestsCount > 0 && failedBrowsersCount === 0) ? 0 : 1)
-    })
+      // common mappings for some of us senile folks
+      allBrowsers.iexplore = allBrowsers['internet explorer']
+      allBrowsers.ie = allBrowsers['internet explorer']
+      allBrowsers.googlechrome = allBrowsers.chrome
 
-    function shutdownAllBrowsers (done) {
-      var Batch = require('batch')
-      var batch = new Batch()
+      if (!config.browsers) {
+        console.error(chalk.red('No cloud browsers specified in .airtap.yml'))
+        return process.exit(1)
+      }
 
-      browsers.forEach(function (browser) {
-        batch.push(function (done) {
-          browser.shutdown()
-          browser.once('done', done)
+      // flatten into list of testable browsers
+      var toTest = flattenBrowser(config.browsers, allBrowsers)
+
+      // pretty prints which browsers we will test on what platforms
+      var byOs = {}
+      toTest.forEach(function (browser) {
+        var key = browser.name + ' @ ' + browser.platform;
+        (byOs[key] = byOs[key] || []).push(browser.version)
+      })
+
+      for (var item in byOs) {
+        console.log(chalk`{gray - testing: ${ item }: ${ byOs[item].join(' ') }}`)
+      }
+
+      toTest.forEach(function (info) {
+        zuul.browser(info)
+      })
+
+      var passedTestsCount = 0
+      var failedBrowsersCount = 0
+      var lastOutputName
+
+      zuul.on('browser', function (browser) {
+        browsers.push(browser)
+
+        var name = browser.toString()
+        var waitInterval
+
+        browser.once('init', function () {
+          console.log(chalk`{gray - queuing: ${ name }}`)
+        })
+
+        browser.on('start', function (reporter) {
+          console.log(chalk`{white - starting: ${ name }}`)
+
+          clearInterval(waitInterval)
+          waitInterval = setInterval(function () {
+            console.log(chalk`{yellow - waiting:} ${ name }`)
+          }, 1000 * 30)
+
+          var currentTest
+          reporter.on('test', function (test) {
+            currentTest = test
+          })
+
+          reporter.on('console', function (msg) {
+            if (lastOutputName !== name) {
+              lastOutputName = name
+              console.log(chalk`{white ${ name } console}`)
+            }
+
+            // When testing with microsoft edge:
+            // Adds length property to array-like object if not defined to execute console.log properly
+            if (msg.args.length === undefined) {
+              msg.args.length = Object.keys(msg.args).length
+            }
+            console.log.apply(console, msg.args)
+          })
+
+          reporter.on('assertion', function (assertion) {
+            console.log()
+            console.log(chalk`{red ${ name } ${ currentTest ? currentTest.name : 'undefined test' }}`)
+            console.log(chalk`{red Error: ${ assertion.message }}`)
+
+            // When testing with microsoft edge:
+            // Adds length property to array-like object if not defined to execute forEach properly
+            if (assertion.frames.length === undefined) {
+              assertion.frames.length = Object.keys(assertion.frames).length
+            }
+            Array.prototype.forEach.call(assertion.frames, function (frame) {
+              console.log()
+              console.log(chalk`{gray ${ frame.func } ${ frame.filename }:${ frame.line }}`)
+            })
+            console.log()
+          })
+
+          reporter.once('done', function () {
+            clearInterval(waitInterval)
+          })
+        })
+
+        browser.once('done', function (results) {
+          passedTestsCount += results.passed
+
+          if (results.failed > 0 || results.passed === 0) {
+            console.log(chalk`{red - failed: ${ name }, (${ results.failed }, ${ results.passed })}`)
+            failedBrowsersCount++
+            return
+          }
+          console.log(chalk`{green - passed: ${ name }}`)
         })
       })
 
-      batch.end(done)
-    }
-  })
+      zuul.on('restart', function (browser) {
+        var name = browser.toString()
+        console.log(chalk`{red - restarting: ${ name }}`)
+      })
+
+      zuul.on('error', function (err) {
+        shutdownAllBrowsers(function () {
+          throw err.message
+        })
+      })
+
+      zuul.run(function (err, passed) {
+        if (err) throw err
+
+        if (failedBrowsersCount > 0) {
+          console.log(chalk`{red ${ failedBrowsersCount } browser(s) failed}`)
+        } else if (passedTestsCount === 0) {
+          console.log(chalk.yellow('No tests ran'))
+        } else {
+          console.log(chalk.green('All browsers passed'))
+        }
+
+        process.exit((passedTestsCount > 0 && failedBrowsersCount === 0) ? 0 : 1)
+      })
+
+      function shutdownAllBrowsers (done) {
+        var Batch = require('batch')
+        var batch = new Batch()
+
+        browsers.forEach(function (browser) {
+          batch.push(function (done) {
+            browser.shutdown()
+            browser.once('done', done)
+          })
+        })
+
+        batch.end(done)
+      }
+    })
+  }
 }
 
 function readLocalConfig (config) {
