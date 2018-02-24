@@ -13,3 +13,8 @@ node_js:
   - 8
   - 6
   - 4
+
+notifications:
+  email:
+    recipients:
+      - airtap.org@gmail.com
