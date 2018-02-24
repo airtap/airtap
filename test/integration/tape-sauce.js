@@ -21,9 +21,8 @@ test('tape - sauce', function (t) {
   var zuul = Zuul(config)
 
   getBrowsers(function (err, allBrowsers) {
-    t.error(err, 'no error')
     var browsers = flattenBrowser(browsersToTest, allBrowsers)
     browsers.forEach(zuul.browser.bind(zuul))
-    verify(t, zuul)
+    verify(t, zuul, err)
   })
 })

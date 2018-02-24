@@ -1,4 +1,8 @@
-module.exports = function (t, zuul) {
+module.exports = function (t, zuul, err) {
+  var count = zuul._browsers.length || 1
+  t.plan(count * 8 + 3)
+  t.error(err, 'no error')
+
   zuul.on('browser', function (browser) {
     var consoleOutput = []
 
@@ -6,6 +10,10 @@ module.exports = function (t, zuul) {
       reporter.on('console', function (msg) {
         consoleOutput.push(msg.args)
       })
+    })
+
+    browser.on('init', function () {
+      t.pass('browser.on.init called')
     })
 
     browser.on('done', function (results) {
@@ -32,6 +40,5 @@ module.exports = function (t, zuul) {
   zuul.run(function (err, passed) {
     t.error(err, 'no error')
     t.is(passed, false, 'test should not pass')
-    t.end()
   })
 }
