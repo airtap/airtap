@@ -1,6 +1,5 @@
 var test = require('tape')
 var Zuul = require('../../')
-var assert = require('assert')
 var auth = require('../auth')
 
 test('capabilities config', function (t) {

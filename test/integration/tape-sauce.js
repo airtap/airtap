@@ -1,6 +1,5 @@
 var test = require('tape')
 var Zuul = require('../../')
-var after = require('after')
 var auth = require('../auth')
 var getBrowsers = require('../../lib/get-saucelabs-browsers')
 var flattenBrowser = require('../../lib/flatten-browserlist')

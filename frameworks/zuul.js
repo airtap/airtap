@@ -128,9 +128,6 @@ var ZuulReporter = function (run_fn) {
   tabs.appendChild(code_coverage_tab)
   main_div.appendChild(tabs)
 
-  // status info
-  var status = document.createElement('div')
-
   document.body.appendChild(main_div)
   self._current_container = test_results_tab
 
@@ -255,8 +252,6 @@ ZuulReporter.prototype.skippedTest = function (test) {
 // test ended
 ZuulReporter.prototype.test_end = function (test) {
   var self = this
-  var name = test.name
-
   var cls = test.passed ? 'passed' : 'failed'
 
   if (test.passed) {
@@ -293,14 +288,10 @@ ZuulReporter.prototype.test_end = function (test) {
 }
 
 // new suite starting
-ZuulReporter.prototype.suite = function (suite) {
-  var self = this
-}
+ZuulReporter.prototype.suite = function (suite) {}
 
 // suite ended
-ZuulReporter.prototype.suite_end = function (suite) {
-  var self = this
-}
+ZuulReporter.prototype.suite_end = function (suite) {}
 
 // assertion within test
 ZuulReporter.prototype.assertion = function (details) {
@@ -371,16 +362,6 @@ ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
   var div = document.createElement('div')
   div.innerHTML = str || (stack || message || error.toString())
   self._current_container.appendChild(div)
-}
-
-function plainString (mapped) {
-  var str = ''
-  for (var i = 0; i < mapped.length; ++i) {
-    var frame = mapped[i]
-    str += '\n\tat '
-    str += frame.func + ' (' + frame.filename + ':' + frame.line + ':'
-    str += (frame.column || 0) + ')'
-  }
 }
 
 function post_message (msg) {

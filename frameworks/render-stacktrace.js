@@ -76,7 +76,6 @@ module.exports = function (mapped, source_map) {
 
     // show code for first stacktrace automatically
     var display = i && code.length ? 'none' : 'block'
-    var anchor_style = code.length ? '' : 'style="cursor: default; text-decoration: none;"'
 
     str += '<li>'
     str += '<span>'

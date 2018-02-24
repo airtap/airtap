@@ -1,7 +1,5 @@
 var test = require('tape')
 var Zuul = require('../../')
-var after = require('after')
-var assert = require('assert')
 var verify = require('./verify-common')
 
 test('tape - phantom', function (t) {
