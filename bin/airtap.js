@@ -9,7 +9,7 @@ var os = require('os')
 var findNearestFile = require('find-nearest-file')
 
 var Zuul = require('../lib/airtap')
-var scoutBrowser = require('../lib/scout-browserlist')
+var getBrowsers = require('../lib/get-saucelabs-browsers')
 var flattenBrowser = require('../lib/flatten-browserlist')
 var aggregate = require('../lib/aggregate-browsers')
 
@@ -64,7 +64,7 @@ for (var key in config) {
 }
 
 if (program.listBrowsers) {
-  scoutBrowser(function (err, allBrowsers) {
+  getBrowsers(function (err, allBrowsers) {
     if (err) {
       console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
       console.error(chalk.red(err.stack))
@@ -130,7 +130,7 @@ if (program.listBrowsers) {
     console.log(chalk.cyan('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.'))
     process.exit(1)
   } else {
-    scoutBrowser(function (err, allBrowsers) {
+    getBrowsers(function (err, allBrowsers) {
       var browsers = []
 
       if (err) {
