@@ -22,7 +22,7 @@ test('browserify builder', function (t) {
   var builder = builderBrowserify(files, config)
 
   builder(function (_, src) {
-    t.notEqual(src.indexOf("console.log('qux');"), -1)
+    t.notEqual(src.indexOf("console.log('qux')"), -1)
     builder.close()
     t.end()
   })
