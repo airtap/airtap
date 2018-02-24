@@ -25,7 +25,7 @@ program
   .option('--sauce-connect [tunnel-identifier]', 'establish a tunnel with sauce connect. Optionally specify the tunnel-identifier')
   .option('--loopback <host name>', 'hostname to use instead of localhost, to accomodate Safari and Edge with Sauce Connect. Must resolve to 127.0.0.1')
   .option('--server <the server script>', 'specify a server script to be run')
-  .option('--list-available-browsers', 'list available browsers and versions')
+  .option('-l, --list-browsers', 'list available browsers and versions')
   .option('--browser-name <browser name>', 'specficy the browser name to test an individual browser')
   .option('--browser-version <browser version>', 'specficy the browser version to test an individual browser')
   .option('--browser-platform <browser platform>', 'specficy the browser platform to test an individual browser')
@@ -64,7 +64,7 @@ for (var key in config) {
   }
 }
 
-if (program.listAvailableBrowsers) {
+if (program.listBrowsers) {
   scoutBrowser(function (err, allBrowsers) {
     if (err) {
       console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
