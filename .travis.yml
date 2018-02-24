@@ -15,4 +15,6 @@ node_js:
   - 4
 
 notifications:
-  email: false
+  email:
+    recipients:
+      - airtap.org@gmail.com
