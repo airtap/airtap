@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [0.0.3] - 2018-02-24
+
+### Added
+* README: add section `"Who Uses Airtap?"` (@feross)
+* Test aggregation of available browsers for `--list-browsers` (@ralphtheninja)
+
+### Changed
+* Rename `lib/zuul.js` to `lib/airtap.js` (@yeskunall)
+* Rename `--list-available-browsers` to `-l/--list-browsers` (@ralphtheninja)
+* Replace `char-split` with `split2` (@jeffreyshen19)
+* Replace `colors` with `chalk` (@yeskunall)
+
+### Removed
+* Remove vim styling and `.editorconfig` (@moondef)
+* Remove all frameworks but `tape` (@ralphtheninja)
+* Remove `.ui/--ui` option (@ralphtheninja)
+* Remove `mocha` dependency (@ralphtheninja)
+* Remove references to `emberjs` in docs and change example to use `tape` (@ralphtheninja)
+
+### Fixed
+* Fix broken `--list-available-browsers` (@ralphtheninja)
+
 ## [0.0.2] - 2018-02-21
 
 ### Added
@@ -53,6 +75,7 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.2...HEAD
+[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.3...HEAD
+[0.0.3]: https://github.com/airtap/airtap/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/airtap/airtap/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/airtap/airtap/compare/v0.0.0...v0.0.1
