@@ -75,7 +75,7 @@ Float version numbers should be quoted.
 
 ### html (optional)
 
-The `html` field allows you to inject custom html into the page. This is useful for testing app frameworks where you might want to specify some custom template logic. The html is inserted at the start of the body. See the [emberjs example](https://github.com/airtap/airtap/tree/master/examples/ember_w_qunit).
+The `html` field allows you to inject custom html into the page. This is useful for testing app frameworks where you might want to specify some custom template logic. The html is inserted at the start of the body.
 
 ```yaml
 html: ./test/templates.html
@@ -92,8 +92,6 @@ scripts:
   - "http://builds.emberjs.com/tags/v1.2.0-beta.1/ember.js"
   - "app.js"
 ```
-
-See the ember w/qunit example for sample tests which use scripts.
 
 ### browserify (optional)
 

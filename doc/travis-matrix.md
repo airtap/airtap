@@ -9,9 +9,7 @@ test:
 	@if [ "x$(BROWSER_NAME)" = "x" ]; then make test-node; else make test-airtap; fi
 
 test-node:
-	@./node_modules/.bin/mocha \
-		--reporter $(REPORTER) \
-		test/index.js
+	@./node_modules/.bin/tape test/index.js
 
 test-airtap:
 	@./node_modules/airtap/bin/airtap \
