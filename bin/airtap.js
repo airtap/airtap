@@ -12,6 +12,7 @@ var _ = require('lodash')
 var Zuul = require('../lib/airtap')
 var scoutBrowser = require('../lib/scout_browser')
 var flattenBrowser = require('../lib/flatten_browser')
+var aggregate = require('../lib/aggregate-browsers')
 
 program
   .version(require('../package.json').version)
@@ -70,31 +71,11 @@ if (program.listAvailableBrowsers) {
       console.error(chalk.red(err.stack))
       return process.exit(1)
     }
-
-    for (var browser in allBrowsers) {
-      // TODO: Debug log?
-      console.log(browser)
-      var versions = _.uniq(_.map(allBrowsers[browser], 'version')).sort(function (a, b) {
-        var aNum = Number(a)
-        var bNum = Number(b)
-
-        if (aNum && !bNum) {
-          return -1
-        } else if (!aNum && bNum) {
-          return 1
-        } else if (a === b) {
-          return 0
-        } else if (aNum > bNum) {
-          return 1
-        }
-
-        return -1
-      })
-      var platforms = _.sortBy(_.uniq(_.map(allBrowsers[browser], 'platform')))
-
-      console.log('   Versions: ' + versions.join(', '))
-      console.log('   Platforms: ' + platforms.join(', '))
-    }
+    aggregate(allBrowsers).forEach(function (i) {
+      console.log(i.browser)
+      console.log('   Versions: ' + i.versions.join(', '))
+      console.log('   Platforms: ' + i.platforms.join(', '))
+    })
   })
 } else if (config.files.length === 0) {
   console.error(chalk.red('at least one `js` test file must be specified'))
