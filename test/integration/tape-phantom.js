@@ -1,13 +1,12 @@
 var test = require('tape')
+var path = require('path')
 var Zuul = require('../../')
-var after = require('after')
-var assert = require('assert')
 var verify = require('./verify-common')
 
 test('tape - phantom', function (t) {
   var config = {
-    prj_dir: __dirname + '/../fixtures/tape',
-    files: [__dirname + '/../fixtures/tape/test.js'],
+    prj_dir: path.resolve(__dirname, '../fixtures/tape'),
+    files: [ path.resolve(__dirname, '../fixtures/tape/test.js') ],
     phantom: true,
     concurrency: 1
   }
