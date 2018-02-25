@@ -204,7 +204,7 @@ ZuulReporter.prototype.done = function (/* err */) {
     coverageTab.innerHTML = '<iframe frameborder="0" src="/__zuul/coverage"></iframe>'
   }
 
-  postMessage({
+  bufferMessage({
     type: 'done',
     stats: stats,
     passed: passed
@@ -223,7 +223,7 @@ ZuulReporter.prototype.test = function (test) {
 
   self._current_container = self._current_container.appendChild(container)
 
-  postMessage({
+  bufferMessage({
     type: 'test',
     name: test.name
   })
@@ -245,7 +245,7 @@ ZuulReporter.prototype.skippedTest = function (test) {
 
   self._set_status(self.stats)
 
-  postMessage({
+  bufferMessage({
     type: 'test',
     name: test.name
   })
@@ -282,7 +282,7 @@ ZuulReporter.prototype.test_end = function (test) {
       })
   }
 
-  postMessage({
+  bufferMessage({
     type: 'test_end',
     name: test.name,
     passed: test.passed
@@ -341,7 +341,7 @@ ZuulReporter.prototype.assertion = function (details) {
 
   self._renderError(stack, frames, message, error)
 
-  postMessage({
+  bufferMessage({
     type: 'assertion',
     actual: details.actual,
     expected: details.expected,
@@ -366,7 +366,7 @@ ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
   self._current_container.appendChild(div)
 }
 
-function postMessage (msg) {
+function bufferMessage (msg) {
   messageBus.push(msg)
 }
 

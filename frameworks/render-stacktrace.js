@@ -31,13 +31,13 @@ function getCode (sources, frame) {
 
 function hashByFile (sourceMap) {
   var sources = sourceMap.sources
-  var result = {}
+  var sourcesByFile = {}
 
   for (var i = 0; i < sources.length; i++) {
-    result[sources[i]] = sourceMap.sourcesContent[i] && sourceMap.sourcesContent[i].split('\n')
+    sourcesByFile[sources[i]] = sourceMap.sourcesContent[i] && sourceMap.sourcesContent[i].split('\n')
   }
 
-  return result
+  return sourcesByFile
 }
 
 function onTraceClick (ev) {
