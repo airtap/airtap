@@ -4,10 +4,10 @@ var fs = require('fs')
 var yaml = require('yamljs')
 
 // optinal additional config from $HOME/.airtaprc
-var home_config = path.join(os.homedir(), '.airtaprc')
+var config = path.join(os.homedir(), '.airtaprc')
 var airtaprc = {}
-if (fs.existsSync(home_config)) {
-  airtaprc = yaml.parse(fs.readFileSync(home_config, 'utf-8'))
+if (fs.existsSync(config)) {
+  airtaprc = yaml.parse(fs.readFileSync(config, 'utf-8'))
 }
 
 module.exports = {

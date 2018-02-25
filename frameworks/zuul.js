@@ -13,14 +13,14 @@ window.onerror = function (msg, file, line) {
 var load = require('load-script')
 var stacktrace = require('stacktrace-js')
 var ajax = require('superagent')
-var render_stacktrace = require('./render-stacktrace')
+var renderStacktrace = require('./render-stacktrace')
 
 try {
-  var stack_mapper = require('stack-mapper')
+  var stackMapper = require('stack-mapper')
 } catch (err) {}
 
 // post messages here to send back to clients
-var zuul_msg_bus = window.zuul_msg_bus = []
+var messageBus = window.zuul_msg_bus = []
 
 // shim console.log so we can report back to user
 if (typeof console === 'undefined') {
@@ -31,7 +31,7 @@ var originalLog = console.log
 console.log = function (msg) {
   var args = [].slice.call(arguments)
 
-  zuul_msg_bus.push({
+  messageBus.push({
     type: 'console',
     args: args
   })
@@ -46,26 +46,26 @@ console.log = function (msg) {
   }
 }
 
-var ZuulReporter = function (run_fn) {
+var ZuulReporter = function (runFn) {
   if (!(this instanceof ZuulReporter)) {
-    return new ZuulReporter(run_fn)
+    return new ZuulReporter(runFn)
   }
 
   var self = this
-  self.run_fn = run_fn
+  self.runFn = runFn
   self.stats = {
     passed: 0,
     pending: 0,
     failed: 0
   }
 
-  var main_div = document.getElementById('zuul')
+  var main = document.getElementById('zuul')
 
   var header = self.header = document.createElement('div')
   header.className = 'heading pending'
   /* global zuul */
   header.innerHTML = zuul.title
-  main_div.appendChild(header)
+  main.appendChild(header)
 
   self.status = header.appendChild(document.createElement('div'))
   self.status.className = 'status'
@@ -75,16 +75,16 @@ var ZuulReporter = function (run_fn) {
   var sub = document.createElement('div')
   sub.className = 'sub-heading'
   sub.innerHTML = navigator.userAgent
-  main_div.appendChild(sub)
+  main.appendChild(sub)
 
   // Add tab selector
-  var tab_selector = document.createElement('div')
-  tab_selector.id = 'tab-selector'
-  var results_selector = document.createElement('a')
-  results_selector.className = 'selected'
-  results_selector.href = '/__zuul'
-  results_selector.innerHTML = 'Test results'
-  results_selector.onclick = function (e) {
+  var tabSelector = document.createElement('div')
+  tabSelector.id = 'tab-selector'
+  var resultsSelector = document.createElement('a')
+  resultsSelector.className = 'selected'
+  resultsSelector.href = '/__zuul'
+  resultsSelector.innerHTML = 'Test results'
+  resultsSelector.onclick = function (e) {
     var selectors = document.querySelectorAll('#tab-selector a')
     for (var i = 0; i < selectors.length; i++) {
       selectors[i].className = ''
@@ -96,11 +96,11 @@ var ZuulReporter = function (run_fn) {
     document.getElementById('code-coverage-tab').className = 'tab hidden'
     e.preventDefault()
   }
-  tab_selector.appendChild(results_selector)
-  var coverage_selector = document.createElement('a')
-  coverage_selector.href = '/__zuul/coverage'
-  coverage_selector.innerHTML = 'Code coverage'
-  coverage_selector.onclick = function (e) {
+  tabSelector.appendChild(resultsSelector)
+  var coverageSelector = document.createElement('a')
+  coverageSelector.href = '/__zuul/coverage'
+  coverageSelector.innerHTML = 'Code coverage'
+  coverageSelector.onclick = function (e) {
     var selectors = document.querySelectorAll('#tab-selector a')
     for (var i = 0; i < selectors.length; i++) {
       selectors[i].className = ''
@@ -112,24 +112,24 @@ var ZuulReporter = function (run_fn) {
     document.getElementById('code-coverage-tab').className = 'tab'
     e.preventDefault()
   }
-  tab_selector.appendChild(coverage_selector)
-  main_div.appendChild(tab_selector)
+  tabSelector.appendChild(coverageSelector)
+  main.appendChild(tabSelector)
 
   // Add tabs and their content containers
   var tabs = document.createElement('div')
   tabs.className = 'tabs'
-  var test_results_tab = document.createElement('div')
-  test_results_tab.className = 'tab'
-  test_results_tab.id = 'test-results-tab'
-  tabs.appendChild(test_results_tab)
-  var code_coverage_tab = document.createElement('div')
-  code_coverage_tab.className = 'tab hidden'
-  code_coverage_tab.id = 'code-coverage-tab'
-  tabs.appendChild(code_coverage_tab)
-  main_div.appendChild(tabs)
+  var testResultsTab = document.createElement('div')
+  testResultsTab.className = 'tab'
+  testResultsTab.id = 'test-results-tab'
+  tabs.appendChild(testResultsTab)
+  var codeCoverageTab = document.createElement('div')
+  codeCoverageTab.className = 'tab hidden'
+  codeCoverageTab.id = 'code-coverage-tab'
+  tabs.appendChild(codeCoverageTab)
+  main.appendChild(tabs)
 
-  document.body.appendChild(main_div)
-  self._current_container = test_results_tab
+  document.body.appendChild(main)
+  self._current_container = testResultsTab
 
   self._mapper = undefined
 
@@ -137,19 +137,18 @@ var ZuulReporter = function (run_fn) {
   // this is a problem for auto starting tests like tape
   // we need map file first
   // load map file first then test bundle
-  load('/__zuul/test-bundle.js', load_map)
+  load('/__zuul/test-bundle.js', onLoad)
 
-  function load_map (err) {
+  function onLoad (err) {
     if (err) {
       self.done(err)
     }
 
-    if (!stack_mapper) {
+    if (!stackMapper) {
       return self.start()
     }
 
-    var map_path = '/__zuul/test-bundle.map.json'
-    ajax.get(map_path).end(function (err, res) {
+    ajax.get('/__zuul/test-bundle.map.json').end(function (err, res) {
       if (err) {
         // ignore map load error
         return self.start()
@@ -157,7 +156,7 @@ var ZuulReporter = function (run_fn) {
 
       self._source_map = res.body
       try {
-        self._mapper = stack_mapper(res.body)
+        self._mapper = stackMapper(res.body)
       } catch (err) {}
 
       self.start()
@@ -180,7 +179,7 @@ ZuulReporter.prototype._set_status = function (info) {
 // tests are starting
 ZuulReporter.prototype.start = function () {
   var self = this
-  self.run_fn()
+  self.runFn()
 }
 
 // all tests done
@@ -198,11 +197,11 @@ ZuulReporter.prototype.done = function (err) {
 
   // add coverage tab content
   if (window.__coverage__) {
-    var coverage_tab = document.getElementById('code-coverage-tab')
-    coverage_tab.innerHTML = '<iframe frameborder="0" src="/__zuul/coverage"></iframe>'
+    var coverageTab = document.getElementById('code-coverage-tab')
+    coverageTab.innerHTML = '<iframe frameborder="0" src="/__zuul/coverage"></iframe>'
   }
 
-  post_message({
+  postMessage({
     type: 'done',
     stats: stats,
     passed: passed
@@ -221,7 +220,7 @@ ZuulReporter.prototype.test = function (test) {
 
   self._current_container = self._current_container.appendChild(container)
 
-  post_message({
+  postMessage({
     type: 'test',
     name: test.name
   })
@@ -243,7 +242,7 @@ ZuulReporter.prototype.skippedTest = function (test) {
 
   self._set_status(self.stats)
 
-  post_message({
+  postMessage({
     type: 'test',
     name: test.name
   })
@@ -280,7 +279,7 @@ ZuulReporter.prototype.test_end = function (test) {
       })
   }
 
-  post_message({
+  postMessage({
     type: 'test_end',
     name: test.name,
     passed: test.passed
@@ -339,7 +338,7 @@ ZuulReporter.prototype.assertion = function (details) {
 
   self._renderError(stack, frames, message, error)
 
-  post_message({
+  postMessage({
     type: 'assertion',
     actual: details.actual,
     expected: details.expected,
@@ -356,7 +355,7 @@ ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
 
   if (mapper && frames.length) {
     var mapped = mapper.map(frames)
-    str = render_stacktrace(mapped, self._source_map)
+    str = renderStacktrace(mapped, self._source_map)
   }
 
   var div = document.createElement('div')
@@ -364,8 +363,8 @@ ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
   self._current_container.appendChild(div)
 }
 
-function post_message (msg) {
-  zuul_msg_bus.push(msg)
+function postMessage (msg) {
+  messageBus.push(msg)
 }
 
 module.exports = ZuulReporter

@@ -15,29 +15,29 @@ function getCode (sources, frame) {
   // hljs is pretty bad at guessing the language
   var ext = frame.filename.slice(-3)
 
-  var highlight_fn = hljs.highlightAuto
+  var highlightFn = hljs.highlightAuto
   if (ext === '.js') {
-    highlight_fn = function (src) {
+    highlightFn = function (src) {
       return hljs.highlight('javascript', src)
     }
   }
 
   try {
-    return highlight_fn(code).value
+    return highlightFn(code).value
   } catch (e) {
     return code
   }
 }
 
-function hashByFile (source_map) {
-  var sources = source_map.sources
-  var sources_by_file = {}
+function hashByFile (sourceMap) {
+  var sources = sourceMap.sources
+  var result = {}
 
   for (var i = 0; i < sources.length; i++) {
-    sources_by_file[sources[i]] = source_map.sourcesContent[i] && source_map.sourcesContent[i].split('\n')
+    result[sources[i]] = sourceMap.sourcesContent[i] && sourceMap.sourcesContent[i].split('\n')
   }
 
-  return sources_by_file
+  return result
 }
 
 function onTraceClick (ev) {
@@ -63,16 +63,16 @@ function onTraceClick (ev) {
   tgt.style.display = 'none'
 }
 
-var on_click = 'onclick="(' + onTraceClick + ').call(this, arguments[0])"'
+var onClick = 'onclick="(' + onTraceClick + ').call(this, arguments[0])"'
 
-module.exports = function (mapped, source_map) {
-  var sources_by_file = hashByFile(source_map)
+module.exports = function (mapped, sourceMap) {
+  var sourcesByFile = hashByFile(sourceMap)
 
-  var str = '<ul class="stack-trace" style="list-style-type: none;"' + '" ' + on_click + '>'
+  var str = '<ul class="stack-trace" style="list-style-type: none;"' + '" ' + onClick + '>'
 
   for (var i = 0; i < mapped.length; ++i) {
     var frame = mapped[i]
-    var code = getCode(sources_by_file, frame)
+    var code = getCode(sourcesByFile, frame)
 
     // show code for first stacktrace automatically
     var display = i && code.length ? 'none' : 'block'

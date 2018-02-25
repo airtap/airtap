@@ -1,6 +1,5 @@
 var finished = require('tap-finished')
 var parser = require('tap-parser')
-
 var ZuulReporter = require('./zuul')
 
 if (typeof global.console === 'undefined') {
@@ -8,16 +7,16 @@ if (typeof global.console === 'undefined') {
 }
 
 var reporter = ZuulReporter(run)
-var previous_test
+var previousTest
 var assertions = 0
 var done = false
 var noMoreTests = false
 
-var parse_stream = parser()
+var parseStream = parser()
 
-var finished_stream = finished(function () {
+var finishedStream = finished(function () {
   done = true
-  parse_stream.end()
+  parseStream.end()
   reporter.done()
 })
 
@@ -27,8 +26,8 @@ global.console.log = function () {
 
   // do not write in a closed WriteStream
   if (!done) {
-    parse_stream.write(msg + '\n')
-    finished_stream.write(msg + '\n')
+    parseStream.write(msg + '\n')
+    finishedStream.write(msg + '\n')
   }
 
   // transfer log to original console,
@@ -39,7 +38,7 @@ global.console.log = function () {
   }
 }
 
-parse_stream.on('comment', function (comment) {
+parseStream.on('comment', function (comment) {
   // if we received 'plan' then no need to go further
   if (noMoreTests) {
     return
@@ -47,7 +46,7 @@ parse_stream.on('comment', function (comment) {
 
   endPreviousTestIfNeeded()
 
-  previous_test = {
+  previousTest = {
     name: comment
   }
 
@@ -58,7 +57,7 @@ parse_stream.on('comment', function (comment) {
   })
 })
 
-parse_stream.on('assert', function (assert) {
+parseStream.on('assert', function (assert) {
   if (!assert.ok) {
     assertions++
   }
@@ -73,17 +72,17 @@ parse_stream.on('assert', function (assert) {
   })
 })
 
-parse_stream.on('plan', function (plan) {
+parseStream.on('plan', function (plan) {
   // starting here, we know the full tape suite is finished
   endPreviousTestIfNeeded()
   noMoreTests = true
 })
 
 function endPreviousTestIfNeeded () {
-  if (previous_test) {
+  if (previousTest) {
     reporter.test_end({
       passed: assertions === 0,
-      name: previous_test.name
+      name: previousTest.name
     })
   }
 }
