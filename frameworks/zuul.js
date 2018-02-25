@@ -184,7 +184,9 @@ ZuulReporter.prototype.start = function () {
 }
 
 // all tests done
-ZuulReporter.prototype.done = function (err) {
+// TODO .done() is called with an error if load fails,
+// how should this error be handled?
+ZuulReporter.prototype.done = function (/* err */) {
   var self = this
 
   var stats = self.stats
