@@ -24,7 +24,9 @@ var messageBus = window.zuul_msg_bus = []
 
 // shim console.log so we can report back to user
 if (typeof console === 'undefined') {
-  console = {}
+  // TODO standard complains on this line due to modifying global console
+  // disabling warning for now
+  console = {} // eslint-disable-line
 }
 
 var originalLog = console.log
