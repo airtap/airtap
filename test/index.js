@@ -1,3 +1,4 @@
+require('./integration/tape-electron')
 require('./integration/tape-sauce')
 require('./integration/tape-phantom')
 require('./unit/aggregate-browsers')
