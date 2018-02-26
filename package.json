@@ -40,7 +40,7 @@
     "airtap-browsers": "0.0.1",
     "cross-env": "~5.1.3",
     "dependency-check": "^2.10.0",
-    "electron-prebuilt": "^1.4.13",
+    "electron": "^1.8.2",
     "phantomjs-prebuilt": "^2.1.16",
     "standard": "^11.0.0",
     "tape": "^4.8.0",
@@ -67,7 +67,7 @@
     "lint": "standard",
     "test": "npm run lint && npm run dependency-check && cross-env DEBUG=airtap* tape test",
     "test-local-phantom": "cross-env DEBUG=airtap* tape test/integration/tape-phantom.js",
-    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i phantomjs -i electron -i cross-env -i standard --entry test/index.js --entry test/integration/*.js --entry test/fixtures/*/*.js --entry test/unit/*.js --entry frameworks/*.js"
+    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i phantomjs -i cross-env -i standard --entry test/index.js --entry test/integration/*.js --entry test/fixtures/*/*.js --entry test/unit/*.js --entry frameworks/*.js"
   },
   "engines": {
     "node": ">=4"
