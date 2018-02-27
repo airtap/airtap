@@ -55,11 +55,11 @@
   },
   "keywords": [
     "airtap",
-    "testing",
     "browser",
-    "qunit",
-    "mocha",
-    "saucelabs"
+    "saucelabs",
+    "tap",
+    "tape",
+    "testing"
   ],
   "author": "Roman Shtylman <shtylman@gmail.com>",
   "license": "MIT",
