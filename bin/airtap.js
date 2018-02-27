@@ -249,7 +249,7 @@ if (program.listBrowsers) {
 
       zuul.on('error', function (err) {
         shutdownAllBrowsers(function () {
-          throw err.message
+          throw err
         })
       })
 
