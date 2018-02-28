@@ -75,6 +75,7 @@ No testing setup would be complete without a badge for passing or failing tests.
 - [`webtorrent`](https://github.com/webtorrent/webtorrent) (and dependencies)
 - [`simple-peer`](https://github.com/feross/simple-peer)
 - [`buffer`](https://github.com/feross/buffer)
+- [`stream-http`](https://github.com/jhiesey/stream-http)
 - *Send a PR to add your package to the list!*
 
 ## Contributing
