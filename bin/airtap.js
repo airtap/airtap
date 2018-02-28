@@ -1,4 +1,11 @@
 #!/usr/bin/env node
+
+// Prevent external PRs of airtap users to fail browser tests
+if (process.env.TRAVIS_SECURE_ENV_VARS === 'false') {
+  console.log('Skipping airtap due to no secure travis environment!')
+  process.exit(0)
+}
+
 var path = require('path')
 var fs = require('fs')
 
