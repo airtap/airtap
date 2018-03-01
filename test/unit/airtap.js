@@ -2,6 +2,7 @@ const test = require('tape')
 const path = require('path')
 const exec = require('child_process').exec
 const airtap = path.resolve(__dirname, '../../bin/airtap.js')
+const messages = require('../../lib/messages')
 
 test('exits cleanly and does nothing if no secure travis env', t => {
   const env = Object.assign({}, process.env, {
@@ -9,7 +10,7 @@ test('exits cleanly and does nothing if no secure travis env', t => {
   })
   exec(airtap, { env }, (err, stdout, stderr) => {
     t.error(err, 'no error')
-    t.equal(stdout.trim(), 'Skipping airtap due to no secure travis environment!')
+    t.equal(stdout.trim(), messages.SKIPPING_AIRTAP)
     t.end()
   })
 })
@@ -20,7 +21,7 @@ test('exits with error if no files are specified', t => {
   delete env.TRAVIS_SECURE_ENV_VARS
   exec(airtap, { env }, (err, stdout, stderr) => {
     t.ok(err, 'should error')
-    t.equal(stderr.trim(), 'at least one `js` test file must be specified')
+    t.equal(stderr.trim(), messages.NO_FILES)
     t.end()
   })
 })
