@@ -1,4 +1,5 @@
 require('./unit/aggregate-browsers')
+require('./unit/airtap')
 require('./unit/browserify-builder')
 require('./unit/capabilities')
 require('./unit/flatten-browser')

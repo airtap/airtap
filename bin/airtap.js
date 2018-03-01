@@ -1,4 +1,13 @@
 #!/usr/bin/env node
+
+var messages = require('../lib/messages')
+
+// Prevent external PRs of airtap users to fail browser tests
+if (process.env.TRAVIS_SECURE_ENV_VARS === 'false') {
+  console.log(messages.SKIPPING_AIRTAP)
+  process.exit(0)
+}
+
 var path = require('path')
 var fs = require('fs')
 
@@ -77,7 +86,7 @@ if (program.listBrowsers) {
     })
   })
 } else if (config.files.length === 0) {
-  console.error(chalk.red('at least one `js` test file must be specified'))
+  console.error(chalk.red(messages.NO_FILES))
   process.exit(1)
 } else if ((program.browserVersion || program.browserPlatform) && !program.browserName) {
   console.error(chalk.red('the browser name needs to be specified (via --browser-name)'))
