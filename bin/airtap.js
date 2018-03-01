@@ -16,10 +16,9 @@ var program = require('commander')
 var yaml = require('yamljs')
 var os = require('os')
 var findNearestFile = require('find-nearest-file')
+var sauceBrowsers = require('sauce-browsers')
 
 var Zuul = require('../lib/airtap')
-var getBrowsers = require('../lib/get-saucelabs-browsers')
-var flattenBrowser = require('../lib/flatten-browserlist')
 var aggregate = require('../lib/aggregate-browsers')
 
 program
@@ -73,17 +72,16 @@ for (var key in config) {
 }
 
 if (program.listBrowsers) {
-  getBrowsers(function (err, allBrowsers) {
-    if (err) {
-      console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
-      console.error(chalk.red(err.stack))
-      return process.exit(1)
-    }
+  sauceBrowsers().then(function (allBrowsers) {
     aggregate(allBrowsers).forEach(function (i) {
       console.log(i.browser)
       console.log('   Versions: ' + i.versions.join(', '))
       console.log('   Platforms: ' + i.platforms.join(', '))
     })
+  }).catch(function (err) {
+    console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
+    console.error(chalk.red(err.stack))
+    process.exit(1)
   })
 } else if (config.files.length === 0) {
   console.error(chalk.red(messages.NO_FILES))
@@ -138,43 +136,29 @@ if (program.listBrowsers) {
     console.error(chalk.red('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.'))
     console.log(chalk.cyan('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.'))
     process.exit(1)
+  } else if (!config.browsers) {
+    console.error(chalk.red('No cloud browsers specified in .airtap.yml'))
+    process.exit(1)
   } else {
-    getBrowsers(function (err, allBrowsers) {
+    sauceBrowsers(config.browsers).then(function (toTest) {
       var browsers = []
-
-      if (err) {
-        console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
-        console.error(chalk.red(err.stack))
-        return process.exit(1)
-      }
-
-      // common mappings for some of us senile folks
-      allBrowsers.iexplore = allBrowsers['internet explorer']
-      allBrowsers.ie = allBrowsers['internet explorer']
-      allBrowsers.googlechrome = allBrowsers.chrome
-
-      if (!config.browsers) {
-        console.error(chalk.red('No cloud browsers specified in .airtap.yml'))
-        return process.exit(1)
-      }
-
-      // flatten into list of testable browsers
-      var toTest = flattenBrowser(config.browsers, allBrowsers)
-
-      // pretty prints which browsers we will test on what platforms
       var byOs = {}
-      toTest.forEach(function (browser) {
-        var key = browser.name + ' @ ' + browser.platform;
-        (byOs[key] = byOs[key] || []).push(browser.version)
+
+      toTest.forEach(function (info) {
+        var key = info.api_name + ' @ ' + info.os;
+        (byOs[key] = byOs[key] || []).push(info.short_version)
+
+        zuul.browser({
+          name: info.api_name,
+          version: info.short_version,
+          platform: info.os
+        })
       })
 
+      // pretty prints which browsers we will test on what platforms
       for (var item in byOs) {
         console.log(chalk`{gray - testing: ${item}: ${byOs[item].join(' ')}}`)
       }
-
-      toTest.forEach(function (info) {
-        zuul.browser(info)
-      })
 
       var passedTestsCount = 0
       var failedBrowsersCount = 0
@@ -289,6 +273,9 @@ if (program.listBrowsers) {
 
         batch.end(done)
       }
+    }).catch(function (err) {
+      console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
+      console.error(chalk.red(err.stack))
     })
   }
 }

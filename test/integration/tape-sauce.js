@@ -1,9 +1,8 @@
 var test = require('tape')
 var path = require('path')
+var sauceBrowsers = require('sauce-browsers')
 var Zuul = require('../../')
 var auth = require('../auth')
-var getBrowsers = require('../../lib/get-saucelabs-browsers')
-var flattenBrowser = require('../../lib/flatten-browserlist')
 var browsersToTest = require('airtap-browsers').pullRequest
 var verify = require('./verify-common')
 
@@ -20,9 +19,17 @@ test('tape - sauce', function (t) {
 
   var zuul = Zuul(config)
 
-  getBrowsers(function (err, allBrowsers) {
-    var browsers = flattenBrowser(browsersToTest, allBrowsers)
-    browsers.forEach(zuul.browser.bind(zuul))
-    verify(t, zuul, err)
+  sauceBrowsers(browsersToTest).then(function (browsers) {
+    browsers.forEach(function (info) {
+      zuul.browser({
+        name: info.api_name,
+        version: info.short_version,
+        platform: info.os
+      })
+    })
+    verify(t, zuul)
+  }, function (err) {
+    t.fail(err.message)
+    t.end()
   })
 })
