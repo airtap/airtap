@@ -20,6 +20,7 @@
 * Update keywords in `package.json` (@yeskunall)
 * Update `dependency-check` to `^3.0.0` (@yeskunall)
 * Exit cleanly if Travis has no secure environment variables (@ralphtheninja)
+* Clean up entries in `dependency-check` (@ralphtheninja)
 
 ### Removed
 * Remove support for older Electron api (@ralphtheninja)
