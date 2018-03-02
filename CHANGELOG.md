@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## [0.0.4] - 2018-03-02
+
+### Added
+* Test electron browser (@ralphtheninja)
+* README: add `stream-http` to list of users (@jhiesey)
+
+### Changed
+* Setup email for Travis builds (@yeskunall)
+* Normalize file names (@yeskunall)
+* Finalize `standard` (@ralphtheninja)
+* Depend on `electron` instead of deprecated `electron-prebuilt` (@ralphtheninja)
+* Throw error instead of error message (@arungalva)
+* Refactor opt/config variable in `setup.js` (@ralphtheninja)
+* Replace IIFE with normal function declaration and function call (@ralphtheninja)
+* Run unit tests before integration tests and put the sauce labs integration last (@ralphtheninja)
+* Update keywords in `package.json` (@yeskunall)
+* Update `dependency-check` to `^3.0.0` (@yeskunall)
+* Exit cleanly if Travis has no secure environment variables (@ralphtheninja)
+
+### Removed
+* Remove support for older Electron api (@ralphtheninja)
+* Remove support for node 4 (@ralphtheninja)
+
+### Fixed
+* Fix race condition in electron ipc (@ralphtheninja)
+* Add debug statement instead of silently failing Sauce Labs (@arungalva)
+
 ## [0.0.3] - 2018-02-24
 
 ### Added
@@ -75,7 +102,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.3...HEAD
+[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.4...HEAD
+[0.0.4]: https://github.com/airtap/airtap/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/airtap/airtap/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/airtap/airtap/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/airtap/airtap/compare/v0.0.0...v0.0.1
