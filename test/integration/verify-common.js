@@ -1,7 +1,6 @@
-module.exports = function (t, zuul, err) {
+module.exports = function (t, zuul) {
   var count = zuul._browsers.length || 1
-  t.plan(count * 8 + 3)
-  t.error(err, 'no error')
+  t.plan(count * 8 + 2)
 
   zuul.on('browser', function (browser) {
     var consoleOutput = []
