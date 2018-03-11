@@ -141,7 +141,7 @@ var ZuulReporter = function (runFn) {
 
   load('/__zuul/test-bundle.js', function (err) {
     if (err) {
-      self.done(err)
+      return self.done(err)
     }
 
     if (!stackMapper) {
