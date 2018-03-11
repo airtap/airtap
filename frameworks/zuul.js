@@ -71,7 +71,7 @@ var ZuulReporter = function (runFn) {
   self.status = header.appendChild(document.createElement('div'))
   self.status.className = 'status'
 
-  self._set_status(self.stats)
+  self._updateStatus()
 
   var sub = document.createElement('div')
   sub.className = 'sub-heading'
@@ -165,16 +165,16 @@ var ZuulReporter = function (runFn) {
   }
 }
 
-ZuulReporter.prototype._set_status = function (info) {
-  var self = this
-  var html = ''
-  html += '<span>' + info.failed + ' <small>failing</small></span> '
-  html += '<span>' + info.passed + ' <small>passing</small></span> '
-  if (self.stats.pending) {
-    html += '<span>' + info.pending + ' <small>pending</small></span>'
+ZuulReporter.prototype._updateStatus = function () {
+  var html =
+    '<span>' + this.stats.failed + ' <small>failing</small></span> ' +
+    '<span>' + this.stats.passed + ' <small>passing</small></span> '
+
+  if (this.stats.pending) {
+    html += '<span>' + this.stats.pending + ' <small>pending</small></span>'
   }
 
-  self.status.innerHTML = html
+  this.status.innerHTML = html
 }
 
 // tests are starting
@@ -243,7 +243,7 @@ ZuulReporter.prototype.skippedTest = function (test) {
 
   self._current_container.appendChild(container)
 
-  self._set_status(self.stats)
+  self._updateStatus()
 
   bufferMessage({
     type: 'test',
@@ -267,7 +267,7 @@ ZuulReporter.prototype.test_end = function (test) {
   // use parentNode for legacy browsers (firefox)
   self._current_container = self._current_container.parentNode
 
-  self._set_status(self.stats)
+  self._updateStatus()
 
   var cov = window.__coverage__
 
