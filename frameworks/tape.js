@@ -6,7 +6,7 @@ if (typeof global.console === 'undefined') {
   global.console = {}
 }
 
-var reporter = ZuulReporter(run)
+var reporter = ZuulReporter()
 var previousTest
 var assertions = 0
 var done = false
@@ -85,9 +85,4 @@ function endPreviousTestIfNeeded () {
       name: previousTest.name
     })
   }
-}
-
-function run () {
-  // tape tests already start by default
-  // I don't like this stuff, very annoying to interface with
 }

@@ -47,14 +47,12 @@ console.log = function (msg) {
   }
 }
 
-var ZuulReporter = function (runFn) {
+var ZuulReporter = function () {
   if (!(this instanceof ZuulReporter)) {
-    return new ZuulReporter(runFn)
+    return new ZuulReporter()
   }
 
-  var self = this
-  self.runFn = runFn
-  self.stats = {
+  this.stats = {
     passed: 0,
     pending: 0,
     failed: 0
@@ -62,16 +60,16 @@ var ZuulReporter = function (runFn) {
 
   var main = document.getElementById('zuul')
 
-  var header = self.header = document.createElement('div')
+  var header = this.header = document.createElement('div')
   header.className = 'heading pending'
   /* global zuul */
   header.innerHTML = zuul.title
   main.appendChild(header)
 
-  self.status = header.appendChild(document.createElement('div'))
-  self.status.className = 'status'
+  this.status = header.appendChild(document.createElement('div'))
+  this.status.className = 'status'
 
-  self._set_status(self.stats)
+  this._updateStatus()
 
   var sub = document.createElement('div')
   sub.className = 'sub-heading'
@@ -130,72 +128,67 @@ var ZuulReporter = function (runFn) {
   main.appendChild(tabs)
 
   document.body.appendChild(main)
-  self._current_container = testResultsTab
 
-  self._mapper = undefined
+  this._current_container = testResultsTab
+  this._mapper = undefined
 
   // load test bundle and trigger tests to start
   // this is a problem for auto starting tests like tape
   // we need map file first
   // load map file first then test bundle
-  load('/__zuul/test-bundle.js', onLoad)
+  //
+  // TODO: wrap the bundle in a function, that we can call
+  // to start the tests after loading the source map.
+  var self = this
 
-  function onLoad (err) {
+  load('/__zuul/test-bundle.js', function (err) {
     if (err) {
-      self.done(err)
+      return self.done(err)
     }
 
     if (!stackMapper) {
-      return self.start()
+      return
     }
 
     ajax.get('/__zuul/test-bundle.map.json').end(function (err, res) {
       if (err) {
         // ignore map load error
-        return self.start()
+        return
       }
 
       self._source_map = res.body
       try {
         self._mapper = stackMapper(res.body)
       } catch (err) {}
-
-      self.start()
     })
-  }
+  })
 }
 
-ZuulReporter.prototype._set_status = function (info) {
-  var self = this
-  var html = ''
-  html += '<span>' + info.failed + ' <small>failing</small></span> '
-  html += '<span>' + info.passed + ' <small>passing</small></span> '
-  if (self.stats.pending) {
-    html += '<span>' + info.pending + ' <small>pending</small></span>'
+ZuulReporter.prototype._updateStatus = function () {
+  var html =
+    '<span>' + this.stats.failed + ' <small>failing</small></span> ' +
+    '<span>' + this.stats.passed + ' <small>passing</small></span> '
+
+  if (this.stats.pending) {
+    html += '<span>' + this.stats.pending + ' <small>pending</small></span>'
   }
 
-  self.status.innerHTML = html
-}
-
-// tests are starting
-ZuulReporter.prototype.start = function () {
-  var self = this
-  self.runFn()
+  this.status.innerHTML = html
 }
 
 // all tests done
-// TODO .done() is called with an error if load fails,
-// how should this error be handled?
-ZuulReporter.prototype.done = function (/* err */) {
-  var self = this
+ZuulReporter.prototype.done = function (err) {
+  if (err) {
+    // TODO: send a message with `type: 'error'`.
+    console.error(err)
+  }
 
-  var stats = self.stats
-  var passed = stats.failed === 0 && stats.passed > 0
+  var passed = !err && this.stats.failed === 0 && this.stats.passed > 0
 
   if (passed) {
-    self.header.className += ' passed'
+    this.header.className += ' passed'
   } else {
-    self.header.className += ' failed'
+    this.header.className += ' failed'
   }
 
   // add coverage tab content
@@ -206,22 +199,20 @@ ZuulReporter.prototype.done = function (/* err */) {
 
   bufferMessage({
     type: 'done',
-    stats: stats,
+    stats: this.stats,
     passed: passed
   })
 }
 
 // new test starting
 ZuulReporter.prototype.test = function (test) {
-  var self = this
-
   var container = document.createElement('div')
   container.className = 'test pending'
 
   var header = container.appendChild(document.createElement('h1'))
   header.innerHTML = test.name
 
-  self._current_container = self._current_container.appendChild(container)
+  this._current_container = this._current_container.appendChild(container)
 
   bufferMessage({
     type: 'test',
@@ -231,9 +222,7 @@ ZuulReporter.prototype.test = function (test) {
 
 // reports on skipped tests
 ZuulReporter.prototype.skippedTest = function (test) {
-  var self = this
-
-  self.stats.pending++
+  this.stats.pending++
 
   var container = document.createElement('div')
   container.className = 'test pending skipped'
@@ -241,9 +230,8 @@ ZuulReporter.prototype.skippedTest = function (test) {
   var header = container.appendChild(document.createElement('h1'))
   header.innerHTML = test.name
 
-  self._current_container.appendChild(container)
-
-  self._set_status(self.stats)
+  this._current_container.appendChild(container)
+  this._updateStatus()
 
   bufferMessage({
     type: 'test',
@@ -253,21 +241,18 @@ ZuulReporter.prototype.skippedTest = function (test) {
 
 // test ended
 ZuulReporter.prototype.test_end = function (test) {
-  var self = this
-  var cls = test.passed ? 'passed' : 'failed'
-
   if (test.passed) {
-    self.stats.passed++
+    this.stats.passed++
   } else {
-    self.stats.failed++
+    this.stats.failed++
   }
 
   // current test element
-  self._current_container.className += ' ' + cls
+  this._current_container.className += test.passed ? ' passed' : ' failed'
   // use parentNode for legacy browsers (firefox)
-  self._current_container = self._current_container.parentNode
+  this._current_container = this._current_container.parentNode
 
-  self._set_status(self.stats)
+  this._updateStatus()
 
   var cov = window.__coverage__
 
@@ -289,15 +274,8 @@ ZuulReporter.prototype.test_end = function (test) {
   })
 }
 
-// new suite starting
-ZuulReporter.prototype.suite = function (suite) {}
-
-// suite ended
-ZuulReporter.prototype.suite_end = function (suite) {}
-
 // assertion within test
 ZuulReporter.prototype.assertion = function (details) {
-  var self = this
   // result (true | false)
   // actual
   // expected
@@ -314,7 +292,7 @@ ZuulReporter.prototype.assertion = function (details) {
   if (details.message) {
     var pre = document.createElement('pre')
     pre.innerHTML = details.message
-    self._current_container.appendChild(pre)
+    this._current_container.appendChild(pre)
   }
 
   // TODO actual, expected
@@ -339,7 +317,7 @@ ZuulReporter.prototype.assertion = function (details) {
     frames = stacktrace(error)
   } catch (err) {}
 
-  self._renderError(stack, frames, message, error)
+  this._renderError(stack, frames, message, error)
 
   bufferMessage({
     type: 'assertion',
@@ -352,18 +330,17 @@ ZuulReporter.prototype.assertion = function (details) {
 }
 
 ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
-  var self = this
-  var mapper = self._mapper
+  var mapper = this._mapper
   var str
 
   if (mapper && frames.length) {
     var mapped = mapper.map(frames)
-    str = renderStacktrace(mapped, self._source_map)
+    str = renderStacktrace(mapped, this._source_map)
   }
 
   var div = document.createElement('div')
   div.innerHTML = str || (stack || message || error.toString())
-  self._current_container.appendChild(div)
+  this._current_container.appendChild(div)
 }
 
 function bufferMessage (msg) {
