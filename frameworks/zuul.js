@@ -177,10 +177,13 @@ ZuulReporter.prototype._updateStatus = function () {
 }
 
 // all tests done
-// TODO .done() is called with an error if load fails,
-// how should this error be handled?
-ZuulReporter.prototype.done = function (/* err */) {
-  var passed = this.stats.failed === 0 && this.stats.passed > 0
+ZuulReporter.prototype.done = function (err) {
+  if (err) {
+    // TODO: send a message with `type: 'error'`.
+    console.error(err)
+  }
+
+  var passed = !err && this.stats.failed === 0 && this.stats.passed > 0
 
   if (passed) {
     this.header.className += ' passed'
