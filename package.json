@@ -26,6 +26,7 @@
     "lodash": "~4.17.5",
     "opener": "~1.4.3",
     "sauce-browsers": "~1.2.0",
+    "server-destroy": "~1.0.1",
     "shell-quote": "~1.6.1",
     "split2": "^2.2.0",
     "stack-mapper": "~0.2.2",
