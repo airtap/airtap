@@ -47,12 +47,11 @@ console.log = function (msg) {
   }
 }
 
-var ZuulReporter = function (runFn) {
+var ZuulReporter = function () {
   if (!(this instanceof ZuulReporter)) {
-    return new ZuulReporter(runFn)
+    return new ZuulReporter()
   }
 
-  this.runFn = runFn
   this.stats = {
     passed: 0,
     pending: 0,
@@ -137,6 +136,9 @@ var ZuulReporter = function (runFn) {
   // this is a problem for auto starting tests like tape
   // we need map file first
   // load map file first then test bundle
+  //
+  // TODO: wrap the bundle in a function, that we can call
+  // to start the tests after loading the source map.
   var self = this
 
   load('/__zuul/test-bundle.js', function (err) {
@@ -145,21 +147,19 @@ var ZuulReporter = function (runFn) {
     }
 
     if (!stackMapper) {
-      return self.start()
+      return
     }
 
     ajax.get('/__zuul/test-bundle.map.json').end(function (err, res) {
       if (err) {
         // ignore map load error
-        return self.start()
+        return
       }
 
       self._source_map = res.body
       try {
         self._mapper = stackMapper(res.body)
       } catch (err) {}
-
-      self.start()
     })
   })
 }
@@ -174,11 +174,6 @@ ZuulReporter.prototype._updateStatus = function () {
   }
 
   this.status.innerHTML = html
-}
-
-// tests are starting
-ZuulReporter.prototype.start = function () {
-  this.runFn()
 }
 
 // all tests done
@@ -275,12 +270,6 @@ ZuulReporter.prototype.test_end = function (test) {
     passed: test.passed
   })
 }
-
-// new suite starting
-ZuulReporter.prototype.suite = function (suite) {}
-
-// suite ended
-ZuulReporter.prototype.suite_end = function (suite) {}
 
 // assertion within test
 ZuulReporter.prototype.assertion = function (details) {
