@@ -1,6 +1,5 @@
 var test = require('tape')
 var Zuul = require('../../')
-var auth = require('../auth')
 
 test('capabilities config', function (t) {
   var config = {
@@ -9,8 +8,6 @@ test('capabilities config', function (t) {
         public: 'private'
       }
     },
-    username: auth.username,
-    key: auth.key,
     sauce_connect: true,
     loopback: 'airtap.local'
   }
