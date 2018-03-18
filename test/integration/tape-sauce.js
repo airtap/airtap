@@ -10,12 +10,21 @@ var verify = require('./verify-common')
 
 test('tape - sauce', function (t) {
   var auth = getAuth()
+
+  if (!process.env.CI && !auth.username && !auth.key) {
+    t.skip('no sauce labs credentials provided')
+    return t.end()
+  } else if (!auth.username || !auth.key) {
+    t.fail('incomplete sauce labs credentials provided')
+    return t.end()
+  }
+
   var config = {
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
     files: [ path.resolve(__dirname, '../fixtures/tape/test.js') ],
     username: auth.username,
-    concurrency: 5,
     key: auth.key,
+    concurrency: 5,
     sauce_connect: true,
     loopback: 'airtap.local'
   }
