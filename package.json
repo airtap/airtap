@@ -67,7 +67,7 @@
   "license": "MIT",
   "scripts": {
     "test": "standard && npm run dependency-check && cross-env DEBUG=airtap* tape test",
-    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i phantomjs -i cross-env -i standard --entry test/index.js --entry test/fixtures/*/*.js --entry frameworks/*.js"
+    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i phantomjs -i cross-env -i standard --entry test/index.js --entry test/fixtures/*/*.js --entry client/*.js"
   },
   "engines": {
     "node": ">=6"
