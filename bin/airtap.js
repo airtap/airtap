@@ -134,8 +134,8 @@ if (program.listBrowsers) {
     })
   } else if (!config.username || !config.key) {
     console.error(chalk.red('Error:'))
-    console.error(chalk.red('Airtap tried to run tests in saucelabs, however no saucelabs credentials were provided.'))
-    console.log(chalk.cyan('See the zuul wiki (https://github.com/defunctzombie/zuul/wiki/Cloud-testing) for info on how to setup cloud testing.'))
+    console.error(chalk.red('Airtap tried to run tests in Sauce Labs, however no credentials were provided.'))
+    console.error(chalk.cyan('See doc/cloud-testing.md for info on how to setup cloud testing.'))
     process.exit(1)
   } else if (!config.browsers) {
     console.error(chalk.red('No cloud browsers specified in .airtap.yml'))
@@ -143,7 +143,7 @@ if (program.listBrowsers) {
   } else {
     sauceBrowsers(config.browsers, function (err, toTest) {
       if (err) {
-        console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
+        console.error(chalk.bold.red('Unable to get available browsers for Sauce Labs'))
         console.error(chalk.red(err.stack))
         return process.exit(1)
       }
