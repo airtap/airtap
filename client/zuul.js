@@ -81,7 +81,7 @@ var ZuulReporter = function () {
   tabSelector.id = 'tab-selector'
   var resultsSelector = document.createElement('a')
   resultsSelector.className = 'selected'
-  resultsSelector.href = '/__zuul'
+  resultsSelector.href = '/airtap'
   resultsSelector.innerHTML = 'Test results'
   resultsSelector.onclick = function (e) {
     var selectors = document.querySelectorAll('#tab-selector a')
@@ -97,7 +97,7 @@ var ZuulReporter = function () {
   }
   tabSelector.appendChild(resultsSelector)
   var coverageSelector = document.createElement('a')
-  coverageSelector.href = '/__zuul/coverage'
+  coverageSelector.href = '/airtap/coverage'
   coverageSelector.innerHTML = 'Code coverage'
   coverageSelector.onclick = function (e) {
     var selectors = document.querySelectorAll('#tab-selector a')
@@ -141,7 +141,7 @@ var ZuulReporter = function () {
   // to start the tests after loading the source map.
   var self = this
 
-  load('/__zuul/test-bundle.js', function (err) {
+  load('/airtap/test-bundle.js', function (err) {
     if (err) {
       return self.done(err)
     }
@@ -150,7 +150,7 @@ var ZuulReporter = function () {
       return
     }
 
-    ajax.get('/__zuul/test-bundle.map.json').end(function (err, res) {
+    ajax.get('/airtap/test-bundle.map.json').end(function (err, res) {
       if (err) {
         // ignore map load error
         return
@@ -194,7 +194,7 @@ ZuulReporter.prototype.done = function (err) {
   // add coverage tab content
   if (window.__coverage__) {
     var coverageTab = document.getElementById('code-coverage-tab')
-    coverageTab.innerHTML = '<iframe frameborder="0" src="/__zuul/coverage"></iframe>'
+    coverageTab.innerHTML = '<iframe frameborder="0" src="/airtap/coverage"></iframe>'
   }
 
   bufferMessage({
@@ -257,7 +257,7 @@ ZuulReporter.prototype.test_end = function (test) {
   var cov = window.__coverage__
 
   if (cov) {
-    ajax.post('/__zuul/coverage/client')
+    ajax.post('/airtap/coverage/client')
       .send(cov)
       .end(function (err, res) {
         if (err) {
