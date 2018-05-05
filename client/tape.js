@@ -1,12 +1,12 @@
 var finished = require('tap-finished')
 var parser = require('tap-parser')
-var ZuulReporter = require('./zuul')
+var Reporter = require('./reporter')
 
 if (typeof global.console === 'undefined') {
   global.console = {}
 }
 
-var reporter = ZuulReporter()
+var reporter = Reporter()
 var previousTest
 var assertions = 0
 var done = false
