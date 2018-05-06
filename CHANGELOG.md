@@ -5,28 +5,28 @@
 ## [0.0.5] - 2018-05-05
 
 ### Added
-* Add `test-local-electron` script (\#134) (@vweevers)
-* Test `AbstractBrowser` and implementations (\#146) (@vweevers)
-* Add node 10 to Travis (\#151) (@ralphtheninja)
+* Add `test-local-electron` script (#134) (@vweevers)
+* Test `AbstractBrowser` and implementations (#146) (@vweevers)
+* Add node 10 to Travis (#151) (@ralphtheninja)
 
 ### Changed
-* Refactor `lib/get-saucelabs-browser.js` and `lib/flatten-browserlist.js` by using `sauce-browsers` module (\#126) (@lpinca)
-* Rename `status` and `results` to `stats` for consistency (\#131) (@vweevers)
-* Terminate connections by using `server-destroy` module (\#132) (@vweevers)
-* Clean up `ZuulReporter` (\#133) (@vweevers)
-* Rename `SauceBrowser#browser` to `webdriver` (\#136) (@vweevers)
-* Introduce `AbstractBrowser` (\#135) (@vweevers)
-* Clean up tests and only run sauce tests on Travis (\#141) (@ralphtheninja)
-* Rename `frameworks/` to `client/` (\#142) (@ralphtheninja)
-* Move `.stats` to `AbstractBrowser` (\#143) (@ralphtheninja)
-* Prefer `debug()` over `console.log()` (\#148) (@vweevers)
-* Clean up `zuul` naming (\#150) (@ralphtheninja)
+* Refactor `lib/get-saucelabs-browser.js` and `lib/flatten-browserlist.js` by using `sauce-browsers` module (#126) (@lpinca)
+* Rename `status` and `results` to `stats` for consistency (#131) (@vweevers)
+* Terminate connections by using `server-destroy` module (#132) (@vweevers)
+* Clean up `ZuulReporter` (#133) (@vweevers)
+* Rename `SauceBrowser#browser` to `webdriver` (#136) (@vweevers)
+* Introduce `AbstractBrowser` (#135) (@vweevers)
+* Clean up tests and only run sauce tests on Travis (#141) (@ralphtheninja)
+* Rename `frameworks/` to `client/` (#142) (@ralphtheninja)
+* Move `.stats` to `AbstractBrowser` (#143) (@ralphtheninja)
+* Prefer `debug()` over `console.log()` (#148) (@vweevers)
+* Clean up `zuul` naming (#150) (@ralphtheninja)
 
 ### Removed
-* Remove unused `tags` option (\#149) (@vweevers)
+* Remove unused `tags` option (#149) (@vweevers)
 
 ### Fixed
-* Fix cli test on windows (\#145) (@vweevers)
+* Fix cli test on windows (#145) (@vweevers)
 
 ## [0.0.4] - 2018-03-02
 
