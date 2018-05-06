@@ -1,6 +1,6 @@
 {
   "name": "airtap",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "JavaScript browser testing in the cloud",
   "main": "lib/airtap.js",
   "dependencies": {
