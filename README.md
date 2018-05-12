@@ -94,9 +94,9 @@ It includes advanced usage like how to run an additional server to support tests
 
 ## Big Thanks
 
-Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com).
+Cross-browser Testing Platform and Open Source ♥ Provided by [Sauce Labs](https://saucelabs.com).
 
-![Sauce Labs logo](./doc/images/sauce-labs-logo.png)
+[![Sauce Labs logo](./doc/images/sauce-labs-logo.svg)](https://saucelabs.com)
 
 ## License
 
