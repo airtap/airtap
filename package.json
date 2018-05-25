@@ -5,7 +5,7 @@
   "main": "lib/airtap.js",
   "dependencies": {
     "batch": "~0.6.1",
-    "browserify": "~16.2.2",
+    "browserify": "~13.3.0",
     "browserify-istanbul": "~3.0.1",
     "chalk": "^2.3.1",
     "commander": "~2.15.1",
