@@ -96,7 +96,7 @@ It includes advanced usage like how to run an additional server to support tests
 
 Cross-browser Testing Platform and Open Source ♥ Provided by [Sauce Labs](https://saucelabs.com).
 
-[![Sauce Labs logo](./doc/images/sauce-labs-logo.svg)](https://saucelabs.com) [![Greenkeeper badge](https://badges.greenkeeper.io/airtap/airtap.svg)](https://greenkeeper.io/)
+[![Sauce Labs logo](./doc/images/sauce-labs-logo.svg)](https://saucelabs.com)
 
 ## License
 
