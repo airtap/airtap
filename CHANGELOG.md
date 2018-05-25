@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [0.0.7] - 2018-05-25
+
+### Changed
+* Update `airtap-browser` to `0.0.2` (@ralphtheninja)
+* Update dependencies to enable Greenkeeper (includes `wd` fix) (@feross, @greenkeeper)
+
+### Removed
+* Remove support for `PhantomJS` (@ralphtheninja)
+
 ## [0.0.6] - 2018-05-24
 
 ### Changed
@@ -13,28 +22,28 @@
 ## [0.0.5] - 2018-05-05
 
 ### Added
-* Add `test-local-electron` script (#134) (@vweevers)
-* Test `AbstractBrowser` and implementations (#146) (@vweevers)
-* Add node 10 to Travis (#151) (@ralphtheninja)
+* Add `test-local-electron` script (@vweevers)
+* Test `AbstractBrowser` and implementations (@vweevers)
+* Add node 10 to Travis (@ralphtheninja)
 
 ### Changed
-* Refactor `lib/get-saucelabs-browser.js` and `lib/flatten-browserlist.js` by using `sauce-browsers` module (#126) (@lpinca)
-* Rename `status` and `results` to `stats` for consistency (#131) (@vweevers)
-* Terminate connections by using `server-destroy` module (#132) (@vweevers)
-* Clean up `ZuulReporter` (#133) (@vweevers)
-* Rename `SauceBrowser#browser` to `webdriver` (#136) (@vweevers)
-* Introduce `AbstractBrowser` (#135) (@vweevers)
-* Clean up tests and only run sauce tests on Travis (#141) (@ralphtheninja)
-* Rename `frameworks/` to `client/` (#142) (@ralphtheninja)
-* Move `.stats` to `AbstractBrowser` (#143) (@ralphtheninja)
-* Prefer `debug()` over `console.log()` (#148) (@vweevers)
-* Clean up `zuul` naming (#150) (@ralphtheninja)
+* Refactor `lib/get-saucelabs-browser.js` and `lib/flatten-browserlist.js` by using `sauce-browsers` module (@lpinca)
+* Rename `status` and `results` to `stats` for consistency (@vweevers)
+* Terminate connections by using `server-destroy` module (@vweevers)
+* Clean up `ZuulReporter` (@vweevers)
+* Rename `SauceBrowser#browser` to `webdriver` (@vweevers)
+* Introduce `AbstractBrowser` (@vweevers)
+* Clean up tests and only run sauce tests on Travis (@ralphtheninja)
+* Rename `frameworks/` to `client/` (@ralphtheninja)
+* Move `.stats` to `AbstractBrowser` (@ralphtheninja)
+* Prefer `debug()` over `console.log()` (@vweevers)
+* Clean up `zuul` naming (@ralphtheninja)
 
 ### Removed
-* Remove unused `tags` option (#149) (@vweevers)
+* Remove unused `tags` option (@vweevers)
 
 ### Fixed
-* Fix cli test on windows (#145) (@vweevers)
+* Fix cli test on windows (@vweevers)
 
 ## [0.0.4] - 2018-03-02
 
@@ -137,7 +146,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.6...HEAD
+[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.7...HEAD
+[0.0.7]: https://github.com/airtap/airtap/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/airtap/airtap/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/airtap/airtap/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/airtap/airtap/compare/v0.0.3...v0.0.4
