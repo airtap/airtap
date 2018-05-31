@@ -105,6 +105,7 @@ if (program.listBrowsers) {
   } catch (err) {}
 
   config.name = config.name || pkg.name || 'airtap'
+  config.watchify = !process.env.CI
 
   if (config.builder) {
     // relative path will needs to be under project dir
