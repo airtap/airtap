@@ -35,7 +35,7 @@
     "tap-finished": "~0.0.1",
     "tap-parser": "~5.4.0",
     "watchify": "~3.11.0",
-    "wd": "~1.7.0",
+    "wd": "~1.8.0",
     "yamljs": "~0.3.0"
   },
   "devDependencies": {
