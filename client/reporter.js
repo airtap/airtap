@@ -254,18 +254,18 @@ ZuulReporter.prototype.test_end = function (test) {
 
   this._updateStatus()
 
-  var cov = window.__coverage__
-
-  if (cov) {
-    ajax.post('/airtap/coverage/client')
-      .send(cov)
-      .end(function (err, res) {
-        if (err) {
-          console.log('error in coverage reports')
-          console.log(err)
-        }
-      })
-  }
+  // TODO disable coverage until we find replacement for istanbul-middleware
+  // var cov = window.__coverage__
+  // if (cov) {
+  //   ajax.post('/airtap/coverage/client')
+  //     .send(cov)
+  //     .end(function (err, res) {
+  //       if (err) {
+  //         console.log('error in coverage reports')
+  //         console.log(err)
+  //       }
+  //     })
+  // }
 
   bufferMessage({
     type: 'test_end',
