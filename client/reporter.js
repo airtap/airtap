@@ -254,7 +254,7 @@ ZuulReporter.prototype.test_end = function (test) {
 
   this._updateStatus()
 
-  // TODO coverage disable until we find replacement for istanbul-middleware
+  // TODO disable coverage until we find replacement for istanbul-middleware
   // var cov = window.__coverage__
   // if (cov) {
   //   ajax.post('/airtap/coverage/client')
