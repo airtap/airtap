@@ -39,7 +39,7 @@ test('tape - sauce', function (t) {
 
     browsers.forEach(function (info) {
       zuul.browser({
-        name: info.api_name,
+        browser: info.api_name,
         version: info.short_version,
         platform: info.os
       })

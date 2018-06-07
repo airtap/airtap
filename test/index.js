@@ -1,7 +1,7 @@
 require('./unit/aggregate-browsers')
 require('./unit/airtap')
 require('./unit/browserify-builder')
-require('./unit/capabilities')
+require('./unit/cli')
 
 require('./abstract-browser/abstract-browser')
 require('./abstract-browser/electron-browser')

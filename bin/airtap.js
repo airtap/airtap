@@ -151,7 +151,7 @@ if (program.listBrowsers) {
         (byOs[key] = byOs[key] || []).push(info.short_version)
 
         zuul.browser({
-          name: info.api_name,
+          browser: info.api_name,
           version: info.short_version,
           platform: info.os
         })

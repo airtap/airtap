@@ -1,30 +1,49 @@
-const test = require('tape')
-const path = require('path')
-const exec = require('child_process').exec
-const airtap = path.resolve(__dirname, '../../bin/airtap.js')
-const messages = require('../../lib/messages')
+var test = require('tape')
+var Zuul = require('../../')
 
-test('exits cleanly and does nothing if no secure travis env', t => {
-  const env = Object.assign({}, process.env, {
-    TRAVIS_SECURE_ENV_VARS: 'false',
-    FORCE_COLOR: '0'
+test('capabilities config', function (t) {
+  var config = {
+    capabilities: {
+      'custom-data': {
+        public: 'private'
+      }
+    },
+    sauce_connect: true,
+    loopback: 'airtap.local'
+  }
+
+  var zuul = Zuul(config)
+
+  zuul.browser({
+    browser: 'internet explorer',
+    version: '11'
   })
-  exec('node ' + airtap, { env }, (err, stdout, stderr) => {
-    t.error(err, 'no error')
-    t.equal(stdout.trim(), messages.SKIPPING_AIRTAP)
-    t.end()
-  })
+
+  var browser = zuul._browsers[0]
+  t.same(browser._conf.capabilities, config.capabilities)
+  t.end()
 })
 
-test('exits with error if no files are specified', t => {
-  const env = Object.assign({}, process.env, {
-    FORCE_COLOR: '0'
+test('browsers are deduped', function (t) {
+  var zuul = Zuul({})
+
+  zuul.browser({
+    browser: 'iphone',
+    version: '11.3',
+    platform: 'Mac 10.13'
   })
-  // Delete this to be sure it's undefined
-  delete env.TRAVIS_SECURE_ENV_VARS
-  exec('node ' + airtap, { env }, (err, stdout, stderr) => {
-    t.ok(err, 'should error')
-    t.equal(stderr.trim(), messages.NO_FILES)
-    t.end()
+  zuul.browser({
+    browser: 'iphone',
+    version: '11.3',
+    platform: 'Mac 10.13'
   })
+
+  var browsers = zuul._browsers
+
+  t.is(browsers.length, 1, 'should be deduped')
+  t.is(browsers[0]._conf.browser, 'iphone', '.browser correct')
+  t.is(browsers[0]._conf.version, '11.3', '.version correct')
+  t.is(browsers[0]._conf.platform, 'Mac 10.13', '.platform correct')
+
+  t.end()
 })
