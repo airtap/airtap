@@ -20,7 +20,7 @@
     "hbs": "~4.0.1",
     "highlight.js": "~9.12.0",
     "http-proxy": "~1.17.0",
-    "humanize-duration": "~3.14.0",
+    "humanize-duration": "~3.15.0",
     "load-script": "~1.0.0",
     "lodash": "~4.17.5",
     "opener": "~1.4.3",
