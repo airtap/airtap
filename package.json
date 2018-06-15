@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "airtap-browsers": "0.0.2",
-    "cross-env": "~5.1.3",
+    "cross-env": "~5.2.0",
     "dependency-check": "^3.0.0",
     "electron": "^1.8.2",
     "standard": "^11.0.0",
