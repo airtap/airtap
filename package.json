@@ -41,7 +41,7 @@
     "airtap-browsers": "0.0.2",
     "cross-env": "~5.2.0",
     "dependency-check": "^3.0.0",
-    "electron": "^1.8.2",
+    "electron": "^2.0.3",
     "standard": "^11.0.0",
     "tape": "^4.8.0",
     "through2": "^2.0.3"
