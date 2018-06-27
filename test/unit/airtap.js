@@ -1,5 +1,5 @@
 var test = require('tape')
-var Zuul = require('../../')
+var Airtap = require('../../')
 
 test('capabilities config', function (t) {
   var config = {
@@ -12,33 +12,33 @@ test('capabilities config', function (t) {
     loopback: 'airtap.local'
   }
 
-  var zuul = Zuul(config)
+  var airtap = Airtap(config)
 
-  zuul.browser({
+  airtap.browser({
     browser: 'internet explorer',
     version: '11'
   })
 
-  var browser = zuul._browsers[0]
+  var browser = airtap._browsers[0]
   t.same(browser._conf.capabilities, config.capabilities)
   t.end()
 })
 
 test('browsers are deduped', function (t) {
-  var zuul = Zuul({})
+  var airtap = Airtap({})
 
-  zuul.browser({
+  airtap.browser({
     browser: 'iphone',
     version: '11.3',
     platform: 'Mac 10.13'
   })
-  zuul.browser({
+  airtap.browser({
     browser: 'iphone',
     version: '11.3',
     platform: 'Mac 10.13'
   })
 
-  var browsers = zuul._browsers
+  var browsers = airtap._browsers
 
   t.is(browsers.length, 1, 'should be deduped')
   t.is(browsers[0]._conf.browser, 'iphone', '.browser correct')

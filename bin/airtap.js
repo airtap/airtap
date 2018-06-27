@@ -18,7 +18,7 @@ var os = require('os')
 var findNearestFile = require('find-nearest-file')
 var sauceBrowsers = require('sauce-browsers/callback')
 
-var Zuul = require('../lib/airtap')
+var Airtap = require('../lib/airtap')
 var aggregate = require('../lib/aggregate-browsers')
 
 program
@@ -116,14 +116,14 @@ if (program.listBrowsers) {
     config.builder = require.resolve(config.builder)
   }
 
-  var zuul = Zuul(config)
+  var airtap = Airtap(config)
 
   if (config.local) {
-    zuul.run(function (err, passed) {
+    airtap.run(function (err, passed) {
       if (err) throw err
     })
   } else if (config.electron) {
-    zuul.run(function (err, passed) {
+    airtap.run(function (err, passed) {
       if (err) throw err
       process.exit(passed ? 0 : 1)
     })
@@ -150,7 +150,7 @@ if (program.listBrowsers) {
         var key = info.api_name + ' @ ' + info.os;
         (byOs[key] = byOs[key] || []).push(info.short_version)
 
-        zuul.browser({
+        airtap.browser({
           browser: info.api_name,
           version: info.short_version,
           platform: info.os
@@ -166,7 +166,7 @@ if (program.listBrowsers) {
       var failedBrowsersCount = 0
       var lastOutputName
 
-      zuul.on('browser', function (browser) {
+      airtap.on('browser', function (browser) {
         browsers.push(browser)
 
         var name = browser.toString()
@@ -237,18 +237,18 @@ if (program.listBrowsers) {
         })
       })
 
-      zuul.on('restart', function (browser) {
+      airtap.on('restart', function (browser) {
         var name = browser.toString()
         console.log(chalk`{red - restarting: ${name}}`)
       })
 
-      zuul.on('error', function (err) {
+      airtap.on('error', function (err) {
         shutdownAllBrowsers(function () {
           throw err
         })
       })
 
-      zuul.run(function (err, passed) {
+      airtap.run(function (err, passed) {
         if (err) throw err
 
         if (failedBrowsersCount > 0) {

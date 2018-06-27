@@ -47,9 +47,9 @@ console.log = function (msg) {
   }
 }
 
-var ZuulReporter = function () {
-  if (!(this instanceof ZuulReporter)) {
-    return new ZuulReporter()
+var Reporter = function () {
+  if (!(this instanceof Reporter)) {
+    return new Reporter()
   }
 
   this.stats = {
@@ -164,7 +164,7 @@ var ZuulReporter = function () {
   })
 }
 
-ZuulReporter.prototype._updateStatus = function () {
+Reporter.prototype._updateStatus = function () {
   var html =
     '<span>' + this.stats.failed + ' <small>failing</small></span> ' +
     '<span>' + this.stats.passed + ' <small>passing</small></span> '
@@ -177,7 +177,7 @@ ZuulReporter.prototype._updateStatus = function () {
 }
 
 // all tests done
-ZuulReporter.prototype.done = function (err) {
+Reporter.prototype.done = function (err) {
   if (err) {
     // TODO: send a message with `type: 'error'`.
     console.error(err)
@@ -205,7 +205,7 @@ ZuulReporter.prototype.done = function (err) {
 }
 
 // new test starting
-ZuulReporter.prototype.test = function (test) {
+Reporter.prototype.test = function (test) {
   var container = document.createElement('div')
   container.className = 'test pending'
 
@@ -221,7 +221,7 @@ ZuulReporter.prototype.test = function (test) {
 }
 
 // reports on skipped tests
-ZuulReporter.prototype.skippedTest = function (test) {
+Reporter.prototype.skippedTest = function (test) {
   this.stats.pending++
 
   var container = document.createElement('div')
@@ -240,7 +240,7 @@ ZuulReporter.prototype.skippedTest = function (test) {
 }
 
 // test ended
-ZuulReporter.prototype.test_end = function (test) {
+Reporter.prototype.test_end = function (test) {
   if (test.passed) {
     this.stats.passed++
   } else {
@@ -275,7 +275,7 @@ ZuulReporter.prototype.test_end = function (test) {
 }
 
 // assertion within test
-ZuulReporter.prototype.assertion = function (details) {
+Reporter.prototype.assertion = function (details) {
   // result (true | false)
   // actual
   // expected
@@ -329,7 +329,7 @@ ZuulReporter.prototype.assertion = function (details) {
   })
 }
 
-ZuulReporter.prototype._renderError = function (stack, frames, message, error) {
+Reporter.prototype._renderError = function (stack, frames, message, error) {
   var mapper = this._mapper
   var str
 
@@ -347,4 +347,4 @@ function bufferMessage (msg) {
   messageBus.push(msg)
 }
 
-module.exports = ZuulReporter
+module.exports = Reporter

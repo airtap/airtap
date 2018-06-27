@@ -4,7 +4,7 @@ var os = require('os')
 var fs = require('fs')
 var yaml = require('yamljs')
 var sauceBrowsers = require('sauce-browsers/callback')
-var Zuul = require('../../')
+var Airtap = require('../../')
 var browsersToTest = require('airtap-browsers').pullRequest
 var verify = require('./verify-common')
 
@@ -29,7 +29,7 @@ test('tape - sauce', function (t) {
     loopback: 'airtap.local'
   }
 
-  var zuul = Zuul(config)
+  var airtap = Airtap(config)
 
   sauceBrowsers(browsersToTest, function (err, browsers) {
     if (err) {
@@ -38,13 +38,13 @@ test('tape - sauce', function (t) {
     }
 
     browsers.forEach(function (info) {
-      zuul.browser({
+      airtap.browser({
         browser: info.api_name,
         version: info.short_version,
         platform: info.os
       })
     })
-    verify(t, zuul)
+    verify(t, airtap)
   })
 })
 
