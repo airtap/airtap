@@ -1,6 +1,6 @@
 var test = require('tape')
 var path = require('path')
-var Zuul = require('../../')
+var Airtap = require('../../')
 var verify = require('./verify-common')
 
 test('tape - electron', function (t) {
@@ -10,5 +10,5 @@ test('tape - electron', function (t) {
     electron: true,
     concurrency: 1
   }
-  verify(t, Zuul(config))
+  verify(t, Airtap(config))
 })

@@ -1,8 +1,8 @@
-module.exports = function (t, zuul) {
-  var count = zuul._browsers.length || 1
+module.exports = function (t, airtap) {
+  var count = airtap._browsers.length || 1
   t.plan(count * 8 + 2)
 
-  zuul.on('browser', function (browser) {
+  airtap.on('browser', function (browser) {
     var consoleOutput = []
 
     browser.on('start', function (reporter) {
@@ -32,11 +32,11 @@ module.exports = function (t, zuul) {
     })
   })
 
-  zuul.on('error', function (err) {
+  airtap.on('error', function (err) {
     t.fail(err.message)
   })
 
-  zuul.run(function (err, passed) {
+  airtap.run(function (err, passed) {
     t.error(err, 'no error')
     t.is(passed, false, 'test should not pass')
   })
