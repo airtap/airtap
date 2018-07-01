@@ -36,7 +36,7 @@ program
   .option('--browser-retries <retries>', 'number of retries allowed when trying to start a cloud browser, default to 6')
   .option('--browser-output-timeout <timeout>', 'how much time to wait between two test results, default to -1 (no timeout)')
   .option('--concurrency <n>', 'specify the number of concurrent browsers to test')
-  .option('--no-coverage', 'disable code coverage analysis with istanbul')
+  .option('--coverage', 'enable code coverage analysis with istanbul')
   .option('--no-instrument', 'disable code coverage instrumentation with istanbul')
   .option('--open', 'open a browser automatically. only used when --local is specified')
   .parse(process.argv)
