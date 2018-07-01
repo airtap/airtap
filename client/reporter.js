@@ -184,6 +184,7 @@ Reporter.prototype.done = function (err) {
   }
 
   var passed = !err && this.stats.failed === 0 && this.stats.passed > 0
+  var stats = this.stats
 
   if (passed) {
     this.header.className += ' passed'
@@ -195,13 +196,28 @@ Reporter.prototype.done = function (err) {
   if (window.__coverage__) {
     var coverageTab = document.getElementById('code-coverage-tab')
     coverageTab.innerHTML = '<iframe frameborder="0" src="/airtap/coverage"></iframe>'
+
+    ajax.post('/airtap/coverage/reports')
+      .send(window.__coverage__)
+      .end(function (err, res) {
+        if (err) {
+          console.error('error in coverage reports')
+          console.error(err)
+        }
+
+        finish()
+      })
+  } else {
+    finish()
   }
 
-  bufferMessage({
-    type: 'done',
-    stats: this.stats,
-    passed: passed
-  })
+  function finish () {
+    bufferMessage({
+      type: 'done',
+      stats: stats,
+      passed: passed
+    })
+  }
 }
 
 // new test starting
@@ -253,19 +269,6 @@ Reporter.prototype.test_end = function (test) {
   this._current_container = this._current_container.parentNode
 
   this._updateStatus()
-
-  // TODO disable coverage until we find replacement for istanbul-middleware
-  // var cov = window.__coverage__
-  // if (cov) {
-  //   ajax.post('/airtap/coverage/client')
-  //     .send(cov)
-  //     .end(function (err, res) {
-  //       if (err) {
-  //         console.log('error in coverage reports')
-  //         console.log(err)
-  //       }
-  //     })
-  // }
 
   bufferMessage({
     type: 'test_end',

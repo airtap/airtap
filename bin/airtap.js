@@ -36,8 +36,7 @@ program
   .option('--browser-retries <retries>', 'number of retries allowed when trying to start a cloud browser, default to 6')
   .option('--browser-output-timeout <timeout>', 'how much time to wait between two test results, default to -1 (no timeout)')
   .option('--concurrency <n>', 'specify the number of concurrent browsers to test')
-  .option('--no-coverage', 'disable code coverage analysis with istanbul')
-  .option('--no-instrument', 'disable code coverage instrumentation with istanbul')
+  .option('--coverage', 'enable code coverage analysis with istanbul')
   .option('--open', 'open a browser automatically. only used when --local is specified')
   .parse(process.argv)
 
@@ -51,7 +50,6 @@ var config = {
   server: program.server,
   concurrency: program.concurrency,
   coverage: program.coverage,
-  instrument: program.instrument,
   open: program.open,
   browser_retries: program.browserRetries && parseInt(program.browserRetries, 10),
   browser_output_timeout: program.browserOutputTimeout && parseInt(program.browserOutputTimeout, 10),
