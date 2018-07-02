@@ -28,13 +28,13 @@ In order for the above Travis configuration to work, we need to create a file wi
 
 ```json
 {
-    "name": "<put your project name here>",
-    "devDependencies": {
-        "airtap": "3.0.0"
-    },
-    "scripts": {
-        "test": "airtap -- test.js"
-    }
+  "name": "<put your project name here>",
+  "devDependencies": {
+    "airtap": "3.0.0"
+  },
+  "scripts": {
+    "test": "airtap -- test.js"
+  }
 }
 ```
 
@@ -43,7 +43,39 @@ That's it! Lets look at the important lines.
 * `devDependencies` simply tells [npm](https://npmjs.org) what to install before running tests. Travis will actually do this for us via the `npm install` command in our project directory.
 * `scripts` will be run by Travis via the `npm test` command to actually run our tests. Tests will consider passing if this command returns successfully. You can actually test it locally by running `npm test` in your terminal.
 
-### 5. Final step
+### 5. Code coverage (optional)
+
+Code coverage is disabled by default so this step is optional. You opt-in by using the `--coverage` cli option. This will collect code coverage per browser into `.nyc-output/airtap-<hash>.json` in Istanbul 1.0 format. Later you can generate reports by using e.g. `nyc report`, which takes care of merging files from multiple browsers.
+
+In local mode, `airtap` writes to `.nyc-report/airtap-local.json`, so that no cleanup is necessary between repeated runs, e.g. if you refresh the page.
+
+A typical setup in Travis could look like:
+
+```json
+{
+  "scripts": {
+    "test": "airtap --sauce-connect --loopback airtap.local --coverage test.js"
+  }
+}
+```
+
+Additionally, you can add hook in Travis to post the results to `coveralls`:
+
+```yaml
+# .travis.yml
+after_success: npm run coverage
+```
+
+```json
+{
+  "scripts": {
+    "test": "airtap --sauce-connect --loopback airtap.local --coverage test.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  }
+}
+```
+
+### 6. Final step
 
 The final step is very important. Remember how we configured the `.airtaprc` file in our local home directory with our sauce username and key? Well, we need to somehow get those keys to Travis. Again we *don't want to commit cleartext keys* into our repo. Luckily Travis has an awesome feature called [secure environment variables](http://about.travis-ci.org/docs/user/build-configuration/#Secure-environment-variables). This lets us encrypt those environment variables and make them available to our build on Travis.
 
