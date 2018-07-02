@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [0.0.9] - 2018-07-02
+
+### Changed
+* Upgrade `sauce-browsers` from `~1.2.0` to `~2.0.0` (@ralphtheninja)
+* Upgrade `commander` from `~2.15.1` to `~2.16.0` (@ralphtheninja)
+
+### Added
+* Add `--coverage` cli option to export browser coverage to `.nyc-output/` folder (@vweevers)
+
+### Removed
+* Remove `--no-coverage` cli option (@vweevers)
+* Remove `--no-instrument` cli option (@vweevers)
+
 ## [0.0.8] - 2018-06-27
 
 ### Changed
@@ -167,7 +180,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.8...HEAD
+[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.9...HEAD
+[0.0.9]: https://github.com/airtap/airtap/compare/v0.0.8...v0.0.9
 [0.0.8]: https://github.com/airtap/airtap/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/airtap/airtap/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/airtap/airtap/compare/v0.0.5...v0.0.6
