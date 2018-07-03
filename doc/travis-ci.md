@@ -59,7 +59,7 @@ A typical setup in Travis could look like:
 }
 ```
 
-Additionally, you can add hook in Travis to post the results to `coveralls`:
+Additionally, you can configure Travis to post the results to `coveralls`:
 
 ```yaml
 # .travis.yml
