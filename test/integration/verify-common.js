@@ -1,4 +1,4 @@
-module.exports = function (t, airtap) {
+module.exports = function (t, airtap, callback) {
   var count = airtap._browsers.length || 1
   t.plan(count * 8 + 2)
 
@@ -43,5 +43,6 @@ module.exports = function (t, airtap) {
   airtap.run(function (err, passed) {
     t.error(err, 'no error')
     t.is(passed, false, 'test should not pass')
+    if (callback) callback()
   })
 }
