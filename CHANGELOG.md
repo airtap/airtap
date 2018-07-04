@@ -7,6 +7,7 @@
 ### Changed
 * Upgrade `sauce-browsers` from `~1.2.0` to `~2.0.0` (@ralphtheninja)
 * Upgrade `commander` from `~2.15.1` to `~2.16.0` (@ralphtheninja)
+* Allow for retries in integration test (@vweevers)
 
 ### Added
 * Add `--coverage` cli option to export browser coverage to `.nyc-output/` folder (@vweevers)
