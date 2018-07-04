@@ -1,9 +1,10 @@
-module.exports = function (t, airtap) {
+module.exports = function (t, airtap, callback) {
   var count = airtap._browsers.length || 1
   t.plan(count * 8 + 2)
 
   airtap.on('browser', function (browser) {
     var consoleOutput = []
+    var inits = 0
 
     browser.on('start', function (reporter) {
       reporter.on('console', function (msg) {
@@ -12,11 +13,14 @@ module.exports = function (t, airtap) {
     })
 
     browser.on('init', function () {
-      t.pass('browser.on.init called')
+      // If there's a Sauce Labs error, init will be emitted on each retry.
+      inits++
     })
 
     browser.on('done', function (results) {
       var endOfOutput = consoleOutput.slice(-5)
+
+      t.ok(inits > 0, 'browser emitted init ' + inits + ' times')
 
       // check that we did output untill the end of the test suite
       // this is the number of asserts in tape
@@ -39,5 +43,6 @@ module.exports = function (t, airtap) {
   airtap.run(function (err, passed) {
     t.error(err, 'no error')
     t.is(passed, false, 'test should not pass')
+    if (callback) callback()
   })
 }
