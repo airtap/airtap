@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-## [0.0.9] - 2018-07-02
+## [0.0.9] - 2018-07-04
 
 ### Changed
 * Upgrade `sauce-browsers` from `~1.2.0` to `~2.0.0` (@ralphtheninja)
