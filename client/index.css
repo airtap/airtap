@@ -32,15 +32,9 @@ html, body {
     font-size: 0.75em;
 }
 
-#zuul, .tabs, .tab {
+#zuul {
     height: 100%;
     width: 100%;
-}
-
-.tab iframe {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
 }
 
 .test {
