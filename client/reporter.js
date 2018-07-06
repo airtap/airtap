@@ -144,7 +144,6 @@ Reporter.prototype.done = function (err) {
     this.header.className += ' failed'
   }
 
-  // add coverage tab content
   if (window.__coverage__) {
     ajax.post('/airtap/coverage/reports')
       .send(window.__coverage__)
