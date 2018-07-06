@@ -25,7 +25,8 @@ var aggregate = require('../lib/aggregate-browsers')
 program
   .version(require('../package.json').version)
   .usage('[options] <files | dir>')
-  .option('--local [port]', 'port for manual testing in a local browser')
+  .option('--local', 'run tests in a local browser of choice')
+  .option('--port <port>', 'port for bouncer server, defaults to a free port')
   .option('--electron', 'run tests in electron. electron must be installed separately.')
   .option('--tunnel-id <id>', 'Tunnel identifier for Sauce Connect, default TRAVIS_JOB_NUMBER or none')
   .option('--loopback <host name>', 'hostname to use instead of localhost, to accomodate Safari and Edge with Sauce Connect. Must resolve to 127.0.0.1')
@@ -44,6 +45,7 @@ program
 var config = {
   files: program.args,
   local: program.local,
+  port: program.port,
   electron: program.electron,
   prj_dir: process.cwd(),
   tunnel_id: program.tunnelId,

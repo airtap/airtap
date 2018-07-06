@@ -50,7 +50,8 @@ test('browsers are deduped', function (t) {
 
 test('loopback is ignored in local mode', function (t) {
   var airtap = Airtap({
-    local: 3000,
+    local: true,
+    port: 3000,
     loopback: 'airtap.local',
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
     files: [ path.resolve(__dirname, '../fixtures/tape/test.js') ]
