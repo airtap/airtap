@@ -17,6 +17,7 @@ var yaml = require('yamljs')
 var os = require('os')
 var findNearestFile = require('find-nearest-file')
 var sauceBrowsers = require('sauce-browsers/callback')
+var open = require('opener')
 
 var Airtap = require('../lib/airtap')
 var aggregate = require('../lib/aggregate-browsers')
@@ -24,9 +25,10 @@ var aggregate = require('../lib/aggregate-browsers')
 program
   .version(require('../package.json').version)
   .usage('[options] <files | dir>')
-  .option('--local [port]', 'port for manual testing in a local browser')
+  .option('--local', 'run tests in a local browser of choice')
+  .option('--port <port>', 'port for bouncer server, defaults to a free port')
   .option('--electron', 'run tests in electron. electron must be installed separately.')
-  .option('--sauce-connect [tunnel-identifier]', 'establish a tunnel with sauce connect. Optionally specify the tunnel-identifier')
+  .option('--tunnel-id <id>', 'Tunnel identifier for Sauce Connect, default TRAVIS_JOB_NUMBER or none')
   .option('--loopback <host name>', 'hostname to use instead of localhost, to accomodate Safari and Edge with Sauce Connect. Must resolve to 127.0.0.1')
   .option('--server <the server script>', 'specify a server script to be run')
   .option('-l, --list-browsers', 'list available browsers and versions')
@@ -43,9 +45,10 @@ program
 var config = {
   files: program.args,
   local: program.local,
+  port: program.port,
   electron: program.electron,
   prj_dir: process.cwd(),
-  sauce_connect: program.sauceConnect,
+  tunnel_id: program.tunnelId,
   loopback: program.loopback,
   server: program.server,
   concurrency: program.concurrency,
@@ -117,8 +120,15 @@ if (program.listBrowsers) {
   var airtap = Airtap(config)
 
   if (config.local) {
-    airtap.run(function (err, passed) {
+    airtap.run(function (err, url) {
       if (err) throw err
+
+      if (config.open) {
+        open(url)
+      } else {
+        console.log('open the following url in a browser:')
+        console.log(url)
+      }
     })
   } else if (config.electron) {
     airtap.run(function (err, passed) {

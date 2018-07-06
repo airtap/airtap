@@ -2,6 +2,14 @@
 
 This document describes breaking changes and how to upgrade. For a complete list of changes including minor and patch releases, please refer to the [changelog](CHANGELOG.md).
 
+## Unreleased
+
+The `--local [port]` option has been split into two options: `--local` and `--port <port>`. Previously, if you didn't specify a port and `--local` was the last flag, you had to do `--local -- test.js`. This is no longer the case. If you do want to specify a port, you must now do `--local --port 8000`.
+
+The `sauce_connect` option has been removed, as Sauce Connect is the default and only tunnel. You can remove `sauce_connect` from `.airtap.yml` and `--sauce-connect` from command line arguments.
+
+If you used this option to specify a custom tunnel identifier for Sauce Connect (e.g. `--sauce-connect <id>`), you must now do `--tunnel-id <id>` on the command line or `tunnel_id: <id>` in `.airtap.yml`.
+
 ## Migrating from Zuul to Airtap 0.0.1
 
 ### Installation

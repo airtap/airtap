@@ -54,7 +54,7 @@ A typical setup in Travis could look like:
 ```json
 {
   "scripts": {
-    "test": "airtap --sauce-connect --loopback airtap.local --coverage test.js"
+    "test": "airtap --loopback airtap.local --coverage test.js"
   }
 }
 ```
@@ -69,7 +69,7 @@ after_success: npm run coverage
 ```json
 {
   "scripts": {
-    "test": "airtap --sauce-connect --loopback airtap.local --coverage test.js",
+    "test": "airtap --loopback airtap.local --coverage test.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   }
 }
