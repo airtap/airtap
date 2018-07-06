@@ -17,6 +17,7 @@ var yaml = require('yamljs')
 var os = require('os')
 var findNearestFile = require('find-nearest-file')
 var sauceBrowsers = require('sauce-browsers/callback')
+var open = require('opener')
 
 var Airtap = require('../lib/airtap')
 var aggregate = require('../lib/aggregate-browsers')
@@ -117,8 +118,15 @@ if (program.listBrowsers) {
   var airtap = Airtap(config)
 
   if (config.local) {
-    airtap.run(function (err, passed) {
+    airtap.run(function (err, url) {
       if (err) throw err
+
+      if (config.open) {
+        open(url)
+      } else {
+        console.log('open the following url in a browser:')
+        console.log(url)
+      }
     })
   } else if (config.electron) {
     airtap.run(function (err, passed) {
