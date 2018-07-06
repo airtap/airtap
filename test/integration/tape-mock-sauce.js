@@ -14,7 +14,6 @@ test('mock sauce with retry', function (t) {
     username: 'mock-username',
     key: 'mock-key',
     concurrency: 5,
-    sauce_connect: false,
     loopback: 'localhost'
   })
 

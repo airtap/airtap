@@ -25,7 +25,6 @@ test('tape - sauce', function (t) {
     username: auth.username,
     key: auth.key,
     concurrency: 5,
-    sauce_connect: true,
     loopback: 'airtap.local'
   }
 

@@ -8,7 +8,6 @@ test('capabilities config', function (t) {
         public: 'private'
       }
     },
-    sauce_connect: true,
     loopback: 'airtap.local'
   }
 
