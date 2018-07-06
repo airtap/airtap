@@ -1,4 +1,5 @@
 var test = require('tape')
+var path = require('path')
 var Airtap = require('../../')
 
 test('capabilities config', function (t) {
@@ -45,4 +46,19 @@ test('browsers are deduped', function (t) {
   t.is(browsers[0]._conf.platform, 'Mac 10.13', '.platform correct')
 
   t.end()
+})
+
+test('loopback is ignored in local mode', function (t) {
+  var airtap = Airtap({
+    local: 3000,
+    loopback: 'airtap.local',
+    prj_dir: path.resolve(__dirname, '../fixtures/tape'),
+    files: [ path.resolve(__dirname, '../fixtures/tape/test.js') ]
+  })
+
+  airtap.run(function (err, url, close) {
+    t.ifError(err, 'no error')
+    t.is(url, 'http://localhost:3000/airtap')
+    close(t.end.bind(t))
+  })
 })
