@@ -76,60 +76,12 @@ var Reporter = function () {
   sub.innerHTML = navigator.userAgent
   main.appendChild(sub)
 
-  // Add tab selector
-  var tabSelector = document.createElement('div')
-  tabSelector.id = 'tab-selector'
-  var resultsSelector = document.createElement('a')
-  resultsSelector.className = 'selected'
-  resultsSelector.href = '/airtap'
-  resultsSelector.innerHTML = 'Test results'
-  resultsSelector.onclick = function (e) {
-    var selectors = document.querySelectorAll('#tab-selector a')
-    for (var i = 0; i < selectors.length; i++) {
-      selectors[i].className = ''
-    }
-
-    e.target.className = 'selected'
-
-    document.getElementById('test-results-tab').className = 'tab'
-    document.getElementById('code-coverage-tab').className = 'tab hidden'
-    e.preventDefault()
-  }
-  tabSelector.appendChild(resultsSelector)
-  var coverageSelector = document.createElement('a')
-  coverageSelector.href = '/airtap/coverage'
-  coverageSelector.innerHTML = 'Code coverage'
-  coverageSelector.onclick = function (e) {
-    var selectors = document.querySelectorAll('#tab-selector a')
-    for (var i = 0; i < selectors.length; i++) {
-      selectors[i].className = ''
-    }
-
-    e.target.className = 'selected'
-
-    document.getElementById('test-results-tab').className = 'tab hidden'
-    document.getElementById('code-coverage-tab').className = 'tab'
-    e.preventDefault()
-  }
-  tabSelector.appendChild(coverageSelector)
-  main.appendChild(tabSelector)
-
-  // Add tabs and their content containers
-  var tabs = document.createElement('div')
-  tabs.className = 'tabs'
-  var testResultsTab = document.createElement('div')
-  testResultsTab.className = 'tab'
-  testResultsTab.id = 'test-results-tab'
-  tabs.appendChild(testResultsTab)
-  var codeCoverageTab = document.createElement('div')
-  codeCoverageTab.className = 'tab hidden'
-  codeCoverageTab.id = 'code-coverage-tab'
-  tabs.appendChild(codeCoverageTab)
-  main.appendChild(tabs)
-
+  // Create div for the test results
+  var testResults = document.createElement('div')
+  main.appendChild(testResults)
   document.body.appendChild(main)
 
-  this._current_container = testResultsTab
+  this._current_container = testResults
   this._mapper = undefined
 
   // load test bundle and trigger tests to start
@@ -192,11 +144,7 @@ Reporter.prototype.done = function (err) {
     this.header.className += ' failed'
   }
 
-  // add coverage tab content
   if (window.__coverage__) {
-    var coverageTab = document.getElementById('code-coverage-tab')
-    coverageTab.innerHTML = '<iframe frameborder="0" src="/airtap/coverage"></iframe>'
-
     ajax.post('/airtap/coverage/reports')
       .send(window.__coverage__)
       .end(function (err, res) {
