@@ -198,8 +198,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v0.0.10...HEAD
-[0.0.10]: https://github.com/airtap/airtap/compare/v0.0.9...v0.0.10
+[Unreleased]: https://github.com/airtap/airtap/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/airtap/airtap/compare/v0.0.9...v0.1.0
 [0.0.9]: https://github.com/airtap/airtap/compare/v0.0.8...v0.0.9
 [0.0.8]: https://github.com/airtap/airtap/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/airtap/airtap/compare/v0.0.6...v0.0.7
