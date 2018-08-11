@@ -69,13 +69,14 @@ No testing setup would be complete without a badge for passing or failing tests.
 
 ## Who Uses Airtap?
 
-**Lots of folks!** Collectively, packages that depend on Airtap get 10's of millions of downloads per month!
+**Lots of folks!** Collectively, packages that depend on Airtap get 100's of millions of downloads per month!
 
 - [`memdown`](https://github.com/Level/memdown)
 - [`webtorrent`](https://github.com/webtorrent/webtorrent) (and dependencies)
 - [`simple-peer`](https://github.com/feross/simple-peer)
 - [`buffer`](https://github.com/feross/buffer)
 - [`stream-http`](https://github.com/jhiesey/stream-http)
+- [`readable-stream`](https://github.com/nodejs/readable-stream)
 - *Send a PR to add your package to the list!*
 
 ## Contributing
