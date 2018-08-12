@@ -29,7 +29,7 @@
     "sauce-browsers": "~2.0.0",
     "server-destroy": "~1.0.1",
     "shell-quote": "~1.6.1",
-    "split2": "^2.2.0",
+    "split2": "^3.0.0",
     "stack-mapper": "~0.2.2",
     "stacktrace-js": "~2.0.0",
     "superagent": "~3.8.2",
