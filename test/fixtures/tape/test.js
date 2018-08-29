@@ -32,7 +32,7 @@ test('plan', function (t) {
   }, 10)
 })
 
-test('failed plan', {timeout: 200}, function (t) {
+test('failed plan', { timeout: 200 }, function (t) {
   t.plan(2)
   t.ok(true, 'one assert')
 })
@@ -43,6 +43,6 @@ test.skip('skipped', function (t) {
 })
 
 // test console still ok
-console.log({hey: 'you'})
+console.log({ hey: 'you' })
 console.debug([1, 2, 3])
 console.log(1, 2, [3, 4])
