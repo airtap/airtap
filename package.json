@@ -6,7 +6,7 @@
   "dependencies": {
     "batch": "~0.6.1",
     "body-parser": "~1.18.3",
-    "browserify": "~13.3.0",
+    "browserify": "~16.2.3",
     "browserify-istanbul": "~3.0.1",
     "chalk": "^2.3.1",
     "commander": "~2.18.0",
