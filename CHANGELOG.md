@@ -2,7 +2,7 @@
 
 If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
 
-## [Unreleased]
+## [Unreleased][unreleased]
 
 ## [1.0.0] - 2018-12-27
 
@@ -221,7 +221,7 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/airtap/airtap/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/airtap/airtap/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/airtap/airtap/compare/v0.0.9...v0.1.0
 [0.0.9]: https://github.com/airtap/airtap/compare/v0.0.8...v0.0.9
