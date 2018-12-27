@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2018-12-27
+
+### Changed
+
+* Replace `superagent` with `xhr` (#231) (@vweevers)
+* Upgrade `convert-source-map` from `~1.5.1` to `~1.6.0` (#218) (@vweevers)
+* Upgrade `wd` from `~1.10.0` to `~1.11.1` (#230) (@vweevers)
+* Upgrade `humanize-duration` from `~3.15.0` to `~3.16.0` (#229) (@vweevers)
+* Upgrade `commander` from `~2.16.0` to `~2.19.0` (#212, #219, #225) (@vweevers, @ralphtheninja)
+* Upgrade `debug` from `~3.1.0` to `~4.1.0` (#220, #221, #224) (@vweevers)
+* Upgrade `firefox-profile` from `~1.1.0` to `~1.2.0` (#216) (@vweevers)
+* Upgrade `split2` from `^2.2.0` to `^3.0.0` (#214) (@ralphtheninja)
+* Upgrade `opener` from `~1.4.3` to `~1.5.0` (#215) (@vweevers)
+* Upgrade `through2` devDependency from `^2.0.3` to `^3.0.0` (#227) (@vweevers)
+* Upgrade `standard` devDependency from `^11.0.0` to `^12.0.0` (#217) (@ralphtheninja)
+
+### Added
+
+* Add `readable-stream` to list of users (#213) (@mcollina)
+
 ## [0.1.0] - 2018-07-07
 
 ### Changed
@@ -198,7 +218,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 * Undocument `--ui` option (we intend to remove it) (@vweevers)
 * Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
 
-[Unreleased]: https://github.com/airtap/airtap/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/airtap/airtap/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/airtap/airtap/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/airtap/airtap/compare/v0.0.9...v0.1.0
 [0.0.9]: https://github.com/airtap/airtap/compare/v0.0.8...v0.0.9
 [0.0.8]: https://github.com/airtap/airtap/compare/v0.0.7...v0.0.8
