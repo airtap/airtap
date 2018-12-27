@@ -13,7 +13,7 @@ Airtap is different than other cross browser test runners in its simplicity and 
 
 Don't just claim your JavaScript supports "all browsers", prove it with tests!
 
-*This project is a fork of the amazing [Zuul](https://github.com/defunctzombie/zuul). Please note that some documentation may be out of date. Anyone is welcome and encouraged to contribute via a pull request.*
+_This project is a fork of the amazing [Zuul](https://github.com/defunctzombie/zuul). Please note that some documentation may be out of date. Anyone is welcome and encouraged to contribute via a pull request._
 
 ## Install
 
@@ -77,7 +77,7 @@ No testing setup would be complete without a badge for passing or failing tests.
 - [`buffer`](https://github.com/feross/buffer)
 - [`stream-http`](https://github.com/jhiesey/stream-http)
 - [`readable-stream`](https://github.com/nodejs/readable-stream)
-- *Send a PR to add your package to the list!*
+- _Send a PR to add your package to the list!_
 
 ## Contributing
 

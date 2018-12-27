@@ -8,184 +8,214 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ### Changed
 
-* Replace `superagent` with `xhr` (#231) (@vweevers)
-* Upgrade `convert-source-map` from `~1.5.1` to `~1.6.0` (#218) (@vweevers)
-* Upgrade `wd` from `~1.10.0` to `~1.11.1` (#230) (@vweevers)
-* Upgrade `humanize-duration` from `~3.15.0` to `~3.16.0` (#229) (@vweevers)
-* Upgrade `commander` from `~2.16.0` to `~2.19.0` (#212, #219, #225) (@vweevers, @ralphtheninja)
-* Upgrade `debug` from `~3.1.0` to `~4.1.0` (#220, #221, #224) (@vweevers)
-* Upgrade `firefox-profile` from `~1.1.0` to `~1.2.0` (#216) (@vweevers)
-* Upgrade `split2` from `^2.2.0` to `^3.0.0` (#214) (@ralphtheninja)
-* Upgrade `opener` from `~1.4.3` to `~1.5.0` (#215) (@vweevers)
-* Upgrade `through2` devDependency from `^2.0.3` to `^3.0.0` (#227) (@vweevers)
-* Upgrade `standard` devDependency from `^11.0.0` to `^12.0.0` (#217) (@ralphtheninja)
+- Replace `superagent` with `xhr` ([#231](https://github.com/airtap/airtap/issues/231)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `convert-source-map` from `~1.5.1` to `~1.6.0` ([#218](https://github.com/airtap/airtap/issues/218)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `wd` from `~1.10.0` to `~1.11.1` ([#230](https://github.com/airtap/airtap/issues/230)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `humanize-duration` from `~3.15.0` to `~3.16.0` ([#229](https://github.com/airtap/airtap/issues/229)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `commander` from `~2.16.0` to `~2.19.0` ([#212](https://github.com/airtap/airtap/issues/212), [#219](https://github.com/airtap/airtap/issues/219), [#225](https://github.com/airtap/airtap/issues/225)) ([**@vweevers**](https://github.com/vweevers), [**@ralphtheninja**](https://github.com/ralphtheninja))
+- Upgrade `debug` from `~3.1.0` to `~4.1.0` ([#220](https://github.com/airtap/airtap/issues/220), [#221](https://github.com/airtap/airtap/issues/221), [#224](https://github.com/airtap/airtap/issues/224)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `firefox-profile` from `~1.1.0` to `~1.2.0` ([#216](https://github.com/airtap/airtap/issues/216)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `split2` from `^2.2.0` to `^3.0.0` ([#214](https://github.com/airtap/airtap/issues/214)) ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Upgrade `opener` from `~1.4.3` to `~1.5.0` ([#215](https://github.com/airtap/airtap/issues/215)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `through2` devDependency from `^2.0.3` to `^3.0.0` ([#227](https://github.com/airtap/airtap/issues/227)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `standard` devDependency from `^11.0.0` to `^12.0.0` ([#217](https://github.com/airtap/airtap/issues/217)) ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Added
 
-* Add `readable-stream` to list of users (#213) (@mcollina)
-* Add `hallmark` (@vweevers)
+- Add `readable-stream` to list of users ([#213](https://github.com/airtap/airtap/issues/213)) ([**@mcollina**](https://github.com/mcollina))
+- Add `hallmark` ([**@vweevers**](https://github.com/vweevers))
 
 ## [0.1.0] - 2018-07-07
 
 ### Changed
-* Ignore `--loopback` in local mode and Electron ([#77](https://github.com/airtap/airtap/issues/77)) (@vweevers)
-* Split `--local [port]` into `--local` and `--port <port>` ([#198](https://github.com/airtap/airtap/issues/198)) (@vweevers)
+
+- Ignore `--loopback` in local mode and Electron ([#77](https://github.com/airtap/airtap/issues/77)) ([**@vweevers**](https://github.com/vweevers))
+- Split `--local [port]` into `--local` and `--port <port>` ([#198](https://github.com/airtap/airtap/issues/198)) ([**@vweevers**](https://github.com/vweevers))
 
 ### Added
-* Add `--tunnel-id` option (@vweevers)
+
+- Add `--tunnel-id` option ([**@vweevers**](https://github.com/vweevers))
 
 ### Removed
-* Remove code coverage tab ([#202](https://github.com/airtap/airtap/issues/202)) (@ralphtheninja)
-* Remove `--sauce-connect` option (@vweevers)
+
+- Remove code coverage tab ([#202](https://github.com/airtap/airtap/issues/202)) ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Remove `--sauce-connect` option ([**@vweevers**](https://github.com/vweevers))
 
 ### Fixed
-* Adjust release date for `0.0.9` (@ralphtheninja)
-* Increase maximum body size for posting code coverage ([#200](https://github.com/airtap/airtap/issues/200)) (@vweevers)
+
+- Adjust release date for `0.0.9` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Increase maximum body size for posting code coverage ([#200](https://github.com/airtap/airtap/issues/200)) ([**@vweevers**](https://github.com/vweevers))
 
 ## [0.0.9] - 2018-07-04
 
 ### Changed
-* Upgrade `sauce-browsers` from `~1.2.0` to `~2.0.0` (@ralphtheninja)
-* Upgrade `commander` from `~2.15.1` to `~2.16.0` (@ralphtheninja)
-* Allow for retries in integration test (@vweevers)
+
+- Upgrade `sauce-browsers` from `~1.2.0` to `~2.0.0` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Upgrade `commander` from `~2.15.1` to `~2.16.0` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Allow for retries in integration test ([**@vweevers**](https://github.com/vweevers))
 
 ### Added
-* Add `--coverage` cli option to export browser coverage to `.nyc-output/` folder (@vweevers)
+
+- Add `--coverage` cli option to export browser coverage to `.nyc-output/` folder ([**@vweevers**](https://github.com/vweevers))
 
 ### Removed
-* Remove `--no-coverage` cli option (@vweevers)
-* Remove `--no-instrument` cli option (@vweevers)
+
+- Remove `--no-coverage` cli option ([**@vweevers**](https://github.com/vweevers))
+- Remove `--no-instrument` cli option ([**@vweevers**](https://github.com/vweevers))
 
 ## [0.0.8] - 2018-06-27
 
 ### Changed
-* Do not `watchify` if `process.env.CI` is defined (@ralphtheninja)
-* Upgrade `wd` from `~1.7.0` to `~1.10.0` (@ralphtheninja)
-* Upgrade `humanize-duration` from `~3.14.0` to `~3.15.0` (@vweevers)
-* Upgrade `cross-env` devDependency from `~5.1.3` to `~5.2.0` (@vweevers)
-* Upgrade `electron` devDependency from `^1.8.2` to `^2.0.3` (@ralphtheninja)
-* Restructure unit tests (@ralphtheninja)
-* Rename `Zuul` to `Airtap` (@ralphtheninja)
-* Rename `ZuulReporter` to `Reporter` (@ralphtheninja)
+
+- Do not `watchify` if `process.env.CI` is defined ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Upgrade `wd` from `~1.7.0` to `~1.10.0` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Upgrade `humanize-duration` from `~3.14.0` to `~3.15.0` ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `cross-env` devDependency from `~5.1.3` to `~5.2.0` ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `electron` devDependency from `^1.8.2` to `^2.0.3` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Restructure unit tests ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Rename `Zuul` to `Airtap` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Rename `ZuulReporter` to `Reporter` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Added
-* Add `favicon.ico` (@ralphtheninja, @gorhgorh)
+
+- Add `favicon.ico` ([**@ralphtheninja**](https://github.com/ralphtheninja), [**@gorhgorh**](https://github.com/gorhgorh))
 
 ### Removed
-* Remove `istanbul-middleware` and disable coverage temporarily (@ralphtheninja)
+
+- Remove `istanbul-middleware` and disable coverage temporarily ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Fixed
-* Dedup browsers (@ralphtheninja)
+
+- Dedup browsers ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ## [0.0.7] - 2018-05-25
 
 ### Changed
-* Update `airtap-browser` to `0.0.2` (@ralphtheninja)
-* Update dependencies to enable Greenkeeper (includes `wd` fix) (@feross, @greenkeeper)
+
+- Update `airtap-browser` to `0.0.2` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Update dependencies to enable Greenkeeper (includes `wd` fix) ([**@feross**](https://github.com/feross), [**@greenkeeper**](https://github.com/greenkeeper))
 
 ### Removed
-* Remove support for `PhantomJS` (@ralphtheninja)
+
+- Remove support for `PhantomJS` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ## [0.0.6] - 2018-05-24
 
 ### Changed
-* Replace Sauce Labs png with svg (@vweevers)
+
+- Replace Sauce Labs png with svg ([**@vweevers**](https://github.com/vweevers))
 
 ### Fixed
-* Don't watch `node_modules/` folder (@vweevers)
+
+- Don't watch `node_modules/` folder ([**@vweevers**](https://github.com/vweevers))
 
 ## [0.0.5] - 2018-05-05
 
 ### Changed
-* Refactor `lib/get-saucelabs-browser.js` and `lib/flatten-browserlist.js` by using `sauce-browsers` module (@lpinca)
-* Rename `status` and `results` to `stats` for consistency (@vweevers)
-* Terminate connections by using `server-destroy` module (@vweevers)
-* Clean up `ZuulReporter` (@vweevers)
-* Rename `SauceBrowser#browser` to `webdriver` (@vweevers)
-* Introduce `AbstractBrowser` (@vweevers)
-* Clean up tests and only run sauce tests on Travis (@ralphtheninja)
-* Rename `frameworks/` to `client/` (@ralphtheninja)
-* Move `.stats` to `AbstractBrowser` (@ralphtheninja)
-* Prefer `debug()` over `console.log()` (@vweevers)
-* Clean up `zuul` naming (@ralphtheninja)
+
+- Refactor `lib/get-saucelabs-browser.js` and `lib/flatten-browserlist.js` by using `sauce-browsers` module ([**@lpinca**](https://github.com/lpinca))
+- Rename `status` and `results` to `stats` for consistency ([**@vweevers**](https://github.com/vweevers))
+- Terminate connections by using `server-destroy` module ([**@vweevers**](https://github.com/vweevers))
+- Clean up `ZuulReporter` ([**@vweevers**](https://github.com/vweevers))
+- Rename `SauceBrowser#browser` to `webdriver` ([**@vweevers**](https://github.com/vweevers))
+- Introduce `AbstractBrowser` ([**@vweevers**](https://github.com/vweevers))
+- Clean up tests and only run sauce tests on Travis ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Rename `frameworks/` to `client/` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Move `.stats` to `AbstractBrowser` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Prefer `debug()` over `console.log()` ([**@vweevers**](https://github.com/vweevers))
+- Clean up `zuul` naming ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Added
-* Add `test-local-electron` script (@vweevers)
-* Test `AbstractBrowser` and implementations (@vweevers)
-* Add node 10 to Travis (@ralphtheninja)
+
+- Add `test-local-electron` script ([**@vweevers**](https://github.com/vweevers))
+- Test `AbstractBrowser` and implementations ([**@vweevers**](https://github.com/vweevers))
+- Add node 10 to Travis ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Removed
-* Remove unused `tags` option (@vweevers)
+
+- Remove unused `tags` option ([**@vweevers**](https://github.com/vweevers))
 
 ### Fixed
-* Fix cli test on windows (@vweevers)
+
+- Fix cli test on windows ([**@vweevers**](https://github.com/vweevers))
 
 ## [0.0.4] - 2018-03-02
 
 ### Changed
-* Setup email for Travis builds (@yeskunall)
-* Normalize file names (@yeskunall)
-* Finalize `standard` (@ralphtheninja)
-* Depend on `electron` instead of deprecated `electron-prebuilt` (@ralphtheninja)
-* Throw error instead of error message (@arungalva)
-* Refactor opt/config variable in `setup.js` (@ralphtheninja)
-* Replace IIFE with normal function declaration and function call (@ralphtheninja)
-* Run unit tests before integration tests and put the sauce labs integration last (@ralphtheninja)
-* Update keywords in `package.json` (@yeskunall)
-* Update `dependency-check` to `^3.0.0` (@yeskunall)
-* Exit cleanly if Travis has no secure environment variables (@ralphtheninja)
-* Clean up entries in `dependency-check` (@ralphtheninja)
+
+- Setup email for Travis builds ([**@yeskunall**](https://github.com/yeskunall))
+- Normalize file names ([**@yeskunall**](https://github.com/yeskunall))
+- Finalize `standard` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Depend on `electron` instead of deprecated `electron-prebuilt` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Throw error instead of error message ([**@arungalva**](https://github.com/arungalva))
+- Refactor opt/config variable in `setup.js` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Replace IIFE with normal function declaration and function call ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Run unit tests before integration tests and put the sauce labs integration last ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Update keywords in `package.json` ([**@yeskunall**](https://github.com/yeskunall))
+- Update `dependency-check` to `^3.0.0` ([**@yeskunall**](https://github.com/yeskunall))
+- Exit cleanly if Travis has no secure environment variables ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Clean up entries in `dependency-check` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Added
-* Test electron browser (@ralphtheninja)
-* README: add `stream-http` to list of users (@jhiesey)
+
+- Test electron browser ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- README: add `stream-http` to list of users ([**@jhiesey**](https://github.com/jhiesey))
 
 ### Removed
-* Remove support for older Electron api (@ralphtheninja)
-* Remove support for node 4 (@ralphtheninja)
+
+- Remove support for older Electron api ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Remove support for node 4 ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Fixed
-* Fix race condition in electron ipc (@ralphtheninja)
-* Add debug statement instead of silently failing Sauce Labs (@arungalva)
+
+- Fix race condition in electron ipc ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Add debug statement instead of silently failing Sauce Labs ([**@arungalva**](https://github.com/arungalva))
 
 ## [0.0.3] - 2018-02-24
 
 ### Changed
-* Rename `lib/zuul.js` to `lib/airtap.js` (@yeskunall)
-* Rename `--list-available-browsers` to `-l/--list-browsers` (@ralphtheninja)
-* Replace `char-split` with `split2` (@jeffreyshen19)
-* Replace `colors` with `chalk` (@yeskunall)
+
+- Rename `lib/zuul.js` to `lib/airtap.js` ([**@yeskunall**](https://github.com/yeskunall))
+- Rename `--list-available-browsers` to `-l/--list-browsers` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Replace `char-split` with `split2` ([**@jeffreyshen19**](https://github.com/jeffreyshen19))
+- Replace `colors` with `chalk` ([**@yeskunall**](https://github.com/yeskunall))
 
 ### Added
-* README: add section `"Who Uses Airtap?"` (@feross)
-* Test aggregation of available browsers for `--list-browsers` (@ralphtheninja)
+
+- README: add section `"Who Uses Airtap?"` ([**@feross**](https://github.com/feross))
+- Test aggregation of available browsers for `--list-browsers` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Removed
-* Remove vim styling and `.editorconfig` (@moondef)
-* Remove all frameworks but `tape` (@ralphtheninja)
-* Remove `.ui/--ui` option (@ralphtheninja)
-* Remove `mocha` dependency (@ralphtheninja)
-* Remove references to `emberjs` in docs and change example to use `tape` (@ralphtheninja)
+
+- Remove vim styling and `.editorconfig` ([**@moondef**](https://github.com/moondef))
+- Remove all frameworks but `tape` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Remove `.ui/--ui` option ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Remove `mocha` dependency ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Remove references to `emberjs` in docs and change example to use `tape` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Fixed
-* Fix broken `--list-available-browsers` (@ralphtheninja)
+
+- Fix broken `--list-available-browsers` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ## [0.0.2] - 2018-02-21
 
 ### Changed
-* Update [dependencies](https://github.com/airtap/airtap/pull/41) (@ralphtheninja)
-* Rename `bin/airtap` to `bin/airtap.js` + fix standard (@ralphtheninja)
-* README: fix typo (@0xflotus)
-* Replace `xtend` and `shallow-copy` with `Object.assign` (@ralphtheninja)
-* Replace `osenv` usage with `os.homedir()` (@yeskunall)
-* Make callback in `zuul.run(cb)` call with `cb(err, result)` (@ralphtheninja)
+
+- Update [dependencies](https://github.com/airtap/airtap/pull/41) ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Rename `bin/airtap` to `bin/airtap.js` + fix standard ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- README: fix typo ([**@0xflotus**](https://github.com/0xflotus))
+- Replace `xtend` and `shallow-copy` with `Object.assign` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Replace `osenv` usage with `os.homedir()` ([**@yeskunall**](https://github.com/yeskunall))
+- Make callback in `zuul.run(cb)` call with `cb(err, result)` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Added
-* Add `standard` for linting but only print warnings for now (@feross)
-* Add Open Open Source `CONTRIBUTING.md` (@ralphtheninja)
+
+- Add `standard` for linting but only print warnings for now ([**@feross**](https://github.com/feross))
+- Add Open Open Source `CONTRIBUTING.md` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 ### Removed
-* Remove `JSON2` (@ralphtheninja)
+
+- Remove `JSON2` ([**@ralphtheninja**](https://github.com/ralphtheninja))
 
 **Historical Note** We didn't update `browserify` to the latest version because it doesn't support IE9 or IE10. Nor did we update `tap-parser` to the latest since it doesn't work with `PhantomJS`.
 
@@ -194,42 +224,57 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/zuul), so this changelog entry lists the differences from `zuul`.
 
 ### Changed
-* Replace multi-framework examples with single `tape` example (@vweevers)
-* Use Sauce Connect in Sauce Labs integration tests (@vweevers)
-* Update `.travis.yml` with node 4, 6, 8 and 9 (@ralphtheninja)
-* Use `airtap-browsers` instead of `browzers` (@vweevers)
-* Set default `--ui` to tape (@vweevers)
+
+- Replace multi-framework examples with single `tape` example ([**@vweevers**](https://github.com/vweevers))
+- Use Sauce Connect in Sauce Labs integration tests ([**@vweevers**](https://github.com/vweevers))
+- Update `.travis.yml` with node 4, 6, 8 and 9 ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Use `airtap-browsers` instead of `browzers` ([**@vweevers**](https://github.com/vweevers))
+- Set default `--ui` to tape ([**@vweevers**](https://github.com/vweevers))
 
 ### Added
-* Add `--loopback <hostname>` option for Safari and Edge (@vweevers)
-* Add `dependency-check` to npm test script (@ralphtheninja)
-* Add `CHANGELOG.md`, `UPGRADING.md` and `LICENSE` (@vweevers)
-* Merge zuul wiki into doc folder and readme (@vweevers)
-* README: add and update badges (@ralphtheninja, @vweevers)
-* README: give credit to Sauce Labs and Zuul (@vweevers)
-* README: warn that airtap is unstable (@vweevers)
+
+- Add `--loopback <hostname>` option for Safari and Edge ([**@vweevers**](https://github.com/vweevers))
+- Add `dependency-check` to npm test script ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- Add `CHANGELOG.md`, `UPGRADING.md` and `LICENSE` ([**@vweevers**](https://github.com/vweevers))
+- Merge zuul wiki into doc folder and readme ([**@vweevers**](https://github.com/vweevers))
+- README: add and update badges ([**@ralphtheninja**](https://github.com/ralphtheninja), [**@vweevers**](https://github.com/vweevers))
+- README: give credit to Sauce Labs and Zuul ([**@vweevers**](https://github.com/vweevers))
+- README: warn that airtap is unstable ([**@vweevers**](https://github.com/vweevers))
 
 ### Fixed
-* Use `cross-env` in npm test script (@vweevers)
+
+- Use `cross-env` in npm test script ([**@vweevers**](https://github.com/vweevers))
 
 ### Removed
-* Remove `localtunnel`, `ngrok` and tunnel setup (@vweevers)
-* Remove tunnel options except for `--sauce-connect` (@vweevers)
-* Remove tunnel options from PhantomJS tests (runs locally) (@vweevers)
-* Remove `.npmrc` (@ralphtheninja)
-* README: remove frameworks other than tap(e) (@vweevers)
-* Undocument `--ui` option (we intend to remove it) (@vweevers)
-* Remove `HISTORY.md` (replaced by `CHANGELOG.md`) (@vweevers)
+
+- Remove `localtunnel`, `ngrok` and tunnel setup ([**@vweevers**](https://github.com/vweevers))
+- Remove tunnel options except for `--sauce-connect` ([**@vweevers**](https://github.com/vweevers))
+- Remove tunnel options from PhantomJS tests (runs locally) ([**@vweevers**](https://github.com/vweevers))
+- Remove `.npmrc` ([**@ralphtheninja**](https://github.com/ralphtheninja))
+- README: remove frameworks other than tap(e) ([**@vweevers**](https://github.com/vweevers))
+- Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
+- Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
 [unreleased]: https://github.com/airtap/airtap/compare/v1.0.0...HEAD
+
 [1.0.0]: https://github.com/airtap/airtap/compare/v0.1.0...v1.0.0
+
 [0.1.0]: https://github.com/airtap/airtap/compare/v0.0.9...v0.1.0
+
 [0.0.9]: https://github.com/airtap/airtap/compare/v0.0.8...v0.0.9
+
 [0.0.8]: https://github.com/airtap/airtap/compare/v0.0.7...v0.0.8
+
 [0.0.7]: https://github.com/airtap/airtap/compare/v0.0.6...v0.0.7
+
 [0.0.6]: https://github.com/airtap/airtap/compare/v0.0.5...v0.0.6
+
 [0.0.5]: https://github.com/airtap/airtap/compare/v0.0.4...v0.0.5
+
 [0.0.4]: https://github.com/airtap/airtap/compare/v0.0.3...v0.0.4
+
 [0.0.3]: https://github.com/airtap/airtap/compare/v0.0.2...v0.0.3
+
 [0.0.2]: https://github.com/airtap/airtap/compare/v0.0.1...v0.0.2
+
 [0.0.1]: https://github.com/airtap/airtap/compare/v0.0.0...v0.0.1

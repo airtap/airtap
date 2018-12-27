@@ -11,10 +11,10 @@ is more like an open wiki than a standard guarded open source project.
 There are a few basic ground-rules for contributors:
 
 1. **No `--force` pushes** or modifying the Git history unless rebasing or squashing pull requests.
-1. **Non-master branches** ought to be used for ongoing work.
-1. **External API changes and significant modifications** ought to be subject to an **internal pull-request** to solicit feedback from other contributors.
-1. Internal pull-requests to solicit feedback are *encouraged* for any other non-trivial contribution but left to the discretion of the contributor.
-1. Contributors should attempt to adhere to the prevailing code-style.
+2. **Non-master branches** ought to be used for ongoing work.
+3. **External API changes and significant modifications** ought to be subject to an **internal pull-request** to solicit feedback from other contributors.
+4. Internal pull-requests to solicit feedback are _encouraged_ for any other non-trivial contribution but left to the discretion of the contributor.
+5. Contributors should attempt to adhere to the prevailing code-style.
 
 ## Releases
 

@@ -4,7 +4,7 @@ This document describes breaking changes and how to upgrade. For a complete list
 
 ## 1.0.0
 
-First stable release. No breaking changes since `0.1.0`. Intended as release line for users needing IE9-10 support; the next major release will only support IE11+ (#171).
+First stable release. No breaking changes since `0.1.0`. Intended as release line for users needing IE9-10 support; the next major release will only support IE11+ ([#171](https://github.com/airtap/airtap/issues/171)).
 
 ## 0.1.0
 
