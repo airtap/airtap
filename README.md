@@ -23,7 +23,7 @@ With [npm](https://npmjs.org) do:
 npm install airtap --save-dev
 ```
 
-If you are upgrading or migrating from zuul: please see the [upgrade guide](./UPGRADING.md).
+If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
 
 ## Workflow
 

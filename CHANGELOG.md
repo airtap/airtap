@@ -1,5 +1,7 @@
 # Changelog
 
+If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
+
 ## [Unreleased]
 
 ## [1.0.0] - 2018-12-27
