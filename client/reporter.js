@@ -12,7 +12,7 @@ window.onerror = function (msg, file, line) {
 
 var load = require('load-script')
 var stacktrace = require('stacktrace-js')
-var ajax = require('superagent')
+var xhr = require('xhr')
 var renderStacktrace = require('./render-stacktrace')
 
 try {
@@ -102,16 +102,27 @@ var Reporter = function () {
       return
     }
 
-    ajax.get('/airtap/test-bundle.map.json').end(function (err, res) {
-      if (err) {
-        // ignore map load error
+    xhr({
+      method: 'get',
+      uri: '/airtap/test-bundle.map.json'
+    }, function (err, res, body) {
+      if (err || res.statusCode !== 200) {
+        console.error('failed to fetch source map', err || res.statusCode)
         return
       }
 
-      self._source_map = res.body
       try {
-        self._mapper = stackMapper(res.body)
-      } catch (err) {}
+        self._source_map = JSON.parse(body)
+      } catch (err) {
+        console.error('failed to parse source map', err)
+        return
+      }
+
+      try {
+        self._mapper = stackMapper(self._source_map)
+      } catch (err) {
+        console.error('failed to initialize stack mapper', err)
+      }
     })
   })
 }
@@ -145,16 +156,18 @@ Reporter.prototype.done = function (err) {
   }
 
   if (window.__coverage__) {
-    ajax.post('/airtap/coverage/reports')
-      .send(window.__coverage__)
-      .end(function (err, res) {
-        if (err) {
-          console.error('error in coverage reports')
-          console.error(err)
-        }
+    xhr({
+      method: 'post',
+      body: JSON.stringify(window.__coverage__),
+      uri: '/airtap/coverage/reports',
+      headers: { 'Content-Type': 'application/json' }
+    }, function (err, res) {
+      if (err || res.statusCode !== 201) {
+        console.error('failed to post coverage report', err || res.statusCode)
+      }
 
-        finish()
-      })
+      finish()
+    })
   } else {
     finish()
   }
