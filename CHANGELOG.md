@@ -23,6 +23,7 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 ### Added
 
 * Add `readable-stream` to list of users (#213) (@mcollina)
+* Add `hallmark` (@vweevers)
 
 ## [0.1.0] - 2018-07-07
 
