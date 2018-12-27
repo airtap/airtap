@@ -68,7 +68,7 @@
   "license": "MIT",
   "scripts": {
     "test": "standard && hallmark && npm run dependency-check && cross-env DEBUG=airtap* tape test",
-    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i cross-env -i standard --entry test/index.js --entry test/fixtures/*/*.js --entry client/*.js",
+    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i cross-env -i standard -i hallmark --entry test/index.js --entry test/fixtures/*/*.js --entry client/*.js",
     "hallmark": "hallmark --fix"
   },
   "engines": {
