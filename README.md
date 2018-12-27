@@ -13,7 +13,7 @@ Airtap is different than other cross browser test runners in its simplicity and 
 
 Don't just claim your JavaScript supports "all browsers", prove it with tests!
 
-*This project is a fork of the amazing [Zuul](https://github.com/defunctzombie/zuul). Please note that our API is currently unstable and some documentation may be out of date. Anyone is welcome and encouraged to contribute towards 1.0.0 via a pull request.*
+*This project is a fork of the amazing [Zuul](https://github.com/defunctzombie/zuul). Please note that some documentation may be out of date. Anyone is welcome and encouraged to contribute via a pull request.*
 
 ## Install
 
