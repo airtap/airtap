@@ -4,6 +4,12 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ## [Unreleased][unreleased]
 
+## [1.0.1] - 2018-12-29
+
+### Fixed
+
+- Fix Android 7.x with `deviceName` workaround ([`8d1b1fa`](https://github.com/airtap/airtap/commit/8d1b1fa)) (backport of [#235](https://github.com/airtap/airtap/issues/235)) ([**@vweevers**](https://github.com/vweevers))
+
 ## [1.0.0] - 2018-12-27
 
 ### Changed
@@ -255,7 +261,9 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
-[unreleased]: https://github.com/airtap/airtap/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/airtap/airtap/compare/v1.0.1...v1.x
+
+[1.0.1]: https://github.com/airtap/airtap/compare/v1.0.0...v1.0.1
 
 [1.0.0]: https://github.com/airtap/airtap/compare/v0.1.0...v1.0.0
 
