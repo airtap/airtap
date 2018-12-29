@@ -4,6 +4,16 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ## [Unreleased][unreleased]
 
+## [2.0.1] - 2018-12-29
+
+### Changed
+
+- Upgrade `airtap-browsers` devDependency from `^0.1.0` to `^0.2.0` ([#235](https://github.com/airtap/airtap/issues/235)) ([**@vweevers**](https://github.com/vweevers))
+
+### Fixed
+
+- Fix Android 7.x with `deviceName` workaround ([#235](https://github.com/airtap/airtap/issues/235)) ([**@vweevers**](https://github.com/vweevers))
+
 ## [2.0.0] - 2018-12-29
 
 ### Changed
@@ -262,7 +272,9 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
-[unreleased]: https://github.com/airtap/airtap/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/airtap/airtap/compare/v2.0.1...HEAD
+
+[2.0.1]: https://github.com/airtap/airtap/compare/v2.0.0...v2.0.1
 
 [2.0.0]: https://github.com/airtap/airtap/compare/v1.0.0...v2.0.0
 
