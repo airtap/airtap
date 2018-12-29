@@ -40,7 +40,7 @@
     "yamljs": "~0.3.0"
   },
   "devDependencies": {
-    "airtap-browsers": "0.0.2",
+    "airtap-browsers": "^0.1.0",
     "cross-env": "~5.2.0",
     "dependency-check": "^3.0.0",
     "electron": "^2.0.3",
