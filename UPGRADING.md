@@ -2,6 +2,10 @@
 
 This document describes breaking changes and how to upgrade. For a complete list of changes including minor and patch releases, please refer to the [changelog](CHANGELOG.md).
 
+## 1.0.0
+
+First stable release. No breaking changes since `0.1.0`. Intended as release line for users needing IE9-10 support; the next major release will only support IE11+ ([#171](https://github.com/airtap/airtap/issues/171)).
+
 ## 0.1.0
 
 The `--local [port]` option has been split into two options: `--local` and `--port <port>`. Previously, if you didn't specify a port and `--local` was the last flag, you had to do `--local -- test.js`. This is no longer the case. If you do want to specify a port, you must now do `--local --port 8000`.
