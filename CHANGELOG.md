@@ -4,6 +4,13 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ## [Unreleased][unreleased]
 
+## [2.0.0] - 2018-12-29
+
+### Changed
+
+- Update `browserify` from `~13.3.0` to `~16.2.3` ([#233](https://github.com/airtap/airtap/issues/233)) ([**@vweevers**](https://github.com/vweevers))
+- Update `airtap-browsers` devDependency from `0.0.2` to `^0.1.0` ([#233](https://github.com/airtap/airtap/issues/233)) ([**@vweevers**](https://github.com/vweevers))
+
 ## [1.0.0] - 2018-12-27
 
 ### Changed
@@ -255,7 +262,9 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
-[unreleased]: https://github.com/airtap/airtap/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/airtap/airtap/compare/v2.0.0...HEAD
+
+[2.0.0]: https://github.com/airtap/airtap/compare/v1.0.0...v2.0.0
 
 [1.0.0]: https://github.com/airtap/airtap/compare/v0.1.0...v1.0.0
 

@@ -2,6 +2,10 @@
 
 This document describes breaking changes and how to upgrade. For a complete list of changes including minor and patch releases, please refer to the [changelog](CHANGELOG.md).
 
+## 2.0.0
+
+Upgraded browserify from `13.x` to `16.x`, which ends support of IE &lt; 11. If you need IE 9-10, either stick with `airtap@1` or follow the workaround described in [#171](https://github.com/airtap/airtap/issues/171).
+
 ## 1.0.0
 
 First stable release. No breaking changes since `0.1.0`. Intended as release line for users needing IE9-10 support; the next major release will only support IE11+ ([#171](https://github.com/airtap/airtap/issues/171)).
