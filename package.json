@@ -33,7 +33,7 @@
     "stack-mapper": "~0.2.2",
     "stacktrace-js": "~2.0.0",
     "tap-finished": "~0.0.1",
-    "tap-parser": "~5.4.0",
+    "tap-parser": "~8.0.0",
     "watchify": "~3.11.0",
     "wd": "~1.11.1",
     "xhr": "~2.5.0",
