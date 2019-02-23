@@ -4,6 +4,12 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ## [Unreleased][unreleased]
 
+## [1.0.2] - 2019-02-23
+
+### Fixed
+
+- Fix Android 8.x (and future versions) ([#240](https://github.com/airtap/airtap/issues/240)) ([`6023a9b`](https://github.com/airtap/airtap/commit/6023a9b)) ([**@vweevers**](https://github.com/vweevers))
+
 ## [1.0.1] - 2018-12-29
 
 ### Fixed
@@ -261,7 +267,9 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
-[unreleased]: https://github.com/airtap/airtap/compare/v1.0.1...v1.x
+[unreleased]: https://github.com/airtap/airtap/compare/v1.0.2...v1.x
+
+[1.0.2]: https://github.com/airtap/airtap/compare/v1.0.1...v1.0.2
 
 [1.0.1]: https://github.com/airtap/airtap/compare/v1.0.0...v1.0.1
 
