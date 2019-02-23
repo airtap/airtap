@@ -4,6 +4,16 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ## [Unreleased][unreleased]
 
+## [2.0.2] - 2019-02-23
+
+### Removed
+
+- Remove outdated `doc/travis-matrix.md` ([#197](https://github.com/airtap/airtap/issues/197)) ([`24f3022`](https://github.com/airtap/airtap/commit/24f3022)) ([**@vweevers**](https://github.com/vweevers))
+
+### Fixed
+
+- Fix Android 8.x (and future versions) ([#240](https://github.com/airtap/airtap/issues/240)) ([`ea1df9e`](https://github.com/airtap/airtap/commit/ea1df9e)) ([**@vweevers**](https://github.com/vweevers))
+
 ## [2.0.1] - 2018-12-29
 
 ### Changed
@@ -272,7 +282,9 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
-[unreleased]: https://github.com/airtap/airtap/compare/v2.0.1...HEAD
+[unreleased]: https://github.com/airtap/airtap/compare/v2.0.2...HEAD
+
+[2.0.2]: https://github.com/airtap/airtap/compare/v2.0.1...v2.0.2
 
 [2.0.1]: https://github.com/airtap/airtap/compare/v2.0.0...v2.0.1
 
