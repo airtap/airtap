@@ -107,6 +107,3 @@ env:
 ### Done
 
 Make sure to `git add .airtap.yml .travis.yml package.json`, commit and push your repo. If everything was done right, Travis will be notified of your commit, clone your repo, install airtap, run airtap, and finally tell you if your tests passed or failed!
-
-### Further instructions
-Check [this](./travis-matrix.md) document for an example set up using the matrix feature.
