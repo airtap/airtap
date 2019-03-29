@@ -76,7 +76,8 @@
   },
   "greenkeeper": {
     "ignore": [
-      "tap-parser"
+      "tap-parser",
+      "highlight.js"
     ]
   }
 }
