@@ -20,7 +20,7 @@ test('browserify builder', function (t) {
       { transform: path.join(fixturesDir, 'baz-to-qux-transform') }
     ]
   }
-  var files = [ path.join(fixturesDir, 'entry.js') ]
+  var files = [path.join(fixturesDir, 'entry.js')]
   var builder = builderBrowserify(files, config)
 
   builder(function (_, src) {

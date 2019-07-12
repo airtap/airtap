@@ -10,7 +10,7 @@ var MockWebdriver = require('./mock-webdriver')
 test('mock sauce with retry', function (t) {
   var airtap = Airtap({
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
-    files: [ path.resolve(__dirname, '../fixtures/tape/test.js') ],
+    files: [path.resolve(__dirname, '../fixtures/tape/test.js')],
     username: 'mock-username',
     key: 'mock-key',
     concurrency: 5,
