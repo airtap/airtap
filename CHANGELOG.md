@@ -4,6 +4,21 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ## [Unreleased][unreleased]
 
+## [2.0.3] - 2019-07-12
+
+### Changed
+
+- Upgrade `humanize-duration` from `~3.16.0` to `~3.19.0` ([#243](https://github.com/airtap/airtap/issues/243), [#250](https://github.com/airtap/airtap/issues/250)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `browserify` from `~16.2.3` to `~16.3.0` ([#249](https://github.com/airtap/airtap/issues/249)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `express` from `~4.16.2` to `~4.17.0` ([#248](https://github.com/airtap/airtap/issues/248)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `body-parser` from `~1.18.3` to `~1.19.0` ([#247](https://github.com/airtap/airtap/issues/247)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `commander` from `~2.19.0` to `~2.20.0` ([#245](https://github.com/airtap/airtap/issues/245)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `electron` devDependency from `^2.0.3` to `^5.0.6` ([`3abef6f`](https://github.com/airtap/airtap/commit/3abef6f), [#252](https://github.com/airtap/airtap/issues/252)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `standard` devDependency from `^12.0.0` to `^13.0.1` ([#251](https://github.com/airtap/airtap/issues/251)) ([**@vweevers**](https://github.com/vweevers))
+- Ignore `highlight.js` in Greenkeeper ([`1653fda`](https://github.com/airtap/airtap/commit/1653fda)) ([**@vweevers**](https://github.com/vweevers))
+- Ignore `tap-parser` in Greenkeeper ([#244](https://github.com/airtap/airtap/issues/244)) ([**@goto-bus-stop**](https://github.com/goto-bus-stop))
+- Unlock devDependencies ([`dee0f88`](https://github.com/airtap/airtap/commit/dee0f88)) ([**@vweevers**](https://github.com/vweevers))
+
 ## [2.0.2] - 2019-02-23
 
 ### Removed
@@ -282,7 +297,9 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
-[unreleased]: https://github.com/airtap/airtap/compare/v2.0.2...HEAD
+[unreleased]: https://github.com/airtap/airtap/compare/v2.0.3...HEAD
+
+[2.0.3]: https://github.com/airtap/airtap/compare/v2.0.2...v2.0.3
 
 [2.0.2]: https://github.com/airtap/airtap/compare/v2.0.1...v2.0.2
 
