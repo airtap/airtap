@@ -54,7 +54,7 @@ test('loopback is ignored in local mode', function (t) {
     port: 3000,
     loopback: 'airtap.local',
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
-    files: [ path.resolve(__dirname, '../fixtures/tape/test.js') ]
+    files: [path.resolve(__dirname, '../fixtures/tape/test.js')]
   })
 
   airtap.run(function (err, url, close) {

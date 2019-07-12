@@ -6,7 +6,7 @@ var verify = require('./verify-common')
 test('tape - electron', function (t) {
   var config = {
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
-    files: [ path.resolve(__dirname, '../fixtures/tape/test.js') ],
+    files: [path.resolve(__dirname, '../fixtures/tape/test.js')],
     electron: true,
     // Should be ignored. TODO: add separate test for this.
     loopback: 'airtap.local',
