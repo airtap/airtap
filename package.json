@@ -44,7 +44,7 @@
     "cross-env": "^5.2.0",
     "dependency-check": "^3.0.0",
     "electron": "^5.0.6",
-    "hallmark": "^0.1.0",
+    "hallmark": "^1.0.0",
     "standard": "^13.0.1",
     "tape": "^4.8.0",
     "through2": "^3.0.0"
