@@ -42,7 +42,7 @@
   "devDependencies": {
     "airtap-browsers": "^0.2.0",
     "cross-env": "^5.2.0",
-    "dependency-check": "^3.0.0",
+    "dependency-check": "^4.0.0",
     "electron": "^6.0.0",
     "hallmark": "^1.0.0",
     "standard": "^13.0.1",
