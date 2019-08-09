@@ -42,7 +42,7 @@
   "devDependencies": {
     "airtap-browsers": "^0.2.0",
     "cross-env": "^5.2.0",
-    "dependency-check": "^3.0.0",
+    "dependency-check": "^4.0.0",
     "electron": "^6.0.0",
     "hallmark": "^1.0.0",
     "standard": "^13.0.1",
@@ -68,7 +68,7 @@
   "license": "MIT",
   "scripts": {
     "test": "standard && hallmark && npm run dependency-check && cross-env DEBUG=airtap* tape test",
-    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i cross-env -i standard -i hallmark --entry test/index.js --entry test/fixtures/*/*.js --entry client/*.js",
+    "dependency-check": "dependency-check package.json --missing --unused -i dependency-check -i cross-env -i standard -i hallmark test/index.js test/fixtures/*/*.js client/*.js",
     "hallmark": "hallmark --fix"
   },
   "engines": {
