@@ -4,6 +4,19 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ## [Unreleased][unreleased]
 
+## [2.0.4] - 2019-08-17
+
+### Changed
+
+- Upgrade `browserify` from `~16.3.0` to `~16.5.0` ([#258](https://github.com/airtap/airtap/issues/258), [#260](https://github.com/airtap/airtap/issues/260)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `commander` from `~2.20.0` to `~3.0.0` ([#259](https://github.com/airtap/airtap/issues/259)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `shell-quote` from `~1.6.1` to `~1.7.0` ([#261](https://github.com/airtap/airtap/issues/261)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `humanize-duration` from `~3.19.0` to `~3.20.0` ([#254](https://github.com/airtap/airtap/issues/254)) ([**@vweevers**](https://github.com/vweevers))
+- Use `xvfb` service in Travis ([#258](https://github.com/airtap/airtap/issues/258)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `dependency-check` devDependency from `^3.0.0` to `^4.0.0` ([#256](https://github.com/airtap/airtap/issues/256)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `electron` devDependency from `^5.0.6` to `^6.0.0` ([#257](https://github.com/airtap/airtap/issues/257)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `hallmark` devDependency from `^0.1.0` to `^1.0.0` ([#253](https://github.com/airtap/airtap/issues/253)) ([**@vweevers**](https://github.com/vweevers))
+
 ## [2.0.3] - 2019-07-12
 
 ### Changed
@@ -297,7 +310,9 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
-[unreleased]: https://github.com/airtap/airtap/compare/v2.0.3...HEAD
+[unreleased]: https://github.com/airtap/airtap/compare/v2.0.4...HEAD
+
+[2.0.4]: https://github.com/airtap/airtap/compare/v2.0.3...v2.0.4
 
 [2.0.3]: https://github.com/airtap/airtap/compare/v2.0.2...v2.0.3
 
