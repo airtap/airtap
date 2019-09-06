@@ -2,8 +2,6 @@
 
 If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
 
-## [Unreleased][unreleased]
-
 ## [2.0.4] - 2019-08-17
 
 ### Changed
@@ -309,8 +307,6 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - README: remove frameworks other than tap(e) ([**@vweevers**](https://github.com/vweevers))
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
-
-[unreleased]: https://github.com/airtap/airtap/compare/v2.0.4...HEAD
 
 [2.0.4]: https://github.com/airtap/airtap/compare/v2.0.3...v2.0.4
 
