@@ -72,7 +72,7 @@
     "hallmark": "hallmark --fix"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=10"
   },
   "greenkeeper": {
     "ignore": [

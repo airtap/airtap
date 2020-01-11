@@ -9,10 +9,9 @@ addons:
 language: node_js
 
 node_js:
+  - 13
+  - 12
   - 10
-  - 9
-  - 8
-  - 6
 
 services:
   - xvfb
