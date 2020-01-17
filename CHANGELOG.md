@@ -2,6 +2,25 @@
 
 If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
 
+## [3.0.0] - 2020-01-17
+
+### Changed
+
+- Upgrade `wd` from `~1.11.1` to `~1.12.0` ([#271](https://github.com/airtap/airtap/issues/271)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `chalk` from `^2.3.1` to `^3.0.0` ([#270](https://github.com/airtap/airtap/issues/270)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `commander` from `~3.0.0` to `~4.0.0` ([#268](https://github.com/airtap/airtap/issues/268)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `convert-source-map` from `~1.6.0` to `~1.7.0` ([#269](https://github.com/airtap/airtap/issues/269)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `http-proxy` from `~1.17.0` to `~1.18.0` ([#265](https://github.com/airtap/airtap/issues/265)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `humanize-duration` from `~3.20.0` to `~3.21.0` ([#266](https://github.com/airtap/airtap/issues/266)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `electron` devDependency from `^6.0.0` to `^7.1.8` ([#267](https://github.com/airtap/airtap/issues/267)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `cross-env` devDependency from `^5.2.0` to `^6.0.0` ([#264](https://github.com/airtap/airtap/issues/264)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `hallmark` devDependency from `^1.0.0` to `^2.0.0` ([#263](https://github.com/airtap/airtap/issues/263)) ([**@vweevers**](https://github.com/vweevers))
+- Upgrade `standard` devDependency from `^13.0.1` to `^14.0.0` ([#262](https://github.com/airtap/airtap/issues/262)) ([**@vweevers**](https://github.com/vweevers))
+
+### Removed
+
+- **Breaking:** Drop node &lt; 10 ([#272](https://github.com/airtap/airtap/issues/272)) ([**@vweevers**](https://github.com/vweevers))
+
 ## [2.0.4] - 2019-08-17
 
 ### Changed
@@ -307,6 +326,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - README: remove frameworks other than tap(e) ([**@vweevers**](https://github.com/vweevers))
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
+
+[3.0.0]: https://github.com/airtap/airtap/compare/v2.0.4...v3.0.0
 
 [2.0.4]: https://github.com/airtap/airtap/compare/v2.0.3...v2.0.4
 
