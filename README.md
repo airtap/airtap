@@ -57,21 +57,19 @@ See the [Cloud Testing](./doc/cloud-testing.md) guide to get your tests running 
 airtap test.js
 ```
 
-Airtap itself is also tested in Sauce Labs.
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/airtap-ci.svg)](https://saucelabs.com/u/airtap-ci)
+![sauce labs screenshot](./doc/images/sauce-labs-screenshot.png)
 
 ### Continuous Integration
 
 No testing setup would be complete without a badge for passing or failing tests. After making sure your tests all pass in the cloud from your local machine, we will configure our tests to pass from Travis when we commit changes. See the [Travis CI](./doc/travis-ci.md) guide.
 
-![travis screenshot](./doc/images/travis-screenshot.png)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/level-js.svg)](https://saucelabs.com/u/level-js)
 
 ## Who Uses Airtap?
 
 **Lots of folks!** Collectively, packages that depend on Airtap get 100's of millions of downloads per month!
 
-- [`memdown`](https://github.com/Level/memdown)
+- [`level`](https://github.com/Level/level) (and dependencies)
 - [`webtorrent`](https://github.com/webtorrent/webtorrent) (and dependencies)
 - [`simple-peer`](https://github.com/feross/simple-peer)
 - [`buffer`](https://github.com/feross/buffer)
