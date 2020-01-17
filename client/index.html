@@ -23,6 +23,11 @@
     {{#if config.port}}
       ZUUL.port = {{config.port}};
     {{/if}}
+
+    var clientScript = '/airtap/client.js';
+    if (typeof Uint8Array === 'undefined') {
+      clientScript += '?ie=1';
+    }
+    document.write('<script src="' + clientScript + '">\x3c/script>');
   </script>
-  <script src="/airtap/client.js"></script>
 </body>
