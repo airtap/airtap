@@ -1,88 +1,68 @@
-var finished = require('tap-finished')
-var parser = require('tap-parser')
-var Reporter = require('./reporter')
+var load = require('load-script')
+var engineClient = require('engine.io-client')
 
-if (typeof global.console === 'undefined') {
-  global.console = {}
-}
+var container = document.getElementById('airtap')
+var colors = { pending: '#e4a533', fail: '#d83131', ok: '#69cf69' }
+var socket = engineClient('ws://' + window.location.host + '/engine.io')
 
-var reporter = Reporter()
-var previousTest
-var assertions = 0
-var done = false
-var noMoreTests = false
+socket.on('open', function () {
+  socket.on('message', function (json) {
+    var msg = JSON.parse(json)
 
-var parseStream = parser()
-
-var finishedStream = finished(function () {
-  done = true
-  parseStream.end()
-  reporter.done()
-})
-
-var originalLog = global.console.log
-global.console.log = function () {
-  var msg = arguments[0]
-
-  // do not write in a closed WriteStream
-  if (!done) {
-    parseStream.write(msg + '\n')
-    finishedStream.write(msg + '\n')
-  }
-
-  // transfer log to original console,
-  // this shows the tap output in console
-  // and also let the user add console logs
-  if (typeof originalLog === 'function') {
-    return originalLog.apply(this, arguments)
-  }
-}
-
-parseStream.on('comment', function (comment) {
-  // if we received 'plan' then no need to go further
-  if (noMoreTests) {
-    return
-  }
-
-  endPreviousTestIfNeeded()
-
-  previousTest = {
-    name: comment
-  }
-
-  assertions = 0
-
-  reporter.test({
-    name: comment
+    if (msg.type === 'complete') {
+      status(msg.ok ? colors.ok : colors.fail)
+      send({ type: 'complete', coverage: window.__coverage__ }, () => {
+        socket.close()
+      })
+    }
   })
-})
 
-parseStream.on('assert', function (assert) {
-  if (!assert.ok) {
-    assertions++
+  global.console.log = wrap(global.console.log, 'log')
+  global.console.error = wrap(global.console.error, 'error')
+
+  window.onerror = onerror
+
+  load('/airtap/test.js', function (err) {
+    if (err) {
+      status(colors.fail)
+      throw err
+    }
+
+    status(colors.pending)
+  })
+
+  function send (msg, ondrain) {
+    if (msg.type === 'console' && msg.level === 'log') {
+      var code = container.appendChild(document.createElement('code'))
+      code.textContent = msg.args.join(' ')
+    }
+
+    socket.send(JSON.stringify(msg), ondrain)
   }
 
-  reporter.assertion({
-    result: assert.ok,
-    expected: undefined,
-    actual: undefined,
-    message: assert.name || 'unnamed assert',
-    error: undefined,
-    stack: undefined
-  })
-})
+  function status (color) {
+    document.body.style.backgroundColor = color
+  }
 
-parseStream.on('plan', function (plan) {
-  // starting here, we know the full tape suite is finished
-  endPreviousTestIfNeeded()
-  noMoreTests = true
-})
+  function wrap (original, level) {
+    return function log () {
+      var args = [].slice.call(arguments)
+      send({ type: 'console', level: level, args: args })
+      if (original) return original.apply(this, args)
+    }
+  }
 
-function endPreviousTestIfNeeded () {
-  if (previousTest) {
-    reporter.test_end({
-      passed: assertions === 0,
-      name: previousTest.name
+  function onerror (message, source, lineno, colno, error) {
+    send({
+      type: 'error',
+      message: message,
+      source: source,
+      lineno: lineno,
+      colno: colno,
+      error: {
+        name: error && error.name,
+        stack: error && error.stack
+      }
     })
   }
-}
+})

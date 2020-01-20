@@ -2,25 +2,27 @@ module.exports = function (t, airtap, callback) {
   var count = airtap._browsers.length || 1
   t.plan(count * 8 + 2)
 
+  // TODO (!!): instead pass browsers array to verifyCommon
   airtap.on('browser', function (browser) {
     var consoleOutput = []
-    var inits = 0
+    var starts = 0
 
-    browser.on('start', function (reporter) {
-      reporter.on('console', function (msg) {
+    browser.on('message', function (msg) {
+      if (msg.type === 'console' && msg.level === 'log') {
         consoleOutput.push(msg.args)
-      })
+      }
     })
 
-    browser.on('init', function () {
-      // If there's a Sauce Labs error, init will be emitted on each retry.
-      inits++
+    browser.on('starting', function () {
+      // If there's a Sauce Labs error, starting will be emitted on each retry.
+      starts++
     })
 
-    browser.on('done', function (results) {
+    browser.on('stop', function (err, stats) {
       var endOfOutput = consoleOutput.slice(-5)
 
-      t.ok(inits > 0, 'browser emitted init ' + inits + ' times')
+      t.is(err, null)
+      t.ok(starts > 0, 'browser emitted "starting" ' + starts + ' times')
 
       // check that we did output untill the end of the test suite
       // this is the number of asserts in tape
@@ -31,18 +33,14 @@ module.exports = function (t, airtap, callback) {
       t.deepEqual(endOfOutput[4], [''])
 
       // this is the number of passed/failed test() in tape
-      t.is(results.passed, 3)
-      t.is(results.failed, 3)
+      t.is(stats.pass, 3)
+      t.is(stats.fail, 3)
     })
   })
 
-  airtap.on('error', function (err) {
-    t.fail(err.message)
-  })
-
-  airtap.run(function (err, passed) {
+  airtap.run(function (err, ok) {
     t.error(err, 'no error')
-    t.is(passed, false, 'test should not pass')
+    t.is(ok, false, 'test should not pass')
     if (callback) callback()
   })
 }

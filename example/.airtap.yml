@@ -5,3 +5,4 @@ browsers:
     version: 30..latest
   - name: chrome
     version: 30..beta
+server: support-server.js
