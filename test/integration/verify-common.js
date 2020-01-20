@@ -1,11 +1,10 @@
 module.exports = function (t, airtap, callback) {
-  var count = airtap._browsers.length || 1
-  t.plan(count * 8 + 2)
+  const count = airtap._browsers.length || 1
+  t.plan(count * 9 + 2)
 
-  // TODO (!!): instead pass browsers array to verifyCommon
-  airtap.on('browser', function (browser) {
-    var consoleOutput = []
-    var starts = 0
+  for (const browser of airtap) {
+    const consoleOutput = []
+    let starts = 0
 
     browser.on('message', function (msg) {
       if (msg.type === 'console' && msg.level === 'log') {
@@ -19,24 +18,23 @@ module.exports = function (t, airtap, callback) {
     })
 
     browser.on('stop', function (err, stats) {
-      var endOfOutput = consoleOutput.slice(-5)
+      const endOfOutput = consoleOutput.slice(-5)
 
-      t.is(err, null)
+      t.is(err, null, 'no error on stop')
       t.ok(starts > 0, 'browser emitted "starting" ' + starts + ' times')
 
-      // check that we did output untill the end of the test suite
-      // this is the number of asserts in tape
+      // check that we did output until the end of the test suite
+      // this is the number of assertions in tape
       t.deepEqual(endOfOutput[0], ['1..9'])
       t.deepEqual(endOfOutput[1], ['# tests 9'])
       t.deepEqual(endOfOutput[2], ['# pass  5'])
       t.deepEqual(endOfOutput[3], ['# fail  4'])
       t.deepEqual(endOfOutput[4], [''])
 
-      // this is the number of passed/failed test() in tape
-      t.is(stats.pass, 3)
-      t.is(stats.fail, 3)
+      t.is(stats.pass, 5, 'pass 5')
+      t.is(stats.fail, 4, 'fail 4')
     })
-  })
+  }
 
   airtap.run(function (err, ok) {
     t.error(err, 'no error')

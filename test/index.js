@@ -8,7 +8,7 @@ require('./abstract-browser/electron-browser')
 require('./abstract-browser/sauce-browser')
 
 // require('./integration/tape-mock-sauce')
-// require('./integration/tape-electron')
+require('./integration/tape-electron')
 // require('./integration/tape-sauce')
 
 // Temporary to please dependency-check
