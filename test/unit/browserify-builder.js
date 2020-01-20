@@ -10,7 +10,7 @@ var path = require('path')
 // if not, it will likely be
 //     console.log('bar')
 test('browserify builder', function (t) {
-  var builderBrowserify = require('../../lib/builder-browserify')
+  var createTestBundler = require('../../lib/builder-browserify')
   var fixturesDir = path.resolve(__dirname, '../fixtures/builder-browserify')
 
   var config = {
@@ -21,11 +21,10 @@ test('browserify builder', function (t) {
     ]
   }
   var files = [path.join(fixturesDir, 'entry.js')]
-  var builder = builderBrowserify(files, config)
+  var bundler = createTestBundler(files, config)
 
-  builder(function (_, src) {
+  bundler.bundle(function (_, src) {
     t.notEqual(src.indexOf("console.log('qux')"), -1)
-    builder.close()
     t.end()
   })
 })
