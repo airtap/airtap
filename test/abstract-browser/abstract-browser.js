@@ -4,41 +4,43 @@ const test = require('tape')
 const AbstractBrowser = require('../../lib/abstract-browser')
 
 function suite (name, test, factory) {
-  // Not yet implemented.
-  test.skip(`${name} has stats`, function (t) {
+  test(`${name} has stats`, function (t) {
     const browser = factory()
 
     t.same(browser.stats, { ok: false, pass: 0, fail: 0 })
     t.end()
   })
 
-  // Not yet implemented.
-  test.skip(`${name} start`, function (t) {
-    t.plan(1)
+  test(`${name} start & stop`, function (t) {
+    t.plan(7)
 
     const browser = factory()
+    const fakeUrl = 'http://localhost:1234'
 
-    browser._start = function () {
-      t.pass('called _start')
+    t.is(browser._status, 'stopped', 'initial status is stopped')
+
+    browser._start = function (url, callback) {
+      t.is(url, fakeUrl, 'got url')
+      t.is(browser._status, 'starting', 'status is starting')
+
+      process.nextTick(function () {
+        callback()
+
+        process.nextTick(function () {
+          t.is(browser._status, 'started', 'status is started')
+          browser.stop()
+        })
+      })
     }
-
-    browser.start()
-  })
-
-  // Not yet implemented.
-  test.skip(`${name} stop`, function (t) {
-    t.plan(3)
-
-    const browser = factory()
 
     browser._stop = function (callback) {
-      t.pass('called _stop')
-      callback()
+      t.is(browser._status, 'stopping', 'status is stopping')
+      process.nextTick(callback)
     }
 
-    browser.stop(function (err) {
-      t.ifError(err, 'no stop error')
-      t.pass('called callback')
+    browser.run(fakeUrl, function (err, stats) {
+      t.ifError(err, 'no error')
+      t.is(browser._status, 'stopped', 'status is stopped')
     })
   })
 
