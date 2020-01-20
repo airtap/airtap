@@ -11,7 +11,7 @@ socket.on('open', function () {
 
     if (msg.type === 'complete') {
       status(msg.ok ? colors.ok : colors.fail)
-      send({ type: 'complete', coverage: window.__coverage__ }, () => {
+      send({ type: 'complete', coverage: window.__coverage__ }, function () {
         socket.close()
       })
     }
