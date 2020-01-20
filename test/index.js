@@ -9,7 +9,4 @@ require('./abstract-browser/sauce-browser')
 
 require('./integration/tape-mock-sauce')
 require('./integration/tape-electron')
-// require('./integration/tape-sauce')
-
-// Temporary to please dependency-check
-require('airtap-browsers')
+require('./integration/tape-sauce')
