@@ -6,11 +6,10 @@ const abstractSuite = require('./abstract-browser')
 
 abstractSuite('ElectronBrowser', test, ElectronBrowser)
 
-// Not yet implemented.
-test.skip('ElectronBrowser toString', function (t) {
+test('ElectronBrowser toString', function (t) {
   const browser = new ElectronBrowser()
   const version = require('electron/package.json').version
 
-  t.is(browser.toString(), `<Electron ${version}>`)
+  t.is(browser.toString(), `electron:${version}`)
   t.end()
 })
