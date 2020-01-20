@@ -17,9 +17,7 @@ services:
   - xvfb
 
 script:
-  # TODO: restore tests once they pass locally
-  # - npm test
-  - npx standard
+  - npm test
 
 notifications:
   email:
