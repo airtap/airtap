@@ -11,7 +11,7 @@ test('exits cleanly and does nothing if no secure travis env', t => {
   })
   exec('node ' + airtap, { env }, (err, stdout, stderr) => {
     t.error(err, 'no error')
-    t.equal(stdout.trim(), messages.SKIPPING_AIRTAP)
+    t.equal(stderr.trim(), messages.SKIPPING_AIRTAP)
     t.end()
   })
 })
