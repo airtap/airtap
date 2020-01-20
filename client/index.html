@@ -1,28 +1,11 @@
 <!doctype html>
 <head>
-  <title>{{title}}</title>
+  <title>Airtap</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
   <link rel="stylesheet" href="/airtap/index.css">
   <link rel="icon" href="/airtap/favicon.ico">
 </head>
 <body>
-  <div id="zuul"></div>
-
-  {{{user_html}}}
-
-  <script>{{{state}}}</script>
-
-  {{#each user_scripts}}
-  <script src="{{this}}"></script>
-  {{/each}}
-
-  <script>
-    var ZUUL = {};
-    {{!-- Only add the support server port if it exists. Not using JSON.parse for backwards compatibility. --}}
-    {{#if config.port}}
-      ZUUL.port = {{config.port}};
-    {{/if}}
-  </script>
+  <div id="airtap"></div>
   <script src="/airtap/client.js"></script>
 </body>

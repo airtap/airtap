@@ -11,10 +11,10 @@ var verify = require('./verify-common')
 test('tape - sauce', function (t) {
   var auth = getAuth()
 
-  if (!process.env.CI && !auth.username && !auth.key) {
+  if (!process.env.CI && !auth.sauce_username && !auth.sauce_key) {
     t.skip('no sauce labs credentials provided')
     return t.end()
-  } else if (!auth.username || !auth.key) {
+  } else if (!auth.sauce_username || !auth.sauce_key) {
     t.fail('incomplete sauce labs credentials provided')
     return t.end()
   }
@@ -22,8 +22,8 @@ test('tape - sauce', function (t) {
   var config = {
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
     files: [path.resolve(__dirname, '../fixtures/tape/test.js')],
-    username: auth.username,
-    key: auth.key,
+    sauce_username: auth.sauce_username,
+    sauce_key: auth.sauce_key,
     concurrency: 5,
     loopback: 'airtap.local'
   }
@@ -37,6 +37,7 @@ test('tape - sauce', function (t) {
     }
 
     browsers.forEach(function (info) {
+      // TODO (!!): update
       airtap.browser({
         browser: info.api_name,
         version: info.short_version,
@@ -57,7 +58,7 @@ function getAuth () {
   }
 
   return {
-    username: process.env.SAUCE_USERNAME || rc.sauce_username,
-    key: process.env.SAUCE_ACCESS_KEY || rc.sauce_key
+    sauce_username: process.env.SAUCE_USERNAME || rc.sauce_username,
+    sauce_key: process.env.SAUCE_ACCESS_KEY || rc.sauce_key
   }
 }

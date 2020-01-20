@@ -11,8 +11,8 @@ test('mock sauce with retry', function (t) {
   var airtap = Airtap({
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
     files: [path.resolve(__dirname, '../fixtures/tape/test.js')],
-    username: 'mock-username',
-    key: 'mock-key',
+    sauce_username: 'mock-username',
+    sauce_key: 'mock-key',
     concurrency: 5,
     loopback: 'localhost'
   })

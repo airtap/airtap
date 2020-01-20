@@ -4,7 +4,7 @@ var messages = require('../lib/messages')
 
 // Prevent external PRs of airtap users to fail browser tests
 if (process.env.TRAVIS_SECURE_ENV_VARS === 'false') {
-  console.log(messages.SKIPPING_AIRTAP)
+  console.error(messages.SKIPPING_AIRTAP)
   process.exit(0)
 }
 
@@ -15,17 +15,21 @@ var chalk = require('chalk')
 var program = require('commander')
 var yaml = require('yamljs')
 var os = require('os')
+var ms = require('ms')
 var findNearestFile = require('find-nearest-file')
 var sauceBrowsers = require('sauce-browsers/callback')
-var open = require('opener')
 
 var Airtap = require('../lib/airtap')
 var aggregate = require('../lib/aggregate-browsers')
+var SauceBrowser = require('../lib/sauce-browser')
+var ElectronBrowser = require('../lib/electron-browser')
+var LocalBrowser = require('../lib/local-browser')
 
 program
   .version(require('../package.json').version)
   .usage('[options] <files | dir>')
   .option('--local', 'run tests in a local browser of choice')
+  .option('--live', 'keep browser open to allow repeated test runs')
   .option('--port <port>', 'port for bouncer server, defaults to a free port')
   .option('--electron', 'run tests in electron. electron must be installed separately.')
   .option('--tunnel-id <id>', 'Tunnel identifier for Sauce Connect, default TRAVIS_JOB_NUMBER or none')
@@ -36,15 +40,17 @@ program
   .option('--browser-version <browser version>', 'specficy the browser version to test an individual browser')
   .option('--browser-platform <browser platform>', 'specficy the browser platform to test an individual browser')
   .option('--browser-retries <retries>', 'number of retries allowed when trying to start a cloud browser, default to 6')
-  .option('--browser-output-timeout <timeout>', 'how much time to wait between two test results, default to -1 (no timeout)')
+  .option('--idle-timeout <timeout>', 'how much time to wait before and between test results, default "5m"')
   .option('--concurrency <n>', 'specify the number of concurrent browsers to test')
   .option('--coverage', 'enable code coverage analysis with istanbul')
   .option('--open', 'open a browser automatically. only used when --local is specified')
   .parse(process.argv)
 
+// TODO: camelCase, across the board
 var config = {
   files: program.args,
   local: program.local,
+  live: program.live,
   port: program.port,
   electron: program.electron,
   prj_dir: process.cwd(),
@@ -54,9 +60,8 @@ var config = {
   concurrency: program.concurrency,
   coverage: program.coverage,
   open: program.open,
-  browser_retries: program.browserRetries && parseInt(program.browserRetries, 10),
-  browser_output_timeout: program.browserOutputTimeout && parseInt(program.browserOutputTimeout, 10),
-  browser_open_timeout: program.browserOpenTimeout && parseInt(program.browserOpenTimeout, 10)
+  browser_retries: program.browserRetries,
+  idle_timeout: program.idleTimeout
 }
 
 // Remove unspecified flags
@@ -97,8 +102,11 @@ if (program.listBrowsers) {
   }
 
   config = readGlobalConfig(config)
-  config.username = process.env.SAUCE_USERNAME || config.sauce_username
-  config.key = process.env.SAUCE_ACCESS_KEY || config.sauce_key
+  config.sauce_username = process.env.SAUCE_USERNAME || config.sauce_username
+  config.sauce_key = process.env.SAUCE_ACCESS_KEY || config.sauce_key
+  config.browser_retries = parseInt(config.browser_retries || 6, 10)
+  config.idle_timeout = parseDuration(config.idle_timeout || '5m')
+  config.concurrency = parseInt(config.concurrency || 5, 10)
 
   var pkg = {}
   try {
@@ -108,37 +116,17 @@ if (program.listBrowsers) {
   config.name = config.name || pkg.name || 'airtap'
   config.watchify = !process.env.CI
 
-  if (config.builder) {
-    // relative path will needs to be under project dir
-    if (config.builder[0] === '.') {
-      config.builder = path.resolve(config.prj_dir, config.builder)
-    }
-
-    config.builder = require.resolve(config.builder)
-  }
-
   var airtap = Airtap(config)
 
-  if (config.local) {
-    airtap.run(function (err, url) {
-      if (err) throw err
+  if (config.local || config.electron) {
+    if (config.local) airtap.add(new LocalBrowser(config))
+    if (config.electron) airtap.add(new ElectronBrowser(config))
 
-      if (config.open) {
-        open(url)
-      } else {
-        console.log('open the following url in a browser:')
-        console.log(url)
-      }
-    })
-  } else if (config.electron) {
-    airtap.run(function (err, passed) {
-      if (err) throw err
-      process.exit(passed ? 0 : 1)
-    })
-  } else if (!config.username || !config.key) {
-    console.error(chalk.red('Error:'))
+    // TODO: first add sauce browsers (if any), then run
+    run(airtap)
+  } else if (!config.sauce_username || !config.sauce_key) {
     console.error(chalk.red('Airtap tried to run tests in Sauce Labs, however no credentials were provided.'))
-    console.error(chalk.cyan('See doc/cloud-testing.md for info on how to setup cloud testing.'))
+    console.error(chalk.red('See doc/cloud-testing.md for info on how to setup cloud testing.'))
     process.exit(1)
   } else if (!config.browsers) {
     console.error(chalk.red('No cloud browsers specified in .airtap.yml'))
@@ -146,143 +134,105 @@ if (program.listBrowsers) {
   } else {
     sauceBrowsers(config.browsers, function (err, toTest) {
       if (err) {
-        console.error(chalk.bold.red('Unable to get available browsers for Sauce Labs'))
+        console.error(chalk.red('Unable to get available browsers for Sauce Labs'))
         console.error(chalk.red(err.stack))
         return process.exit(1)
       }
 
-      var browsers = []
-      var byOs = {}
+      const byOs = {}
 
       toTest.forEach(function (info) {
-        var key = info.api_name + ' @ ' + info.os;
+        const key = info.api_name + ' @ ' + info.os;
         (byOs[key] = byOs[key] || []).push(info.short_version)
 
-        airtap.browser({
-          browser: info.api_name,
+        airtap.add(new SauceBrowser(config, {
+          browserName: info.api_name,
           version: info.short_version,
-          platform: info.os
-        })
+          platform: info.os,
+
+          // TODO: broken, sauce-browsers doesn't preserve custom properties
+          firefox_profile: info.firefox_profile
+        }))
       })
 
       // pretty prints which browsers we will test on what platforms
-      for (var item in byOs) {
-        console.log(chalk`{gray - testing: ${item}: ${byOs[item].join(' ')}}`)
+      // TODO: do we really need this?
+      for (const item in byOs) {
+        console.error(chalk.gray(`# testing ${item}: ${byOs[item].join(' ')}`))
       }
 
-      var passedTestsCount = 0
-      var failedBrowsersCount = 0
-      var lastOutputName
+      run(airtap)
+    })
+  }
+}
 
-      airtap.on('browser', function (browser) {
-        browsers.push(browser)
+function run (airtap) {
+  monitor(airtap)
 
-        var name = browser.toString()
-        var waitInterval
+  airtap.run(function (err, ok) {
+    if (err) throw err
+    process.exit(ok ? 0 : 1)
+  })
+}
 
-        browser.once('init', function () {
-          console.log(chalk`{gray - queuing: ${name}}`)
-        })
+function monitor (airtap) {
+  for (const browser of airtap) {
+    let waitTimer
 
-        browser.on('start', function (reporter) {
-          console.log(chalk`{white - starting: ${name}}`)
+    browser.on('message', function (msg) {
+      // TODO (!!): reset waitTimer
 
-          clearInterval(waitInterval)
-          waitInterval = setInterval(function () {
-            console.log(chalk`{yellow - waiting:} ${name}`)
-          }, 1000 * 30)
-
-          var currentTest
-          reporter.on('test', function (test) {
-            currentTest = test
-          })
-
-          reporter.on('console', function (msg) {
-            if (lastOutputName !== name) {
-              lastOutputName = name
-              console.log(chalk`{white ${name} console}`)
-            }
-
-            // When testing with microsoft edge:
-            // Adds length property to array-like object if not defined to execute console.log properly
-            if (msg.args.length === undefined) {
-              msg.args.length = Object.keys(msg.args).length
-            }
-            console.log.apply(console, msg.args)
-          })
-
-          reporter.on('assertion', function (assertion) {
-            console.log()
-            console.log(chalk`{red ${name} ${currentTest ? currentTest.name : 'undefined test'}}`)
-            console.log(chalk`{red Error: ${assertion.message}}`)
-
-            // When testing with microsoft edge:
-            // Adds length property to array-like object if not defined to execute forEach properly
-            if (assertion.frames.length === undefined) {
-              assertion.frames.length = Object.keys(assertion.frames).length
-            }
-            Array.prototype.forEach.call(assertion.frames, function (frame) {
-              console.log()
-              console.log(chalk`{gray ${frame.func} ${frame.filename}:${frame.line}}`)
-            })
-            console.log()
-          })
-
-          reporter.once('done', function () {
-            clearInterval(waitInterval)
-          })
-        })
-
-        browser.once('done', function (results) {
-          passedTestsCount += results.passed
-
-          if (results.failed > 0 || results.passed === 0) {
-            console.log(chalk`{red - failed: ${name}, (${results.failed}, ${results.passed})}`)
-            failedBrowsersCount++
-            return
-          }
-          console.log(chalk`{green - passed: ${name}}`)
-        })
-      })
-
-      airtap.on('restart', function (browser) {
-        var name = browser.toString()
-        console.log(chalk`{red - restarting: ${name}}`)
-      })
-
-      airtap.on('error', function (err) {
-        shutdownAllBrowsers(function () {
-          throw err
-        })
-      })
-
-      airtap.run(function (err, passed) {
-        if (err) throw err
-
-        if (failedBrowsersCount > 0) {
-          console.log(chalk`{red ${failedBrowsersCount} browser(s) failed}`)
-        } else if (passedTestsCount === 0) {
-          console.log(chalk.yellow('No tests ran'))
+      if (msg.type === 'console') {
+        if (msg.level === 'log') {
+          // Only use stdout for TAP
+          // IDEA: merge TAP output of multiple browsers. Then you can pipe
+          // airtap into the usual TAP reporters. Per browser, we'll have
+          // two TAP streams: one for state changes (start/stop/waiting) and
+          // one for the browser output (which may repeat itself, in case of
+          // retries). We'll aggregate the plans of all streams, and emit a
+          // total at the end.
+          console.log(...msg.args)
         } else {
-          console.log(chalk.green('All browsers passed'))
+          console.error(...msg.args)
         }
-
-        process.exit((passedTestsCount > 0 && failedBrowsersCount === 0) ? 0 : 1)
-      })
-
-      function shutdownAllBrowsers (done) {
-        var Batch = require('batch')
-        var batch = new Batch()
-
-        browsers.forEach(function (browser) {
-          batch.push(function (done) {
-            browser.shutdown()
-            browser.once('done', done)
-          })
-        })
-
-        batch.end(done)
+      } else if (msg.type === 'error') {
+        const { type, ...rest } = msg
+        console.error(chalk.red(`# ${browser} window error`), rest)
       }
+    })
+
+    browser.on('starting', function (url) {
+      console.error(chalk.yellow(`# ${browser} starting ${url}`))
+    })
+
+    browser.on('stopping', function () {
+      console.error(chalk.yellow(`# ${browser} stopping`))
+    })
+
+    browser.on('start', function () {
+      console.error(chalk.yellow(`# ${browser} started`))
+
+      clearInterval(waitTimer)
+      waitTimer = setInterval(function () {
+        console.error(chalk.yellow(`# ${browser} waiting`))
+      }, 30e3)
+    })
+
+    browser.on('stop', function (err, stats) {
+      clearInterval(waitTimer)
+
+      if (err) {
+        console.error(chalk.red(`# ${browser} error: ${err.message}`))
+      } else if (!stats.ok) {
+        console.error(chalk.red(`# ${browser} failed: pass ${stats.pass}, fail ${stats.fail}`))
+      } else {
+        console.error(chalk.green(`# ${browser} passed: pass ${stats.pass}, fail ${stats.fail}`))
+      }
+    })
+
+    browser.on('restart', function () {
+      clearInterval(waitTimer)
+      console.error(chalk.yellow(`# ${browser} restarting`))
     })
   }
 }
@@ -324,4 +274,8 @@ function readYAMLConfig (filename) {
 function mergeConfig (config, update) {
   config = Object.assign({}, update, config)
   return config
+}
+
+function parseDuration (d) {
+  return typeof d === 'number' ? d : ms(d)
 }

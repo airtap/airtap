@@ -73,26 +73,6 @@ browsers:
 
 Float version numbers should be quoted.
 
-### html (optional)
-
-The `html` field allows you to inject custom html into the page. This is useful for testing app frameworks where you might want to specify some custom template logic. The html is inserted at the start of the body.
-
-```yaml
-html: ./test/templates.html
-```
-
-### scripts (optional)
-
-A list of files or url to load into `<script>` tags on the page before tests run. This would be used to load jquery or other globals if your module and test code is not self contained.
-
-```yaml
-scripts:
-  - "http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.js"
-  - "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"
-  - "http://builds.emberjs.com/tags/v1.2.0-beta.1/ember.js"
-  - "app.js"
-```
-
 ### browserify (optional)
 
 You can set any of the configuration elements in the list below, and they'll be passed to `browserify`.
@@ -142,19 +122,19 @@ browserify:
 
 ### server (optional)
 
-This field can point to an optional shell command or javascript file to run as a testing support server. This is used to make testing with real ajax and websocket requests possible. Your command will be run with the `AIRTAP_PORT` environment variable set to a port number you MUST use. If your server does not listen on this PORT then your test requests won't be able to reach it.
+This field can point to an optional shell command or javascript file to run as a testing support server. This is used to make testing with real ajax and websocket requests possible. Your command will be run with the `AIRTAP_SUPPORT_PORT` environment variable set to a port number you MUST use. If your server does not listen on this PORT then your test requests won't be able to reach it.
 
 ```yaml
 server: ./test/support/server.js
 ```
 
-We recommend writing simple support servers using [expressjs](http://expressjs.com/). However, any shell command will be run so servers in ruby, python, etc are also supported. $AIRTAP_PORT can also be used as part of the arguments, enabling the use of command-line http servers:
+We recommend writing simple support servers using [expressjs](http://expressjs.com/). However, any shell command will be run so servers in ruby, python, etc are also supported. $AIRTAP_SUPPORT_PORT can also be used as part of the arguments, enabling the use of command-line http servers:
 
 ```yaml
 # Assuming python is installed
-server: "python -m SimpleHTTPServer $AIRTAP_PORT"
+server: "python -m SimpleHTTPServer $AIRTAP_SUPPORT_PORT"
 # If http-server is available, e.g. npm install -g http-server
-server: "http-server -p $AIRTAP_PORT"
+server: "http-server -p $AIRTAP_SUPPORT_PORT"
 ```
 
 ### firefox_profile (optional)

@@ -8,7 +8,7 @@ function suite (name, test, factory) {
   test.skip(`${name} has stats`, function (t) {
     const browser = factory()
 
-    t.same(browser.stats, { passed: 0, failed: 0 })
+    t.same(browser.stats, { ok: false, pass: 0, fail: 0 })
     t.end()
   })
 
@@ -26,24 +26,23 @@ function suite (name, test, factory) {
   })
 
   // Not yet implemented.
-  test.skip(`${name} shutdown`, function (t) {
+  test.skip(`${name} stop`, function (t) {
     t.plan(3)
 
     const browser = factory()
 
-    browser._shutdown = function (callback) {
-      t.pass('called _shutdown')
+    browser._stop = function (callback) {
+      t.pass('called _stop')
       callback()
     }
 
-    browser.shutdown(function (err) {
-      t.ifError(err, 'no shutdown error')
+    browser.stop(function (err) {
+      t.ifError(err, 'no stop error')
       t.pass('called callback')
     })
   })
 
-  // Not yet implemented (except on SauceBrowser).
-  test.skip(`${name} toString`, function (t) {
+  test(`${name} toString`, function (t) {
     const browser = factory()
     const str = browser.toString()
 

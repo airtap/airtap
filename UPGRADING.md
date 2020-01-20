@@ -2,6 +2,55 @@
 
 This document describes breaking changes and how to upgrade. For a complete list of changes including minor and patch releases, please refer to the [changelog](CHANGELOG.md).
 
+## Upcoming
+
+### Thinner UI
+
+In favor of parsing TAP in the backend, with `tap-parser` upgraded from v5 to v10. All browsers now send unparsed console logs to the backend over WebSockets (or just HTTP in older browsers) instead of the frontend parsing TAP and varying ways of getting that data to the backend.
+
+Stack traces embedded in TAP no longer utilize source maps; we may restore this functionality in a future release.
+
+Electron gained support for `--coverage`.
+
+### Unified logic
+
+Electron, local and Sauce Labs browsers now have the same logic for timeouts, retries and concurrency. You can test Electron and a local browser in parallel. This exits when both complete:
+
+```
+airtap --electron --local --open test.js
+```
+
+### Add `--live`
+
+In `--local` mode, airtap now exits by default after the tests complete. To allow repeated runs like before (upon reloading the page) pass the new `--live` flag. This keeps airtap running and works on Electron (and theoretically Sauce Labs browsers) too. If you combine `--electron` and `--live`, the Electron window will be made visible to allow for debugging and reloading.
+
+When browserify errors, airtap exits unless `--live`. Previously, it would hang.
+
+### Changes to configuration
+
+- Removed the `username` and `key` aliases of the `sauce_username` and `sauce_key` options
+- Removed the `builder` option (which allowed replacing browserify, but no other bundler could "just work")
+- Removed the `html` option (allowed inserting custom HTML) (you can do this from your tests using DOM)
+- Removed the `scripts` option (allowed loading external scripts) (you can use browserify features and/or plugins to achieve this)
+- Replaced the `browser_open_timeout` and `browser_output_timeout / --browser-output-timeout` options with a single `idle_timeout / --idle-timeout` option. It dictates how long to wait before and between getting output from a browser. The default is 5 minutes and it accepts strings like "5m" and "10s" to be parsed by [`ms`](https://www.npmjs.com/package/ms).
+
+### Changes to support server
+
+- Renamed the `AIRTAP_PORT` environment variable to `AIRTAP_SUPPORT_PORT`
+- Removed `window.ZUUL.port` (you can use `window.location.port` instead)
+- Stdout of a support server is now piped to stderr; stdout is reserved for TAP
+- Removed `serve-static` middleware that served any file in the current working directory. If you need to serve custom files, use a support server.
+
+### Changes to internals
+
+Less likely to affect you.
+
+- Moved start, stop and retry logic to `AbstractBrowser`
+- Renamed `shutdown()` to `stop()` (browsers) or `close()` (servers)
+- Renamed `init` event to `starting`
+- Renamed `passed` and `failed` to `pass` and `fail` (same as `tap-parser`)
+- Renamed inconsistent `config` / `opt` / `conf` variables.
+
 ## 3.0.0
 
 Dropped support of node < 10.
