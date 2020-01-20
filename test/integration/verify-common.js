@@ -1,6 +1,16 @@
-module.exports = function (t, airtap, callback) {
+module.exports = function (t, airtap, opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts
+    opts = {}
+  } else if (!opts) {
+    opts = {}
+  }
+
+  let expectedRetries = opts.expectedRetries || 0
   const count = airtap._browsers.length || 1
-  t.plan(count * 9 + 2)
+  const assertionsPerBrowser = 9 + expectedRetries
+
+  t.plan(count * assertionsPerBrowser + 2)
 
   for (const browser of airtap) {
     const consoleOutput = []
@@ -13,11 +23,16 @@ module.exports = function (t, airtap, callback) {
     })
 
     browser.on('starting', function () {
-      // If there's a Sauce Labs error, starting will be emitted on each retry.
+      // If there's an error, starting will be emitted on each retry.
       starts++
     })
 
     browser.on('stop', function (err, stats) {
+      if (expectedRetries-- > 0) {
+        t.ok(err, 'got error')
+        return
+      }
+
       const endOfOutput = consoleOutput.slice(-5)
 
       t.is(err, null, 'no error on stop')

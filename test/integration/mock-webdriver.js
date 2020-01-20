@@ -23,7 +23,7 @@ MockWebdriver.detach = function () {
 }
 
 MockWebdriver.prototype.init = function (initOpts, callback) {
-  process.nextTick(callback)
+  process.nextTick(callback, null, 'mock-session-id')
 }
 
 MockWebdriver.prototype.sauceJobStatus = function (passed, callback) {
@@ -32,10 +32,6 @@ MockWebdriver.prototype.sauceJobStatus = function (passed, callback) {
 
 MockWebdriver.prototype.get = function (url, callback) {
   process.nextTick(callback)
-}
-
-MockWebdriver.prototype.eval = function (js, callback) {
-  process.nextTick(callback, [])
 }
 
 MockWebdriver.prototype.quit = function (callback) {
