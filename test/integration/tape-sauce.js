@@ -32,7 +32,8 @@ test('tape - sauce', function (t) {
 
     sauceConnectLauncher({
       username: auth.sauce_username,
-      accessKey: auth.sauce_key
+      accessKey: auth.sauce_key,
+      noSslBumpDomains: 'all'
     }, function (err, sc) {
       t.ifError(err, 'no error')
       sauceConnectProcess = sc
