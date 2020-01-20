@@ -7,7 +7,7 @@ const abstractSuite = require('./abstract-browser')
 // Wrap the constructor because it has custom required options.
 function factory () {
   return new SauceBrowser({}, {
-    browser: 'chrome',
+    browserName: 'chrome',
     version: '60.0',
     platform: 'linux'
   })
