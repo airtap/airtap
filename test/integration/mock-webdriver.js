@@ -31,7 +31,12 @@ MockWebdriver.prototype.sauceJobStatus = function (passed, callback) {
 }
 
 MockWebdriver.prototype.get = function (url, callback) {
+  this._url = url
   process.nextTick(callback)
+}
+
+MockWebdriver.prototype.url = function (callback) {
+  process.nextTick(callback, null, this._url)
 }
 
 MockWebdriver.prototype.quit = function (callback) {

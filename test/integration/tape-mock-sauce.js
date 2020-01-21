@@ -49,7 +49,7 @@ test('mock sauce with retry', function (t) {
   })
 
   var sauceBrowser = new SauceBrowser(config, {
-    browser: 'mock-browser',
+    browserName: 'mock-browser',
     version: '1.0.0',
     platform: 'mock-platform'
   })

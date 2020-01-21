@@ -200,16 +200,12 @@ function monitor (airtap) {
       }
     })
 
-    browser.on('starting', function (url) {
-      console.error(chalk.yellow(`# ${browser} starting ${url}`))
-    })
-
     browser.on('stopping', function () {
       console.error(chalk.yellow(`# ${browser} stopping`))
     })
 
-    browser.on('start', function () {
-      console.error(chalk.yellow(`# ${browser} started`))
+    browser.on('start', function (url) {
+      console.error(chalk.yellow(`# ${browser} start ${url}`))
 
       clearInterval(waitTimer)
       waitTimer = setInterval(function () {
