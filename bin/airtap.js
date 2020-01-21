@@ -32,7 +32,6 @@ program
   .option('--live', 'keep browser open to allow repeated test runs')
   .option('--port <port>', 'port for bouncer server, defaults to a free port')
   .option('--electron', 'run tests in electron. electron must be installed separately.')
-  .option('--tunnel-id <id>', 'Tunnel identifier for Sauce Connect, default TRAVIS_JOB_NUMBER or none')
   .option('--loopback <host name>', 'hostname to use instead of localhost, to accomodate Safari and Edge with Sauce Connect. Must resolve to 127.0.0.1')
   .option('--server <the server script>', 'specify a server script to be run')
   .option('-l, --list-browsers', 'list available browsers and versions')
@@ -54,7 +53,6 @@ var config = {
   port: program.port,
   electron: program.electron,
   prj_dir: process.cwd(),
-  tunnel_id: program.tunnelId,
   loopback: program.loopback,
   server: program.server,
   concurrency: program.concurrency,

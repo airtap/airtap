@@ -6,7 +6,7 @@ This document describes breaking changes and how to upgrade. For a complete list
 
 ### Integrated Sauce Connect
 
-Airtap now includes Sauce Connect. If you were using the Travis Sauce Connect addon, remove it from `.travis.yml`. If you had:
+Airtap now includes Sauce Connect. The `tunnel-id / tunnel_id` option has been removed. If you were using the Travis Sauce Connect addon, remove it from `.travis.yml`. If you had:
 
 ```yaml
 addons:
