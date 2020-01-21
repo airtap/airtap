@@ -176,11 +176,7 @@ function run (airtap) {
 
 function monitor (airtap) {
   for (const browser of airtap) {
-    let waitTimer
-
     browser.on('message', function (msg) {
-      // TODO (!!): reset waitTimer
-
       if (msg.type === 'console') {
         if (msg.level === 'log') {
           // Only use stdout for TAP
@@ -206,16 +202,9 @@ function monitor (airtap) {
 
     browser.on('start', function (url) {
       console.error(chalk.yellow(`# ${browser} start ${url}`))
-
-      clearInterval(waitTimer)
-      waitTimer = setInterval(function () {
-        console.error(chalk.yellow(`# ${browser} waiting`))
-      }, 30e3)
     })
 
     browser.on('stop', function (err, stats) {
-      clearInterval(waitTimer)
-
       if (err) {
         console.error(chalk.red(`# ${browser} error: ${err.message}`))
       } else if (!stats.ok) {
@@ -226,7 +215,6 @@ function monitor (airtap) {
     })
 
     browser.on('restart', function () {
-      clearInterval(waitTimer)
       console.error(chalk.yellow(`# ${browser} restarting`))
     })
   }
