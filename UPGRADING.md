@@ -4,6 +4,35 @@ This document describes breaking changes and how to upgrade. For a complete list
 
 ## Upcoming
 
+### Integrated Sauce Connect
+
+Airtap now includes Sauce Connect. If you were using the Travis Sauce Connect addon, remove it from `.travis.yml`. If you had:
+
+```yaml
+addons:
+  sauce_connect: true
+  hosts:
+    - airtap.local
+```
+
+Or:
+
+```yaml
+addons:
+  sauce_connect:
+    no_ssl_bump_domains: all
+  hosts:
+    - airtap.local
+```
+
+It should now be:
+
+```yaml
+addons:
+  hosts:
+    - airtap.local
+```
+
 ### Thinner UI
 
 In favor of parsing TAP in the backend, with `tap-parser` upgraded from v5 to v10. All browsers now send unparsed console logs to the backend over WebSockets (or just HTTP in older browsers) instead of the frontend parsing TAP and varying ways of getting that data to the backend.

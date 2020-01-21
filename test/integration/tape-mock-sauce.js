@@ -16,7 +16,8 @@ test('mock sauce with retry', function (t) {
     sauce_key: 'mock-key',
     concurrency: 5,
     browser_retries: 6,
-    loopback: 'localhost'
+    loopback: 'localhost',
+    sauceConnect: false
   }
 
   var airtap = Airtap(config)

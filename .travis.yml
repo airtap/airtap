@@ -2,8 +2,6 @@
 sudo: false
 
 addons:
-  sauce_connect:
-    no_ssl_bump_domains: all
   hosts:
     - airtap.local
 
