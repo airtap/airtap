@@ -46,9 +46,12 @@ socket.on('open', function () {
 
   function wrap (original, level) {
     return function log () {
-      var args = [].slice.call(arguments)
-      send({ type: 'console', level: level, args: args })
-      if (original) return original.apply(this, args)
+      send({ type: 'console', level: level, args: [].slice.call(arguments) })
+
+      // In IE9 this is an object that doesn't have Function.prototype.apply
+      if (typeof original === 'function') {
+        return original.apply(this, arguments)
+      }
     }
   }
 
