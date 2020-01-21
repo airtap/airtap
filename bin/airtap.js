@@ -61,7 +61,8 @@ var config = {
   coverage: program.coverage,
   open: program.open,
   browser_retries: program.browserRetries,
-  idle_timeout: program.idleTimeout
+  idle_timeout: program.idleTimeout,
+  sauceConnect: true
 }
 
 // Remove unspecified flags

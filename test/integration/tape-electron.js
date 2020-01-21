@@ -9,10 +9,6 @@ test('tape - electron', function (t) {
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
     files: [path.resolve(__dirname, '../fixtures/tape/test.js')],
 
-    // TODO (refactor): remove reliance on "config.electron";
-    // airtap behavior should be dictated by ElectronBrowser somehow
-    electron: true,
-
     // Should be ignored. TODO: add separate test for this.
     loopback: 'airtap.local',
     concurrency: 1

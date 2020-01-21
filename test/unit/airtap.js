@@ -57,9 +57,6 @@ test('loopback is ignored on local browser', function (t) {
   t.plan(2)
 
   var config = {
-    // TODO (refactor): remove reliance on "config.local";
-    // airtap behavior should be dictated by LocalBrowser somehow
-    local: true,
     port: 3000,
     loopback: 'airtap.local',
     prj_dir: path.resolve(__dirname, '../fixtures/tape'),
