@@ -44,5 +44,4 @@ test.skip('skipped', function (t) {
 
 // test console still ok
 console.log({ hey: 'you' })
-console.debug([1, 2, 3])
 console.log(1, 2, [3, 4])
