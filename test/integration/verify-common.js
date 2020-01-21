@@ -8,7 +8,7 @@ module.exports = function (t, airtap, opts, callback) {
 
   let expectedRetries = opts.expectedRetries || 0
   const count = airtap._browsers.length || 1
-  const assertionsPerBrowser = 9 + expectedRetries
+  const assertionsPerBrowser = 10 + (expectedRetries * 2)
 
   t.plan(count * assertionsPerBrowser + 2)
 
@@ -22,8 +22,10 @@ module.exports = function (t, airtap, opts, callback) {
       }
     })
 
-    browser.on('starting', function () {
-      // If there's an error, starting will be emitted on each retry.
+    browser.on('start', function (url) {
+      t.ok(url, 'has url')
+
+      // If there's an error, start will be emitted on each retry.
       starts++
     })
 
@@ -36,7 +38,7 @@ module.exports = function (t, airtap, opts, callback) {
       const endOfOutput = consoleOutput.slice(-5)
 
       t.is(err, null, 'no error on stop')
-      t.ok(starts > 0, 'browser emitted "starting" ' + starts + ' times')
+      t.ok(starts > 0, 'browser emitted "start" ' + starts + ' times')
 
       // check that we did output until the end of the test suite
       // this is the number of assertions in tape

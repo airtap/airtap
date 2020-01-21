@@ -12,7 +12,7 @@ function suite (name, test, factory) {
   })
 
   test(`${name} start & stop`, function (t) {
-    t.plan(7)
+    t.plan(6)
 
     const browser = factory()
     const fakeUrl = 'http://localhost:1234'
@@ -21,13 +21,12 @@ function suite (name, test, factory) {
 
     browser._start = function (url, callback) {
       t.is(url, fakeUrl, 'got url')
-      t.is(browser._status, 'starting', 'status is starting')
+      t.is(browser._status, 'started', 'status is started')
 
       process.nextTick(function () {
         callback()
 
         process.nextTick(function () {
-          t.is(browser._status, 'started', 'status is started')
           browser.stop()
         })
       })

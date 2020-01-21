@@ -76,7 +76,7 @@ Less likely to affect you.
 
 - Moved start, stop and retry logic to `AbstractBrowser`
 - Renamed `shutdown()` to `stop()` (browsers) or `close()` (servers)
-- Renamed `init` event to `starting`
+- Removed `init` event
 - Renamed `passed` and `failed` to `pass` and `fail` (same as `tap-parser`)
 - Renamed inconsistent `config` / `opt` / `conf` variables.
 
