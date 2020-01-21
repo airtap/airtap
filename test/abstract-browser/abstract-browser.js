@@ -12,7 +12,7 @@ function suite (name, test, factory) {
   })
 
   test(`${name} start & stop`, function (t) {
-    t.plan(6)
+    t.plan(7)
 
     const browser = factory()
     const fakeUrl = 'http://localhost:1234'
@@ -32,7 +32,8 @@ function suite (name, test, factory) {
       })
     }
 
-    browser._stop = function (callback) {
+    browser._stop = function (err, callback) {
+      t.is(err, null)
       t.is(browser._status, 'stopping', 'status is stopping')
       process.nextTick(callback)
     }
