@@ -1,6 +1,10 @@
 var load = require('load-script')
 var engineClient = require('engine.io-client')
 
+if (typeof global.console === 'undefined') {
+  global.console = {}
+}
+
 var container = document.getElementById('airtap')
 var colors = { pending: '#e4a533', fail: '#d83131', ok: '#69cf69' }
 var socket = engineClient('ws://' + window.location.host + '/engine.io')
