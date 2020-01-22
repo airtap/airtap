@@ -1,0 +1,7 @@
+The --local flag has been removed in favor of providers.
+
+Providers must be installed separately. You might like:
+
+- airtap-manual      (https://github.com/airtap/manual)
+- airtap-playwright  (https://github.com/airtap/playwright);
+- airtap-system      (https://github.com/airtap/system).

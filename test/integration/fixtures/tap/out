@@ -1,0 +1,22 @@
+{ hey: 'you' }
+1 2 [ 3, 4 ]
+TAP version 13
+# ok
+ok 1 (unnamed assert)
+# fail
+not ok 2 should be truthy
+# suite
+ok 3 yeah
+not ok 4 WOOPS
+not ok 5
+# pass
+ok 6 (unnamed assert)
+# plan
+ok 7 true is true AWESOME
+# failed plan
+ok 8 one assert
+not ok 9 test timed out after 200ms
+# error
+not ok 10 Error: test
+
+1..10
