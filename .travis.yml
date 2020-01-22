@@ -1,24 +1,9 @@
-# http://blog.travis-ci.com/2014-12-17-faster-builds-with-container-based-infrastructure/
-sudo: false
-
-addons:
-  hosts:
-    - airtap.local
-
 language: node_js
 
 node_js:
-  - 13
-  - 12
   - 10
-
-services:
-  - xvfb
-
-script:
-  - npm test
+  - 12
+  - 14
 
 notifications:
-  email:
-    recipients:
-      - airtap.org@gmail.com
+  email: false

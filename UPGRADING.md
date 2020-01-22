@@ -4,85 +4,166 @@ This document describes breaking changes and how to upgrade. For a complete list
 
 ## Upcoming
 
-### Integrated Sauce Connect
+**Airtap 4 is a modular rewrite that supports concurrent local browsers, headless testing with Playwright, starting Sauce Labs from your local machine & from GitHub Actions, and live reload on any browser.**
 
-Airtap now includes Sauce Connect. The `tunnel-id / tunnel_id` option has been removed. If you were using the Travis Sauce Connect addon, remove it from `.travis.yml`. If you had:
+### New modules
+
+**Browsers have been abstracted away into [`abstract-browser`](https://github.com/airtap/abstract-browser) and [`browser-provider`](https://github.com/airtap/browser-provider).** The purpose of the latter is to discover browsers on a particular platform or remote service and expose them to Airtap. Coming from Airtap 3, which was primarily meant to run Sauce Labs browsers, you'll want to install the [`airtap-sauce`](https://github.com/airtap/sauce) provider and add it to `airtap.yml`:
+
+```
+npm install airtap-sauce --save-dev
+```
 
 ```yaml
-addons:
-  sauce_connect: true
-  hosts:
-    - airtap.local
+providers:
+  - airtap-sauce
+```
+
+### New browsers
+
+**You can now run tests on headless Playwright browsers, by including the [`airtap-playwright`](https://github.com/airtap/playwright) provider in your configuration. Or locally installed browsers with [`airtap-system`](https://github.com/airtap/system).** Or include multiple providers and let Airtap find the best matching browser:
+
+```yaml
+providers:
+  - airtap-playwright
+  - airtap-system
+
+browsers:
+  - name: ff
+    version: 78
+```
+
+For details, please see the [README](./README.md).
+
+### Integrated Sauce Connect
+
+**The `airtap-sauce` provider includes the Sauce Connect tunnel, which means Airtap can now start Sauce browsers from your local machine and from GitHub Actions.** The `tunnel-id / tunnel_id` option has been removed.
+
+Only `localhost` and `airtap.local` are routed through the tunnel, with [SSL bumping disabled](https://github.com/airtap/airtap/issues/129). In addition, Airtap only starts a tunnel if it is testing browsers [that require one](https://github.com/airtap/browser-manifest#wants). If you are using the Travis Sauce Connect addon you can (choose to) keep doing so and Airtap will skip starting a tunnel itself.
+
+### Replaced `--electron` and `--local`
+
+**The `--electron` and `--local` flags have been removed in favor of providers.** The relevant providers to check out are [`airtap-electron`](https://github.com/airtap/electron), [`airtap-default`](https://github.com/airtap/default) and [`airtap-manual`](https://github.com/airtap/manual). The `airtap-default` provider behaves like `--local --open` did: it opens the default browser. While the `airtap-manual` provider behaves like `--local` did.
+
+You may recall that the `--electron` and `--local` flags also overrode any browsers defined in `airtap.yml`. To achieve that same exclusive behavior, use a _preset_ which selectively overrides your root configuration:
+
+<details><summary>Click to expand</summary>
+
+```yaml
+providers:
+  - airtap-sauce
+
+browsers:
+  - name: chrome
+
+presets:
+  local:
+    providers:
+      - airtap-system
+```
+
+```bash
+airtap test.js # runs chrome in sauce labs
+airtap -p local test.js # runs local chrome
 ```
 
 Or:
 
 ```yaml
-addons:
-  sauce_connect:
-    no_ssl_bump_domains: all
-  hosts:
-    - airtap.local
+providers:
+  - airtap-sauce
+  - airtap-default
+
+browsers:
+  - name: chrome
+
+presets:
+  local:
+    browsers:
+      - name: default
 ```
 
-It should now be:
-
-```yaml
-addons:
-  hosts:
-    - airtap.local
+```bash
+airtap test.js # runs chrome in sauce labs
+airtap -p local test.js # runs local default browser
 ```
 
-### Thinner UI
+</details>
 
-In favor of parsing TAP in the backend, with `tap-parser` upgraded from v5 to v10. All browsers now send unparsed console logs to the backend over WebSockets (or just HTTP in older browsers) instead of the frontend parsing TAP and varying ways of getting that data to the backend.
+### Introducing `--live`
 
-Stack traces embedded in TAP no longer utilize source maps; we may restore this functionality in a future release.
+**On any browser, Airtap now exits by default after the tests complete.** To allow repeated runs like before, pass the new `--live` flag. This keeps Airtap running and doesn't close the browser. When `browserify` errors, Airtap exits unless `--live`. When you make changes to your test files during a test, browsers are automatically reloaded.
 
-Electron gained support for `--coverage`.
+### Changes to matching of browsers
 
-### Unified logic
+**As a general rule, Airtap 4 defaults to a small set of browsers.** Browsers are deduplicated by properties you did not explicitly match on. Each entry in `browsers` will match exactly one browser, unless multiple versions are specified. If your specified browser has 0 matches, an error is thrown.
 
-Electron, local and Sauce Labs browsers now have the same logic for timeouts, retries and concurrency. You can test Electron and a local browser in parallel. This exits when both complete:
+The [`sauce-browsers`](https://github.com/lpinca/sauce-browsers) dependency has been replaced with [`airtap-sauce-browsers`](https://github.com/airtap/sauce-browsers) and [`airtap-match-browsers`](https://github.com/airtap/match-browsers). This led to a few breaking changes:
 
-```
-airtap --electron --local --open test.js
-```
+<details><summary>Click to expand</summary>
 
-### Add `--live`
+- For mobile browsers, the `platform` field previously mapped to the host OS (Linux or MacOS) that runs the Android emulator or iOS simulator. It now maps to either Android or iOS.
+- `name: android` only matches _Android Browser_. Previously it could match both _Android Browser_ and _Chrome for Android_. If both were available on a particular Android version then Sauce Labs would pick _Chrome for Android_. If you want to test in _Chrome for Android_, you must now use `name: and_chr` or its more descriptive alias `chrome for android`.
+- iOS browsers have the name `ios_saf` (iOS Safari) rather than `ipad` or `iphone`. For now, Airtap will match the old names for backwards compatibility.
 
-In `--local` mode, airtap now exits by default after the tests complete. To allow repeated runs like before (upon reloading the page) pass the new `--live` flag. This keeps airtap running and works on Electron (and theoretically Sauce Labs browsers) too. If you combine `--electron` and `--live`, the Electron window will be made visible to allow for debugging and reloading.
+</details>
 
-When browserify errors, airtap exits unless `--live`. Previously, it would hang.
+### Changes to frontend
+
+**TAP output is now parsed in the backend instead of the frontend, with `tap-parser` upgraded from v5 to v10.** Browsers send console logs to the backend over WebSockets, or HTTP in older browsers. Stack traces embedded in TAP no longer utilize source maps; we may restore this functionality in a future release.
 
 ### Changes to configuration
 
-- Removed the `username` and `key` aliases of the `sauce_username` and `sauce_key` options
-- Removed the `builder` option (which allowed replacing browserify, but no other bundler could "just work")
-- Removed the `html` option (allowed inserting custom HTML) (you can do this from your tests using DOM)
-- Removed the `scripts` option (allowed loading external scripts) (you can use browserify features and/or plugins to achieve this)
-- Replaced the `browser_open_timeout` and `browser_output_timeout / --browser-output-timeout` options with a single `idle_timeout / --idle-timeout` option. It dictates how long to wait before and between getting output from a browser. The default is 5 minutes and it accepts strings like "5m" and "10s" to be parsed by [`ms`](https://www.npmjs.com/package/ms).
+**A number of options have been renamed:**
+
+<details><summary>Click to expand</summary>
+
+- Replaced the `browser_open_timeout` and `browser_output_timeout / --browser-output-timeout` options with a single `timeout / --timeout` option. It dictates how long to wait for output from a browser. The default is 5 minutes and it accepts strings like "5m" and "10s" to be parsed by [`bruce-millis`](https://www.npmjs.com/package/bruce-millis).
+- Renamed `browser_retries / --browser-retries` to `retries / --retries`
+- Renamed `prj_dir` to `cwd`
+
+</details>
+
+**A few sauce-only options have moved to `airtap-sauce`:**
+
+<details><summary>Click to expand</summary>
+
+- The `name` option (sets a job name)
+- The `capabilities` option
+- The `firefox_profile` option (on a browser)
+- Options related to the Sauce Connect tunnel
+
+</details>
+
+**Various options have been removed:**
+
+<details><summary>Click to expand</summary>
+
+- `port` (didn't work with parallel browsers)
+- `builder` (allowed replacing browserify, but no other bundler could "just work")
+- `html` (allowed inserting custom HTML) (you can do this from your tests using DOM)
+- `scripts` (allowed loading external scripts) (you can use browserify features and/or plugins to achieve this)
+- The command-line flags `--browser-name`, `--browser-version` and `--browser-platform` (incomplete feature, not all browsers have a version and platform).
+
+</details>
+
+**Lastly, Airtap no longer reads `airtap.config.js`.**
 
 ### Changes to support server
 
+<details><summary>Click to expand</summary>
+
+- Only one support server is started, for all browsers & tests
 - Renamed the `AIRTAP_PORT` environment variable to `AIRTAP_SUPPORT_PORT`
 - Removed `window.ZUUL.port` (you can use `window.location.port` instead)
 - Stdout of a support server is now piped to stderr; stdout is reserved for TAP
 - Removed `serve-static` middleware that served any file in the current working directory. If you need to serve custom files, use a support server.
 
-### Changes to internals
-
-Less likely to affect you.
-
-- Moved start, stop and retry logic to `AbstractBrowser`
-- Renamed `shutdown()` to `stop()` (browsers) or `close()` (servers)
-- Removed `init` event
-- Renamed `passed` and `failed` to `pass` and `fail` (same as `tap-parser`)
-- Renamed inconsistent `config` / `opt` / `conf` variables.
+</details>
 
 ## 3.0.0
 
-Dropped support of node < 10.
+Dropped support of node &lt; 10.
 
 ## 2.0.0
 

@@ -1,0 +1,18 @@
+At least one provider and browser must be specified in .airtap.yml.
+
+For example:
+
+  providers:
+    - airtap-sauce
+
+  browsers:
+    - name: chrome
+
+Providers must be installed separately. You might like:
+
+- airtap-sauce       (https://github.com/airtap/sauce)
+- airtap-electron    (https://github.com/airtap/electron)
+- airtap-default     (https://github.com/airtap/default)
+- airtap-manual      (https://github.com/airtap/manual)
+- airtap-playwright  (https://github.com/airtap/playwright);
+- airtap-system      (https://github.com/airtap/system).

@@ -1,0 +1,5 @@
+The --electron flag has been removed in favor of providers.
+
+Providers must be installed separately. You might like:
+
+- airtap-electron (https://github.com/airtap/electron).

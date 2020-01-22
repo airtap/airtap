@@ -1,0 +1,6 @@
+Setting Sauce Labs credentials in .airtap.yml or .airtaprc is deprecated and will be removed in a future release. Instead set the credentials via the environment as SAUCE_USERNAME and SAUCE_ACCESS_KEY respectively, or pass them to the airtap-sauce provider:
+
+  providers:
+    - airtap-sauce:
+        username: example
+        key: secret

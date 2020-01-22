@@ -1,264 +1,204 @@
 #!/usr/bin/env node
+'use strict'
 
-var messages = require('../lib/messages')
-
-// Prevent external PRs of airtap users to fail browser tests
-if (process.env.TRAVIS_SECURE_ENV_VARS === 'false') {
-  console.error(messages.SKIPPING_AIRTAP)
+if (process.version.match(/^v(\d+)\./)[1] < 10) {
+  console.error('airtap: Node 10 or greater is required. `airtap` did not run.')
   process.exit(0)
 }
 
-var path = require('path')
-var fs = require('fs')
+require('make-promises-safe')
 
-var chalk = require('chalk')
-var program = require('commander')
-var yaml = require('yamljs')
-var os = require('os')
-var ms = require('ms')
-var findNearestFile = require('find-nearest-file')
-var sauceBrowsers = require('sauce-browsers/callback')
-
-var Airtap = require('../lib/airtap')
-var aggregate = require('../lib/aggregate-browsers')
-var SauceBrowser = require('../lib/sauce-browser')
-var ElectronBrowser = require('../lib/electron-browser')
-var LocalBrowser = require('../lib/local-browser')
+const program = require('commander')
+const nearest = require('find-nearest-file')
+const yaml = require('js-yaml')
+const os = require('os')
+const fs = require('fs')
+const path = require('path')
+const Airtap = require('../lib/airtap')
+const version = require('../package.json').version
+const hasOwnProperty = Object.prototype.hasOwnProperty
 
 program
-  .version(require('../package.json').version)
-  .usage('[options] <files | dir>')
-  .option('--local', 'run tests in a local browser of choice')
-  .option('--live', 'keep browser open to allow repeated test runs')
-  .option('--port <port>', 'port for bouncer server, defaults to a free port')
-  .option('--electron', 'run tests in electron. electron must be installed separately.')
-  .option('--loopback <host name>', 'hostname to use instead of localhost, to accomodate Safari and Edge with Sauce Connect. Must resolve to 127.0.0.1')
-  .option('--server <the server script>', 'specify a server script to be run')
-  .option('-l, --list-browsers', 'list available browsers and versions')
-  .option('--browser-name <browser name>', 'specficy the browser name to test an individual browser')
-  .option('--browser-version <browser version>', 'specficy the browser version to test an individual browser')
-  .option('--browser-platform <browser platform>', 'specficy the browser platform to test an individual browser')
-  .option('--browser-retries <retries>', 'number of retries allowed when trying to start a cloud browser, default to 6')
-  .option('--idle-timeout <timeout>', 'how much time to wait before and between test results, default "5m"')
-  .option('--concurrency <n>', 'specify the number of concurrent browsers to test')
-  .option('--coverage', 'enable code coverage analysis with istanbul')
-  .option('--open', 'open a browser automatically. only used when --local is specified')
+  .version(version, '-v, --version', 'print version')
+  .usage('[options] <files>')
+  .option('-l, --list-browsers', 'list (effective or --all) browsers')
+  .option('-a, --all', 'test or list all available browsers')
+  .option('-c, --concurrency <n>', 'number of browsers to test concurrently, default 5')
+  .option('-r, --retries <retries>', 'number of retries when running a browser, default 6')
+  .option('-t, --timeout <timeout>', 'how long to wait for test results, default 5m')
+  .option('--coverage', 'enable code coverage analysis')
+  .option('--live', 'keep browsers open to allow repeated test runs')
+  .option('-p, --preset <preset>', 'select a configuration preset')
+  .option('-s, --server <script>', 'path to script that runs a support server')
+  .option('--loopback <hostname>', 'custom hostname for tunneling, default airtap.local')
+  .option('--verbose', 'enable airtap debug output')
+  .option('--silly', 'enable all debug output')
+
+  // Can we hide these in help?
+  .option('--local', 'n/a')
+  .option('--open', 'n/a')
+  .option('--electron', 'n/a')
+
+  .on('--help', function () {
+    console.log()
+    console.log(read('examples.txt'))
+  })
   .parse(process.argv)
 
-// TODO: camelCase, across the board
-var config = {
-  files: program.args,
-  local: program.local,
-  live: program.live,
-  port: program.port,
-  electron: program.electron,
-  prj_dir: process.cwd(),
-  loopback: program.loopback,
-  server: program.server,
-  concurrency: program.concurrency,
-  coverage: program.coverage,
-  open: program.open,
-  browser_retries: program.browserRetries,
-  idle_timeout: program.idleTimeout,
-  sauceConnect: true
+const config = {
+  watchify: !process.env.CI,
+  ...readYAML(nearest('.airtaprc') || path.join(os.homedir(), '.airtaprc')),
+  ...readYAML('.airtap.yml'),
+  ...wash(program.opts())
 }
 
-// Remove unspecified flags
-for (var key in config) {
-  if (typeof config[key] === 'undefined') {
-    delete config[key]
-  }
+if (program.preset) {
+  usePreset(config, program.preset)
 }
 
-if (program.listBrowsers) {
-  sauceBrowsers(function (err, allBrowsers) {
-    if (err) {
-      console.error(chalk.bold.red('Unable to get available browsers for saucelabs'))
-      console.error(chalk.red(err.stack))
-      return process.exit(1)
-    }
-    aggregate(allBrowsers).forEach(function (i) {
-      console.log(i.browser)
-      console.log('   Versions: ' + i.versions.join(', '))
-      console.log('   Platforms: ' + i.platforms.join(', '))
-    })
-  })
-} else if (config.files.length === 0) {
-  console.error(chalk.red(messages.NO_FILES))
-  process.exit(1)
-} else if ((program.browserVersion || program.browserPlatform) && !program.browserName) {
-  console.error(chalk.red('the browser name needs to be specified (via --browser-name)'))
-  process.exit(1)
-} else if ((program.browserName || program.browserPlatform) && !program.browserVersion) {
-  console.error(chalk.red('the browser version needs to be specified (via --browser-version)'))
-  process.exit(1)
-} else {
-  config = readLocalConfig(config)
+if (config.silly) {
+  require('debug').enable('*,-babel')
+} else if (config.verbose) {
+  require('debug').enable('airtap*')
+}
 
-  // Overwrite browsers from command line arguments
-  if (program.browserName) {
-    Object.assign(config, { browsers: [{ name: program.browserName, version: program.browserVersion, platform: program.browserPlatform }] })
+// Reject flags that have been removed in airtap 4
+if (config.local && config.open) {
+  fail(read('no-local-open.txt'), true)
+} else if (config.local) {
+  fail(read('no-local.txt'), true)
+} else if (config.electron) {
+  fail(read('no-electron.txt'), true)
+}
+
+// Take credentials from root config for airtap < 4 compatibility
+// TODO: remove in next major. Can be specified via env or provider options.
+setCredentials(config, process.env)
+
+const airtap = new Airtap()
+const wanted = config.all ? null : config.browsers || []
+const files = program.args.length ? program.args : config.files || []
+
+if (!config.providers) {
+  config.providers = ['airtap-default']
+  if (wanted) wanted.splice(0, wanted.length, { name: 'default' })
+}
+
+if (!files.length && !program.listBrowsers) {
+  fail('At least one file must be specified.', true)
+} else if (!config.providers.length) {
+  fail(read('no-input.txt'), true)
+} else if (wanted && !wanted.length) {
+  fail(read('no-input.txt'), true)
+}
+
+// Load providers
+airtap.provider(config.providers)
+
+// Match provider manifests against wanted manifests
+airtap.manifests(wanted, function (err, manifests) {
+  if (err) return fail(err)
+
+  if (program.listBrowsers) {
+    manifests.forEach(simplifyManifest)
+    console.log(toYAML(manifests))
+    return
   }
 
-  config = readGlobalConfig(config)
-  config.sauce_username = process.env.SAUCE_USERNAME || config.sauce_username
-  config.sauce_key = process.env.SAUCE_ACCESS_KEY || config.sauce_key
-  config.browser_retries = parseInt(config.browser_retries || 6, 10)
-  config.idle_timeout = parseDuration(config.idle_timeout || '5m')
-  config.concurrency = parseInt(config.concurrency || 5, 10)
-
-  var pkg = {}
-  try {
-    pkg = require(process.cwd() + '/package.json')
-  } catch (err) {}
-
-  config.name = config.name || pkg.name || 'airtap'
-  config.watchify = !process.env.CI
-
-  var airtap = Airtap(config)
-
-  if (config.local || config.electron) {
-    if (config.local) airtap.add(new LocalBrowser(config))
-    if (config.electron) airtap.add(new ElectronBrowser(config))
-
-    // TODO: first add sauce browsers (if any), then run
-    run(airtap)
-  } else if (!config.sauce_username || !config.sauce_key) {
-    console.error(chalk.red('Airtap tried to run tests in Sauce Labs, however no credentials were provided.'))
-    console.error(chalk.red('See doc/cloud-testing.md for info on how to setup cloud testing.'))
-    process.exit(1)
-  } else if (!config.browsers) {
-    console.error(chalk.red('No cloud browsers specified in .airtap.yml'))
-    process.exit(1)
-  } else {
-    sauceBrowsers(config.browsers, function (err, toTest) {
-      if (err) {
-        console.error(chalk.red('Unable to get available browsers for Sauce Labs'))
-        console.error(chalk.red(err.stack))
-        return process.exit(1)
-      }
-
-      const byOs = {}
-
-      toTest.forEach(function (info) {
-        const key = info.api_name + ' @ ' + info.os;
-        (byOs[key] = byOs[key] || []).push(info.short_version)
-
-        airtap.add(new SauceBrowser(config, {
-          browserName: info.api_name,
-          version: info.short_version,
-          platform: info.os,
-
-          // TODO: broken, sauce-browsers doesn't preserve custom properties
-          firefox_profile: info.firefox_profile
-        }))
+  airtap.test(manifests, files, config)
+    .on('error', fail)
+    .on('context', function (context) {
+      // Emits one session or more (on page reload)
+      context.on('session', function (session) {
+        // TODO (later): merge TAP from multiple sessions
+        session.pipe(process.stdout, { end: false })
       })
-
-      // pretty prints which browsers we will test on what platforms
-      // TODO: do we really need this?
-      for (const item in byOs) {
-        console.error(chalk.gray(`# testing ${item}: ${byOs[item].join(' ')}`))
-      }
-
-      run(airtap)
     })
-  }
-}
-
-function run (airtap) {
-  monitor(airtap)
-
-  airtap.run(function (err, ok) {
-    if (err) throw err
-    process.exit(ok ? 0 : 1)
-  })
-}
-
-function monitor (airtap) {
-  for (const browser of airtap) {
-    browser.on('message', function (msg) {
-      if (msg.type === 'console') {
-        if (msg.level === 'log') {
-          // Only use stdout for TAP
-          // IDEA: merge TAP output of multiple browsers. Then you can pipe
-          // airtap into the usual TAP reporters. Per browser, we'll have
-          // two TAP streams: one for state changes (start/stop/waiting) and
-          // one for the browser output (which may repeat itself, in case of
-          // retries). We'll aggregate the plans of all streams, and emit a
-          // total at the end.
-          console.log(...msg.args)
-        } else {
-          console.error(...msg.args)
-        }
-      } else if (msg.type === 'error') {
-        const { type, ...rest } = msg
-        console.error(chalk.red(`# ${browser} window error`), rest)
-      }
+    .on('complete', function (stats) {
+      console.log('# %d of %d browsers ok', stats.pass, stats.count)
+      process.exit(stats.ok ? 0 : 1)
     })
+})
 
-    browser.on('stopping', function () {
-      console.error(chalk.yellow(`# ${browser} stopping`))
-    })
+function fail (err, expected) {
+  if (err.expected || expected) {
+    if (err.code === 'ERR_MANIFEST_NOT_FOUND') {
+      const isEmpty = Object.keys(err.input).length === 0
+      const wanted = isEmpty ? '<empty>' : toYAML(err.input)
 
-    browser.on('start', function (url) {
-      console.error(chalk.yellow(`# ${browser} start ${url}`))
-    })
-
-    browser.on('stop', function (err, stats) {
-      if (err) {
-        console.error(chalk.red(`# ${browser} error: ${err.message}`))
-      } else if (!stats.ok) {
-        console.error(chalk.red(`# ${browser} failed: pass ${stats.pass}, fail ${stats.fail}`))
-      } else {
-        console.error(chalk.green(`# ${browser} passed: pass ${stats.pass}, fail ${stats.fail}`))
-      }
-    })
-
-    browser.on('restart', function () {
-      console.error(chalk.yellow(`# ${browser} restarting`))
-    })
-  }
-}
-
-function readLocalConfig (config) {
-  var yaml = path.join(process.cwd(), '.airtap.yml')
-  var js = path.join(process.cwd(), 'airtap.config.js')
-  var yamlExists = fs.existsSync(yaml)
-  var jsExists = fs.existsSync(js)
-  if (yamlExists && jsExists) {
-    console.error(chalk.red('Both `.airtap.yaml` and `airtap.config.js` are found in the project directory, please choose one'))
-    process.exit(1)
-  } else if (yamlExists) {
-    return mergeConfig(config, readYAMLConfig(yaml))
-  } else if (jsExists) {
-    return mergeConfig(config, require(js))
-  }
-  return config
-}
-
-function readGlobalConfig (config) {
-  var filename = findNearestFile('.airtaprc') || path.join(os.homedir(), '.airtaprc')
-  if (fs.existsSync(filename)) {
-    var globalConfig
-    try {
-      globalConfig = require(filename)
-    } catch (_err) {
-      globalConfig = readYAMLConfig(filename)
+      console.error('No manifest found matching:\n\n%s', indent(wanted))
+    } else {
+      console.error(err.message || err)
     }
-    return mergeConfig(config, globalConfig)
+
+    process.exit(err.exitCode || 1)
   }
-  return config
+
+  throw err
 }
 
-function readYAMLConfig (filename) {
-  return yaml.parse(fs.readFileSync(filename, 'utf-8'))
+function readYAML (fp) {
+  try {
+    return yaml.safeLoad(fs.readFileSync(fp, 'utf8'))
+  } catch (err) {
+    if (err.code !== 'ENOENT') fail(err)
+  }
 }
 
-function mergeConfig (config, update) {
-  config = Object.assign({}, update, config)
-  return config
+function toYAML (value) {
+  return yaml.safeDump(value, { noRefs: true }).trim()
 }
 
-function parseDuration (d) {
-  return typeof d === 'number' ? d : ms(d)
+function indent (str) {
+  return '  ' + str.replace(/\r?\n/g, '\n  ')
+}
+
+function wash (opts) {
+  const copy = {}
+
+  for (const k in opts) {
+    if (!hasOwnProperty.call(opts, k)) continue
+    if (opts[k] != null) copy[k] = opts[k]
+  }
+
+  return copy
+}
+
+function usePreset (config, preset) {
+  const presets = config.presets
+  const overrides = presets && presets[preset]
+
+  if (typeof presets !== 'object' || presets === null) {
+    return fail('No presets are available', true)
+  } else if (typeof overrides !== 'object' || overrides === null) {
+    return fail(`Preset '${preset}' not found`, true)
+  }
+
+  for (const k in overrides) {
+    if (k === 'presets') continue
+    if (!hasOwnProperty.call(overrides, k)) continue
+
+    config[k] = overrides[k]
+  }
+}
+
+function setCredentials (config, env) {
+  const username = config.sauce_username || config.username
+  const key = config.sauce_key || config.sauce_access_key || config.key
+
+  if (username || key) console.error(read('deprecated-creds.txt'))
+  if (username && !env.SAUCE_USERNAME) env.SAUCE_USERNAME = username
+  if (key && !env.SAUCE_ACCESS_KEY) env.SAUCE_ACCESS_KEY = key
+}
+
+function simplifyManifest (m) {
+  // Remove irrelevant properties, to ease copy-pasting into airtap.yml.
+  if (Object.keys(m.supports).length === 0) delete m.supports
+  if (Object.keys(m.wants).length === 0) delete m.wants
+  if (Object.keys(m.options).length === 0) delete m.options
+}
+
+function read (filename) {
+  const fp = path.join(__dirname, filename)
+  return fs.readFileSync(fp, 'utf8').trim()
 }

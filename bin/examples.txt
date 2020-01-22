@@ -1,0 +1,11 @@
+List all available browsers:
+  $ airtap -la
+
+Test browsers specified in .airtap.yml:
+  $ airtap test.js
+
+Test all available browsers (careful):
+  $ airtap -a test.js
+
+Test multiple files:
+  $ airtap "test/*.js"
