@@ -1,6 +1,7 @@
 var load = require('load-script')
 var engineClient = require('engine.io-client')
 
+// Without Developer Tools open, console is undefined in IE9.
 if (typeof global.console === 'undefined') {
   global.console = {}
 }
