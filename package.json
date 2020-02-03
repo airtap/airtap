@@ -9,7 +9,7 @@
     "browserify": "~16.5.0",
     "browserify-istanbul": "~3.0.1",
     "chalk": "^3.0.0",
-    "commander": "~4.0.0",
+    "commander": "~4.1.1",
     "compression": "~1.7.1",
     "convert-source-map": "~1.7.0",
     "debug": "~4.1.0",
