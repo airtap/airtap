@@ -426,7 +426,7 @@ browserify:
 
 ### `server` (string or object)
 
-This field can point to an optional shell command or JavaScript file to run as a support server. It will be started before all tests and killed afterwards. This allows testing websockets and other network requests. Your command will be run with the `AIRTAP_SUPPORT_PORT` environment variable set to a port number you must use. If your server does not listen on this port it will be unreachable (on browser providers that use a tunnel).
+This field can point to an optional shell command or JavaScript file to run as a support server. It will be started before all tests and stopped afterwards. This allows testing websockets and other network requests. Your command will be run with the `AIRTAP_SUPPORT_PORT` environment variable set to a port number you must use. If your server does not listen on this port it will be unreachable (on browser providers that use a tunnel).
 
 ```yaml
 server: ./test/support/server.js
