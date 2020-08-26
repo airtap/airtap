@@ -30,7 +30,7 @@ program
   .option('--live', 'keep browsers open to allow repeated test runs')
   .option('-p, --preset <preset>', 'select a configuration preset')
   .option('-s, --server <script>', 'path to script that runs a support server')
-  .option('--loopback <hostname>', 'custom hostname for tunneling, default airtap.local')
+  .option('--loopback <hostname>', 'custom hostname that equals or resolves to 127.0.0.1')
   .option('--verbose', 'enable airtap debug output')
   .option('--silly', 'enable all debug output')
 

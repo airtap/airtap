@@ -270,8 +270,7 @@ Usage: `airtap [options] <files>`. Supports multiple `files`. They can be paths 
   --live                   keep browsers open to allow repeated test runs
   -p, --preset <preset>    select a configuration preset
   -s, --server <script>    path to script that runs a support server
-  --loopback <hostname>    custom hostname for tunneling, default
-                           airtap.local
+  --loopback <hostname>    custom hostname that equals or resolves to 127.0.0.1
   --verbose                enable airtap debug output
   --silly                  enable all debug output
   -h, --help               display help for command
