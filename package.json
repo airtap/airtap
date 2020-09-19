@@ -21,7 +21,6 @@
     "test/integration",
     "CHANGELOG.md",
     "CONTRIBUTING.md",
-    "sauce-labs.svg",
     "UPGRADING.md"
   ],
   "dependencies": {

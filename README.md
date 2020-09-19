@@ -469,12 +469,6 @@ Airtap is an **OPEN Open Source Project**. This means that:
 
 See the [contribution guide](CONTRIBUTING.md) for more details.
 
-## Big Thanks
-
-Cross-browser Testing Platform and Open Source ♥ Provided by [Sauce Labs](https://saucelabs.com).
-
-[![Sauce Labs logo](./sauce-labs.svg)](https://saucelabs.com)
-
 ## License
 
 MIT © [Roman Shtylman](https://github.com/defunctzombie), [Zuul contributors](https://github.com/defunctzombie/zuul/graphs/contributors) and [Airtap contributors](https://github.com/airtap).
