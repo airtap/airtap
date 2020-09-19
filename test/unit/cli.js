@@ -7,6 +7,7 @@ const yaml = require('js-yaml')
 const exec = require('child_process').exec
 const tempy = require('tempy')
 
+const version = require('../../package.json').version
 const dir = path.resolve(__dirname, '../../bin')
 const bin = path.join(dir, 'airtap.js')
 const read = (fp) => fs.readFileSync(path.join(dir, fp), 'utf8')
@@ -15,7 +16,7 @@ const env = Object.assign({}, process.env, { FORCE_COLOR: '0' })
 test('cli prints out version with -v', function (t) {
   exec(`node ${bin} -v`, { env }, (err, stdout, stderr) => {
     t.ifError(err, 'no error')
-    t.is(stdout.trim(), '3.0.0')
+    t.is(stdout.trim(), version)
     t.is(stderr.trim(), '')
     t.end()
   })
