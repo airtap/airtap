@@ -41,7 +41,6 @@
   - [Firefox Profile](#firefox-profile)
 - [Who Uses Airtap?](#who-uses-airtap)
 - [Contributing](#contributing)
-- [Big Thanks](#big-thanks)
 - [License](#license)
 
 </details>

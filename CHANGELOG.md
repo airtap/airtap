@@ -2,6 +2,12 @@
 
 If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
 
+## [4.0.0] - 2020-09-19
+
+**Airtap 4 is a modular rewrite that supports concurrent local browsers, headless testing with Playwright, starting Sauce Labs from your local machine & from GitHub Actions, and live reload on any browser.**
+
+For details, please see the [upgrade guide](./UPGRADING.md).
+
 ## [3.0.0] - 2020-01-17
 
 ### Changed
@@ -326,6 +332,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - README: remove frameworks other than tap(e) ([**@vweevers**](https://github.com/vweevers))
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
+
+[4.0.0]: https://github.com/airtap/airtap/compare/v3.0.0...v4.0.0
 
 [3.0.0]: https://github.com/airtap/airtap/compare/v2.0.4...v3.0.0
 

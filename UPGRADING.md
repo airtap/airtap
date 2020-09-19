@@ -2,7 +2,7 @@
 
 This document describes breaking changes and how to upgrade. For a complete list of changes including minor and patch releases, please refer to the [changelog](CHANGELOG.md).
 
-## Upcoming
+## 4.0.0
 
 **Airtap 4 is a modular rewrite that supports concurrent local browsers, headless testing with Playwright, starting Sauce Labs from your local machine & from GitHub Actions, and live reload on any browser.**
 
@@ -110,7 +110,7 @@ The [`sauce-browsers`](https://github.com/lpinca/sauce-browsers) dependency has 
 
 ### Changes to frontend
 
-**TAP output is now parsed in the backend instead of the frontend, with `tap-parser` upgraded from v5 to v10.** Browsers send console logs to the backend over WebSockets, or HTTP in older browsers. Stack traces embedded in TAP no longer utilize source maps; we may restore this functionality in a future release.
+**TAP output is now parsed in the backend instead of the frontend, with `tap-parser` upgraded from v5 to v10.** Browsers send console logs to the backend over WebSockets, or HTTP in older browsers. Support of IE &lt; 11 has been restored. Stack traces embedded in TAP no longer utilize source maps; we may restore this functionality in a future release.
 
 ### Changes to configuration
 
