@@ -81,11 +81,5 @@
   ],
   "engines": {
     "node": ">=10.2"
-  },
-  "greenkeeper": {
-    "ignore": [
-      "engine.io-client",
-      "buffer"
-    ]
   }
 }
