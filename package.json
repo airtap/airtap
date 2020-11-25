@@ -65,7 +65,7 @@
     "simple-get": "^4.0.0",
     "standard": "^14.3.4",
     "tape": "^5.0.1",
-    "tempy": "^0.6.0"
+    "tempy": "^1.0.0"
   },
   "repository": {
     "type": "git",
