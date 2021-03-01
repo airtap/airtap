@@ -54,7 +54,7 @@
     "thunky-with-args": "^1.0.0",
     "transient-error": "^1.0.0",
     "uuid": "^8.3.0",
-    "watchify": "^3.11.0"
+    "watchify": "^4.0.0"
   },
   "devDependencies": {
     "abstract-browser": "^1.0.0",
