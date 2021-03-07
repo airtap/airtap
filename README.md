@@ -259,20 +259,21 @@ Should work in theory :)
 Usage: `airtap [options] <files>`. Supports multiple `files`. They can be paths relative to the working directory or glob patterns (e.g. `airtap test/*.js`). Options:
 
 ```
-  -v, --version            print version
-  -l, --list-browsers      list (effective or --all) browsers
-  -a, --all                test or list all available browsers
-  -c, --concurrency <n>    number of browsers to test concurrently, default 5
-  -r, --retries <retries>  number of retries when running a browser, default 6
-  -t, --timeout <timeout>  how long to wait for test results, default 5m
-  --coverage               enable code coverage analysis
-  --live                   keep browsers open to allow repeated test runs
-  -p, --preset <preset>    select a configuration preset
-  -s, --server <script>    path to script that runs a support server
-  --loopback <hostname>    custom hostname that equals or resolves to 127.0.0.1
-  --verbose                enable airtap debug output
-  --silly                  enable all debug output
-  -h, --help               display help for command
+-v --version          Print version and exit
+-l --list-browsers    List (effective or --all) browsers
+-a --all              Test or list all available browsers
+   --coverage         Enable code coverage analysis
+   --live             Keep browsers open to allow repeated test runs
+-c --concurrency <n>  Number of browsers to test concurrently, default 5
+-r --retries <n>      Number of retries when running a browser, default 6
+-t --timeout <n>      How long to wait for test results, default 5m. Can
+                      be a number in milliseconds or a string with unit.
+-p --preset <preset>  Select a configuration preset
+-s --server <script>  Path to script that runs a support server
+   --loopback <host>  Custom hostname that equals or resolves to 127.0.0.1
+   --verbose          Enable airtap debug output
+   --silly            Enable all debug output
+-h --help             Print help and exit.
 ```
 
 <details><summary>Examples (click to expand)</summary>
