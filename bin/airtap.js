@@ -154,14 +154,14 @@ function fail (err, expected) {
 
 function readYAML (fp) {
   try {
-    return yaml.safeLoad(fs.readFileSync(fp, 'utf8'))
+    return yaml.load(fs.readFileSync(fp, 'utf8'))
   } catch (err) {
     if (err.code !== 'ENOENT') fail(err)
   }
 }
 
 function toYAML (value) {
-  return yaml.safeDump(value, { noRefs: true }).trim()
+  return yaml.dump(value, { noRefs: true }).trim()
 }
 
 function indent (str) {

@@ -143,5 +143,5 @@ function writeConfig (cwd, config) {
 }
 
 function toYAML (value) {
-  return yaml.safeDump(value, { noRefs: true }).trim()
+  return yaml.dump(value, { noRefs: true }).trim()
 }
