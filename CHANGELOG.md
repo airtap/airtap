@@ -2,6 +2,14 @@
 
 If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
 
+## [4.0.2] - 2021-03-07
+
+### Changed
+
+- Bump `js-yaml` from `3.14.1` to `4.0.0` ([#304](https://github.com/airtap/airtap/issues/304)) ([`53a1cd7`](https://github.com/airtap/airtap/commit/53a1cd7)) (Vincent Weevers)
+- Replace `commander` with `minimist` ([#307](https://github.com/airtap/airtap/issues/307)) ([`bc2c893`](https://github.com/airtap/airtap/commit/bc2c893)) (Vincent Weevers)
+- Bump `watchify` from `3.11.1` to `4.0.0` ([#306](https://github.com/airtap/airtap/issues/306)) ([`164b89d`](https://github.com/airtap/airtap/commit/164b89d)) (Renée Kooi, Vincent Weevers).
+
 ## [4.0.1] - 2020-09-20
 
 ### Fixed
@@ -339,6 +347,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - README: remove frameworks other than tap(e) ([**@vweevers**](https://github.com/vweevers))
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
+
+[4.0.2]: https://github.com/airtap/airtap/compare/v4.0.1...v4.0.2
 
 [4.0.1]: https://github.com/airtap/airtap/compare/v4.0.0...v4.0.1
 

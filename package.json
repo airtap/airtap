@@ -1,6 +1,6 @@
 {
   "name": "airtap",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Run TAP unit tests in 1789+ browsers",
   "main": "lib/airtap.js",
   "author": "Roman Shtylman <shtylman@gmail.com>",
