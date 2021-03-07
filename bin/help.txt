@@ -1,0 +1,30 @@
+Usage: airtap [options] <files>
+
+Options:
+  -v --version          Print version and exit
+  -l --list-browsers    List (effective or --all) browsers
+  -a --all              Test or list all available browsers
+     --coverage         Enable code coverage analysis
+     --live             Keep browsers open to allow repeated test runs
+  -c --concurrency <n>  Number of browsers to test concurrently, default 5
+  -r --retries <n>      Number of retries when running a browser, default 6
+  -t --timeout <n>      How long to wait for test results, default 5m. Can
+                        be a number in milliseconds or a string with unit.
+  -p --preset <preset>  Select a configuration preset
+  -s --server <script>  Path to script that runs a support server
+     --loopback <host>  Custom hostname that equals or resolves to 127.0.0.1
+     --verbose          Enable airtap debug output
+     --silly            Enable all debug output
+  -h --help             Print help and exit.
+
+List all available browsers:
+  $ airtap -la
+
+Test browsers specified in .airtap.yml:
+  $ airtap test.js
+
+Test all available browsers (careful):
+  $ airtap -a test.js
+
+Test multiple files:
+  $ airtap "test/*.js"

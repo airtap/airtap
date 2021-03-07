@@ -8,52 +8,67 @@ if (process.version.match(/^v(\d+)\./)[1] < 10) {
 
 require('make-promises-safe')
 
-const program = require('commander')
 const nearest = require('find-nearest-file')
 const yaml = require('js-yaml')
 const os = require('os')
 const fs = require('fs')
 const path = require('path')
 const Airtap = require('../lib/airtap')
-const version = require('../package.json').version
 const hasOwnProperty = Object.prototype.hasOwnProperty
+const argv = require('minimist')(process.argv.slice(2), {
+  string: [
+    'concurrency',
+    'retries',
+    'timeout',
+    'preset',
+    'server',
+    'loopback'
+  ],
+  boolean: [
+    'version',
+    'help',
+    'list-browsers',
+    'all',
+    'coverage',
+    'live',
+    'verbose',
+    'silly',
 
-program
-  .version(version, '-v, --version', 'print version')
-  .usage('[options] <files>')
-  .option('-l, --list-browsers', 'list (effective or --all) browsers')
-  .option('-a, --all', 'test or list all available browsers')
-  .option('-c, --concurrency <n>', 'number of browsers to test concurrently, default 5')
-  .option('-r, --retries <retries>', 'number of retries when running a browser, default 6')
-  .option('-t, --timeout <timeout>', 'how long to wait for test results, default 5m')
-  .option('--coverage', 'enable code coverage analysis')
-  .option('--live', 'keep browsers open to allow repeated test runs')
-  .option('-p, --preset <preset>', 'select a configuration preset')
-  .option('-s, --server <script>', 'path to script that runs a support server')
-  .option('--loopback <hostname>', 'custom hostname that equals or resolves to 127.0.0.1')
-  .option('--verbose', 'enable airtap debug output')
-  .option('--silly', 'enable all debug output')
+    // Legacy options (handled below)
+    'local',
+    'open',
+    'electron'
+  ],
+  alias: {
+    v: 'version',
+    h: 'help',
+    l: 'list-browsers',
+    a: 'all',
+    c: 'concurrency',
+    r: 'retries',
+    t: 'timeout',
+    p: 'preset',
+    s: 'server'
+  }
+})
 
-  // Can we hide these in help?
-  .option('--local', 'n/a')
-  .option('--open', 'n/a')
-  .option('--electron', 'n/a')
-
-  .on('--help', function () {
-    console.log()
-    console.log(read('examples.txt'))
-  })
-  .parse(process.argv)
+if (argv.help) {
+  console.log(read('help.txt'))
+  process.exit()
+} else if (argv.version) {
+  console.log(require('../package.json').version)
+  process.exit()
+}
 
 const config = {
   watchify: !process.env.CI,
   ...readYAML(nearest('.airtaprc') || path.join(os.homedir(), '.airtaprc')),
   ...readYAML('.airtap.yml'),
-  ...wash(program.opts())
+  ...wash(argv)
 }
 
-if (program.preset) {
-  usePreset(config, program.preset)
+if (argv.preset) {
+  usePreset(config, argv.preset)
 }
 
 if (config.silly) {
@@ -77,14 +92,14 @@ setCredentials(config, process.env)
 
 const airtap = new Airtap()
 const wanted = config.all ? null : config.browsers || []
-const files = program.args.length ? program.args : config.files || []
+const files = argv._.length ? argv._ : config.files || []
 
 if (!config.providers) {
   config.providers = ['airtap-default']
   if (wanted) wanted.splice(0, wanted.length, { name: 'default' })
 }
 
-if (!files.length && !program.listBrowsers) {
+if (!files.length && !argv['list-browsers']) {
   fail('At least one file must be specified.', true)
 } else if (!config.providers.length) {
   fail(read('no-input.txt'), true)
@@ -99,7 +114,7 @@ airtap.provider(config.providers)
 airtap.manifests(wanted, function (err, manifests) {
   if (err) return fail(err)
 
-  if (program.listBrowsers) {
+  if (argv['list-browsers']) {
     manifests.forEach(simplifyManifest)
     console.log(toYAML(manifests))
     return
@@ -157,8 +172,8 @@ function wash (opts) {
   const copy = {}
 
   for (const k in opts) {
-    if (!hasOwnProperty.call(opts, k)) continue
-    if (opts[k] != null) copy[k] = opts[k]
+    if (k.startsWith('_') || !hasOwnProperty.call(opts, k)) continue
+    if (opts[k] != null && opts[k] !== '') copy[k] = opts[k]
   }
 
   return copy

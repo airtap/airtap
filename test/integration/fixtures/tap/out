@@ -15,7 +15,7 @@ ok 6 (unnamed assert)
 ok 7 true is true AWESOME
 # failed plan
 ok 8 one assert
-not ok 9 test timed out after 200ms
+not ok 9 failed plan timed out after 200ms
 # error
 not ok 10 Error: test
 
