@@ -2,6 +2,12 @@
 
 If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
 
+## [4.0.3] - 2021-03-07
+
+### Changed
+
+- Replace `browserify-istanbul` with `@airtap` fork ([#308](https://github.com/airtap/airtap/issues/308)) ([`f6f8f9d`](https://github.com/airtap/airtap/commit/f6f8f9d)) (Vincent Weevers).
+
 ## [4.0.2] - 2021-03-07
 
 ### Changed
@@ -347,6 +353,8 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - README: remove frameworks other than tap(e) ([**@vweevers**](https://github.com/vweevers))
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
+
+[4.0.3]: https://github.com/airtap/airtap/compare/v4.0.2...v4.0.3
 
 [4.0.2]: https://github.com/airtap/airtap/compare/v4.0.1...v4.0.2
 
