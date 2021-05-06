@@ -131,8 +131,7 @@ browsers:
   - name: chromium
     options:
       headless: false
-      launch:
-        args: [--lang=en-US]
+      args: [--lang=en-US]
 ```
 
 For more information on the `browsers` field, see [Configuration](#configuration).
