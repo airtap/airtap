@@ -27,7 +27,7 @@
     "@airtap/browserify-istanbul": "^4.0.0",
     "airtap-default": "^1.0.0",
     "airtap-multi": "^1.0.0",
-    "browserify": "^16.5.2",
+    "browserify": "^17.0.0",
     "bruce-millis-option": "^1.0.0",
     "compression": "^1.7.1",
     "debug": "^4.1.0",
