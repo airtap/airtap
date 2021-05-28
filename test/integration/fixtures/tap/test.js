@@ -1,4 +1,4 @@
-var test = require('tape')
+const test = require('tape')
 
 // https://github.com/defunctzombie/zuul/issues/145
 test('ok', function (t) {
