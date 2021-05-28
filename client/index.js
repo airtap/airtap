@@ -1,19 +1,19 @@
-var load = require('load-script')
-var engineClient = require('engine.io-client')
+const load = require('load-script')
+const engineClient = require('engine.io-client')
 
 // Without Developer Tools open, console is undefined in IE9.
 if (typeof global.console === 'undefined') {
   global.console = {}
 }
 
-var container = document.getElementById('airtap')
-var colors = { pending: '#e4a533', fail: '#d83131', ok: '#69cf69' }
-var socket = engineClient('ws://' + window.location.host, { path: '/airtap/msg' })
-var started = false
+const container = document.getElementById('airtap')
+const colors = { pending: '#e4a533', fail: '#d83131', ok: '#69cf69' }
+const socket = engineClient('ws://' + window.location.host, { path: '/airtap/msg' })
+let started = false
 
 socket.on('open', function () {
   socket.on('message', function (json) {
-    var msg = JSON.parse(json)
+    const msg = JSON.parse(json)
 
     if (msg.type === 'start') {
       started = true
@@ -52,10 +52,10 @@ socket.on('open', function () {
 
   function wrap (original, level) {
     return function log () {
-      var args = [].slice.call(arguments)
+      const args = [].slice.call(arguments)
 
       // Useful for browsers that don't have a console
-      var code = container.appendChild(document.createElement('code'))
+      const code = container.appendChild(document.createElement('code'))
       code.textContent = args.join(' ')
 
       if (started) {
