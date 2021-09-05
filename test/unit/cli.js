@@ -122,7 +122,7 @@ test('cli errors if provider does not exist', function (t) {
 
 test('cli warns if sauce labs credentials are provided in root config', function (t) {
   const cwd = tempy.directory()
-  const expected = read('deprecated-creds.txt')
+  const expected = read('deprecated-creds.txt').trim()
 
   writeConfig(cwd, {
     username: 'test',
