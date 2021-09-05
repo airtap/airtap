@@ -4,7 +4,7 @@
 
 [![npm status](http://img.shields.io/npm/v/airtap.svg)](https://www.npmjs.org/package/airtap)
 [![node](https://img.shields.io/node/v/airtap.svg)](https://www.npmjs.org/package/airtap)
-[![Build Status](https://travis-ci.org/airtap/airtap.svg?branch=master)](https://travis-ci.org/airtap/airtap)
+[![Build Status](https://github.com/airtap/airtap/workflows/ci/badge.svg)](https://github.com/airtap/airtap/actions)
 
 ## Table of Contents
 
