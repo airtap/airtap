@@ -39,7 +39,7 @@
     "http-proxy": "^1.18.1",
     "humanize-duration": "^3.23.1",
     "js-yaml": "^4.0.0",
-    "load-script": "^1.0.0",
+    "load-script": "^2.0.0",
     "make-promises-safe": "^5.1.0",
     "maybe-combine-errors": "^1.0.0",
     "minimist": "^1.2.5",
