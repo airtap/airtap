@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.4] - 2021-11-27
+
+### Fixed
+
+- Bump `engine.io` and `engine.io-client` ([`5e7560b`](https://github.com/airtap/airtap/commit/5e7560b)) (Vincent Weevers)
+- Bump `load-script` from 1.x to 2.x ([#319](https://github.com/airtap/airtap/issues/319)) ([`d1dc264`](https://github.com/airtap/airtap/commit/d1dc264)) (Vincent Weevers).
+
 ## [4.0.3] - 2021-03-07
 
 ### Changed
@@ -355,6 +362,8 @@ _First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie
 - README: remove frameworks other than tap(e) ([**@vweevers**](https://github.com/vweevers))
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
+
+[4.0.4]: https://github.com/airtap/airtap/releases/tag/v4.0.4
 
 [4.0.3]: https://github.com/airtap/airtap/releases/tag/v4.0.3
 
