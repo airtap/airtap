@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directory: '/'
+    directory: /
     schedule:
       interval: monthly
     open-pull-requests-limit: 10
@@ -11,6 +11,6 @@ updates:
       interval: monthly
     ignore:
       - dependency-name: engine.io
-      - dependency-name: uuid
       - dependency-name: engine.io-client
       - dependency-name: standard
+      - dependency-name: tempy
