@@ -110,7 +110,7 @@ The [`sauce-browsers`](https://github.com/lpinca/sauce-browsers) dependency has 
 
 ### Changes to frontend
 
-**TAP output is now parsed in the backend instead of the frontend, with `tap-parser` upgraded from v5 to v10.** Browsers send console logs to the backend over WebSockets, or HTTP in older browsers. Support of IE &lt; 11 has been restored. Stack traces embedded in TAP no longer utilize source maps; we may restore this functionality in a future release.
+**TAP output is now parsed in the backend instead of the frontend, with `tap-parser` upgraded from v5 to v10.** Browsers send console logs to the backend over WebSockets, or HTTP in older browsers. Support of IE < 11 has been restored. Stack traces embedded in TAP no longer utilize source maps; we may restore this functionality in a future release.
 
 ### Changes to configuration
 
@@ -163,11 +163,11 @@ The [`sauce-browsers`](https://github.com/lpinca/sauce-browsers) dependency has 
 
 ## 3.0.0
 
-Dropped support of node &lt; 10.
+Dropped support of node < 10.
 
 ## 2.0.0
 
-Upgraded browserify from `13.x` to `16.x`, which ends support of IE &lt; 11. If you need IE 9-10, either stick with `airtap@1` or follow the workaround described in [#171](https://github.com/airtap/airtap/issues/171).
+Upgraded browserify from `13.x` to `16.x`, which ends support of IE < 11. If you need IE 9-10, either stick with `airtap@1` or follow the workaround described in [#171](https://github.com/airtap/airtap/issues/171).
 
 ## 1.0.0
 

@@ -2,9 +2,11 @@
 
 **Run TAP unit tests in 1789+ browsers.** Airtap is a command-line interface to unit test your JavaScript in browsers, using a TAP-producing harness like `tape`. Start testing locally and seamlessly move to browsers in the cloud for full coverage. Airtap runs browsers concurrently and lets you iterate quickly during development. Don't just claim your JavaScript supports "all browsers", prove it with tests!
 
-[![npm status](http://img.shields.io/npm/v/airtap.svg)](https://www.npmjs.org/package/airtap)
-[![node](https://img.shields.io/node/v/airtap.svg)](https://www.npmjs.org/package/airtap)
-[![Build Status](https://github.com/airtap/airtap/workflows/ci/badge.svg)](https://github.com/airtap/airtap/actions)
+[![npm](https://img.shields.io/npm/v/airtap.svg)](https://www.npmjs.com/package/airtap)
+[![Node version](https://img.shields.io/node/v/airtap.svg)](https://www.npmjs.com/package/airtap)
+[![Test](https://img.shields.io/github/workflow/status/airtap/airtap/ci?label=test)](https://github.com/airtap/airtap/actions/workflows/ci.yml)
+[![Standard](https://img.shields.io/badge/standard-informational?logo=javascript\&logoColor=fff)](https://standardjs.com)
+[![Common Changelog](https://common-changelog.org/badge.svg)](https://common-changelog.org)
 
 ## Table of Contents
 
@@ -36,7 +38,7 @@
     - [Disjoint with ranges](#disjoint-with-ranges)
     - [Float version numbers](#float-version-numbers)
   - [`browserify` (array)](#browserify-array)
-    - [IE &lt; 11 support](#ie--11-support)
+    - [IE < 11 support](#ie--11-support)
   - [`server` (string or object)](#server-string-or-object)
   - [Firefox Profile](#firefox-profile)
 - [Who Uses Airtap?](#who-uses-airtap)
@@ -412,9 +414,9 @@ browserify:
       node: true
 ```
 
-#### IE &lt; 11 support
+#### IE < 11 support
 
-To support IE &lt; 11, an older version of the [`buffer`](https://github.com/feross/buffer) polyfill is required. Use the following configuration and run `npm install buffer@4`:
+To support IE < 11, an older version of the [`buffer`](https://github.com/feross/buffer) polyfill is required. Use the following configuration and run `npm install buffer@4`:
 
 ```yaml
 # Use buffer@4 to support IE < 11

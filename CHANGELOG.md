@@ -1,7 +1,5 @@
 # Changelog
 
-If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md).
-
 ## [4.0.3] - 2021-03-07
 
 ### Changed
@@ -25,11 +23,11 @@ If you are upgrading or migrating from [Zuul](https://github.com/defunctzombie/z
 
 ## [4.0.0] - 2020-09-19
 
-**Airtap 4 is a modular rewrite that supports concurrent local browsers, headless testing with Playwright, starting Sauce Labs from your local machine & from GitHub Actions, and live reload on any browser.**
-
-For details, please see the [upgrade guide](./UPGRADING.md).
+_Airtap 4 is a modular rewrite that supports concurrent local browsers, headless testing with Playwright, starting Sauce Labs from your local machine & from GitHub Actions, and live reload on any browser. For details, please see the [upgrade guide](./UPGRADING.md)._
 
 ## [3.0.0] - 2020-01-17
+
+_If you are upgrading: please see the [upgrade guide](./UPGRADING.md)._
 
 ### Changed
 
@@ -46,7 +44,7 @@ For details, please see the [upgrade guide](./UPGRADING.md).
 
 ### Removed
 
-- **Breaking:** Drop node &lt; 10 ([#272](https://github.com/airtap/airtap/issues/272)) ([**@vweevers**](https://github.com/vweevers))
+- **Breaking:** Drop node < 10 ([#272](https://github.com/airtap/airtap/issues/272)) ([**@vweevers**](https://github.com/vweevers))
 
 ## [2.0.4] - 2019-08-17
 
@@ -98,12 +96,16 @@ For details, please see the [upgrade guide](./UPGRADING.md).
 
 ## [2.0.0] - 2018-12-29
 
+_If you are upgrading: please see the [upgrade guide](./UPGRADING.md)._
+
 ### Changed
 
 - Update `browserify` from `~13.3.0` to `~16.2.3` ([#233](https://github.com/airtap/airtap/issues/233)) ([**@vweevers**](https://github.com/vweevers))
 - Update `airtap-browsers` devDependency from `0.0.2` to `^0.1.0` ([#233](https://github.com/airtap/airtap/issues/233)) ([**@vweevers**](https://github.com/vweevers))
 
 ## [1.0.0] - 2018-12-27
+
+_If you are upgrading: please see the [upgrade guide](./UPGRADING.md)._
 
 ### Changed
 
@@ -320,7 +322,7 @@ For details, please see the [upgrade guide](./UPGRADING.md).
 
 ## [0.0.1] - 2018-02-18
 
-First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/zuul), so this changelog entry lists the differences from `zuul`.
+_First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/zuul) so this changelog entry lists the differences from `zuul`. If you are migrating from [`zuul`](https://github.com/defunctzombie/zuul): please see the [upgrade guide](./UPGRADING.md)._
 
 ### Changed
 
@@ -354,44 +356,44 @@ First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie/
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
 
-[4.0.3]: https://github.com/airtap/airtap/compare/v4.0.2...v4.0.3
+[4.0.3]: https://github.com/airtap/airtap/releases/tag/v4.0.3
 
-[4.0.2]: https://github.com/airtap/airtap/compare/v4.0.1...v4.0.2
+[4.0.2]: https://github.com/airtap/airtap/releases/tag/v4.0.2
 
-[4.0.1]: https://github.com/airtap/airtap/compare/v4.0.0...v4.0.1
+[4.0.1]: https://github.com/airtap/airtap/releases/tag/v4.0.1
 
-[4.0.0]: https://github.com/airtap/airtap/compare/v3.0.0...v4.0.0
+[4.0.0]: https://github.com/airtap/airtap/releases/tag/v4.0.0
 
-[3.0.0]: https://github.com/airtap/airtap/compare/v2.0.4...v3.0.0
+[3.0.0]: https://github.com/airtap/airtap/releases/tag/v3.0.0
 
-[2.0.4]: https://github.com/airtap/airtap/compare/v2.0.3...v2.0.4
+[2.0.4]: https://github.com/airtap/airtap/releases/tag/v2.0.4
 
-[2.0.3]: https://github.com/airtap/airtap/compare/v2.0.2...v2.0.3
+[2.0.3]: https://github.com/airtap/airtap/releases/tag/v2.0.3
 
-[2.0.2]: https://github.com/airtap/airtap/compare/v2.0.1...v2.0.2
+[2.0.2]: https://github.com/airtap/airtap/releases/tag/v2.0.2
 
-[2.0.1]: https://github.com/airtap/airtap/compare/v2.0.0...v2.0.1
+[2.0.1]: https://github.com/airtap/airtap/releases/tag/v2.0.1
 
-[2.0.0]: https://github.com/airtap/airtap/compare/v1.0.0...v2.0.0
+[2.0.0]: https://github.com/airtap/airtap/releases/tag/v2.0.0
 
-[1.0.0]: https://github.com/airtap/airtap/compare/v0.1.0...v1.0.0
+[1.0.0]: https://github.com/airtap/airtap/releases/tag/v1.0.0
 
-[0.1.0]: https://github.com/airtap/airtap/compare/v0.0.9...v0.1.0
+[0.1.0]: https://github.com/airtap/airtap/releases/tag/v0.1.0
 
-[0.0.9]: https://github.com/airtap/airtap/compare/v0.0.8...v0.0.9
+[0.0.9]: https://github.com/airtap/airtap/releases/tag/v0.0.9
 
-[0.0.8]: https://github.com/airtap/airtap/compare/v0.0.7...v0.0.8
+[0.0.8]: https://github.com/airtap/airtap/releases/tag/v0.0.8
 
-[0.0.7]: https://github.com/airtap/airtap/compare/v0.0.6...v0.0.7
+[0.0.7]: https://github.com/airtap/airtap/releases/tag/v0.0.7
 
-[0.0.6]: https://github.com/airtap/airtap/compare/v0.0.5...v0.0.6
+[0.0.6]: https://github.com/airtap/airtap/releases/tag/v0.0.6
 
-[0.0.5]: https://github.com/airtap/airtap/compare/v0.0.4...v0.0.5
+[0.0.5]: https://github.com/airtap/airtap/releases/tag/v0.0.5
 
-[0.0.4]: https://github.com/airtap/airtap/compare/v0.0.3...v0.0.4
+[0.0.4]: https://github.com/airtap/airtap/releases/tag/v0.0.4
 
-[0.0.3]: https://github.com/airtap/airtap/compare/v0.0.2...v0.0.3
+[0.0.3]: https://github.com/airtap/airtap/releases/tag/v0.0.3
 
-[0.0.2]: https://github.com/airtap/airtap/compare/v0.0.1...v0.0.2
+[0.0.2]: https://github.com/airtap/airtap/releases/tag/v0.0.2
 
-[0.0.1]: https://github.com/airtap/airtap/compare/v0.0.0...v0.0.1
+[0.0.1]: https://github.com/airtap/airtap/releases/tag/v0.0.1
