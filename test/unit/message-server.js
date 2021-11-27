@@ -1,7 +1,7 @@
 'use strict'
 
 const test = require('tape')
-const engineClient = require('engine.io-client')
+const Socket = require('engine.io-client').Socket
 const EventEmitter = require('events')
 const MessageServer = require('../../lib/message-server')
 
@@ -37,7 +37,7 @@ test('message server closes open connections', function (t) {
 
     server.register(cid, mockContext)
 
-    const socket = engineClient(url, {
+    const socket = new Socket(url, {
       path: '/airtap/msg',
       extraHeaders: {
         'x-airtap-context-id': cid
@@ -73,7 +73,7 @@ test('message server closes if connections were already closed', function (t) {
 
     server.register(cid, mockContext)
 
-    const socket = engineClient(url, {
+    const socket = new Socket(url, {
       path: '/airtap/msg',
       extraHeaders: {
         'x-airtap-context-id': cid
@@ -104,7 +104,7 @@ test('message server closes connection without valid cid', function (t) {
   server.open(function (err) {
     t.ifError(err, 'no open error')
 
-    const socket = engineClient(`ws://localhost:${server.port}`, {
+    const socket = new Socket(`ws://localhost:${server.port}`, {
       path: '/airtap/msg'
     })
 

@@ -10,7 +10,5 @@ updates:
     schedule:
       interval: monthly
     ignore:
-      - dependency-name: engine.io
-      - dependency-name: engine.io-client
       - dependency-name: standard
       - dependency-name: tempy

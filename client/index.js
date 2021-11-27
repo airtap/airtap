@@ -1,5 +1,7 @@
 var load = require('load-script')
-var engineClient = require('engine.io-client')
+
+// Use transpiled flavor for older browser support
+var engineClient = require('engine.io-client/dist/engine.io.js')
 
 // Without Developer Tools open, console is undefined in IE9.
 if (typeof global.console === 'undefined') {
