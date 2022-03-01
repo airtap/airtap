@@ -16,7 +16,7 @@ jobs:
       - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3
         with:
-          node: ${{ matrix.node }}
+          node-version: ${{ matrix.node }}
       - name: Install
         run: npm i --ignore-scripts
       - name: Test
