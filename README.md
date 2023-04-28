@@ -4,7 +4,7 @@
 
 [![npm](https://img.shields.io/npm/v/airtap.svg)](https://www.npmjs.com/package/airtap)
 [![Node version](https://img.shields.io/node/v/airtap.svg)](https://www.npmjs.com/package/airtap)
-[![Test](https://img.shields.io/github/workflow/status/airtap/airtap/Test?label=test)](https://github.com/airtap/airtap/actions/workflows/test.yml)
+[![Test](https://img.shields.io/github/actions/workflow/status/airtap/airtap/test.yml?label=test)](https://github.com/airtap/airtap/actions/workflows/test.yml)
 [![Standard](https://img.shields.io/badge/standard-informational?logo=javascript\&logoColor=fff)](https://standardjs.com)
 [![Common Changelog](https://common-changelog.org/badge.svg)](https://common-changelog.org)
 
