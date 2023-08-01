@@ -461,7 +461,7 @@ browserify:
     presets: ['@babel/preset-env']
     plugins: ['@babel/plugin-syntax-import-assertions']
 ```
-You'll need to install `babelify`, `@babel/present-env` and `@babel/plugin-syntax-import-assertions`. Note that other global browserify configs might break this and that the `global` parameter might not be required.
+You'll need to install `babelify`, `@babel/preset-env` and `@babel/plugin-syntax-import-assertions`. Note that other global browserify configs might break this and that the `global` parameter might not be required.
 
 ## Who Uses Airtap?
 
