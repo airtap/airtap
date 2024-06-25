@@ -1,3 +1,6 @@
+
+#### This forked airtap has a debloated version of package-lock.json file, which execludes the unnecessary dependencies in production.
+
 # airtap
 
 **Run TAP unit tests in 1789+ browsers.** Airtap is a command-line interface to unit test your JavaScript in browsers, using a TAP-producing harness like `tape`. Start testing locally and seamlessly move to browsers in the cloud for full coverage. Airtap runs browsers concurrently and lets you iterate quickly during development. Don't just claim your JavaScript supports "all browsers", prove it with tests!
