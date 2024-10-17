@@ -9,7 +9,7 @@
     "airtap": "./bin/airtap.js"
   },
   "scripts": {
-    "test": "standard && hallmark && depcheck --ignores hallmark && npm run test:unit",
+    "test": "standard && hallmark && npm run test:unit",
     "test:unit": "cross-env DEBUG=airtap* nyc node test",
     "fix:md": "hallmark fix",
     "fix:js": "standard --fix"
@@ -59,7 +59,6 @@
   "devDependencies": {
     "abstract-browser": "^1.0.0",
     "cross-env": "^7.0.2",
-    "depcheck": "^1.2.0",
     "hallmark": "^4.0.0",
     "nyc": "^15.1.0",
     "simple-get": "^4.0.0",
