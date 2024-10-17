@@ -73,7 +73,7 @@ airtap --live test.js
 
 ### Adding Browsers
 
-In order to run other (and more than one) browsers, create a `.airtap.yml` file in your working directory, containing at least one provider and at least one browser. For example:
+In order to run more browsers, create a `.airtap.yml` file in your working directory, containing at least one provider and browser. For example:
 
 ```yaml
 providers:
@@ -84,7 +84,11 @@ browsers:
   - name: ff
 ```
 
-Providers discover browsers on a particular platform or remote service. In the above example, [`airtap-system`][airtap-system] finds browsers installed on your machine which Airtap then matches against the `browsers` you specified.
+Providers discover browsers on a particular platform or remote service. In the above example, [`airtap-system`][airtap-system] finds browsers installed on your machine which Airtap then matches against the specified `browsers`. Providers are npm packages that must be installed separately from the main `airtap` package. So that would be:
+
+```
+npm install airtap airtap-system --save-dev
+```
 
 You can include multiple providers and let Airtap find the best matching browser(s):
 
@@ -140,8 +144,6 @@ browsers:
 For more information on the `browsers` field, see [Configuration](#configuration).
 
 ## Available Providers
-
-Providers must be installed separately.
 
 | **Package**                              | **Description**                                    |
 | :--------------------------------------- | :------------------------------------------------- |
