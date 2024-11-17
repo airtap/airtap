@@ -377,16 +377,20 @@ browserify:
       node: true
 ```
 
-#### IE < 11 support
+#### IE support
 
-To support IE < 11, an older version of the [`buffer`](https://github.com/feross/buffer) polyfill is required. Use the following configuration and run `npm install buffer@4`:
+To support Internet Explorer, older versions of the [`buffer`](https://github.com/feross/buffer) and [`stream-browserify`](https://github.com/browserify/stream-browserify) polyfills are required. Use the following configuration and run `npm install buffer@4 stream-browserify@2`:
 
 ```yaml
-# Use buffer@4 to support IE < 11
+# Use buffer@4 and stream-browserify@2 to support IE
 browserify:
   - require: 'buffer/'
     expose: 'buffer'
+  - require: 'stream-browserify'
+    expose: 'stream'
 ```
+
+This is not officially supported. There may be other reasons that IE will not work.
 
 ### `server` (string or object)
 
