@@ -414,6 +414,18 @@ browsers:
         webgl.force-enabled: true
 ```
 
+## ESM Support
+
+By default airtap doesn't support ESM, but you can configure it to work with ESM and CJS using the following config:
+```yml
+browserify:
+  - transform: babelify
+    global: true
+    presets: ['@babel/preset-env']
+    plugins: ['@babel/plugin-syntax-import-assertions']
+```
+You'll need to install `babelify`, `@babel/preset-env` and `@babel/plugin-syntax-import-assertions`. Note that other global browserify configs might break this and that the `global` parameter might not be required.
+
 ## Who Uses Airtap?
 
 **Lots of folks!** Collectively, packages that depend on Airtap get 100's of millions of downloads per month!
