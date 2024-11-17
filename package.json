@@ -53,7 +53,7 @@
     "tap-completed": "^2.0.0",
     "thunky-with-args": "^1.0.0",
     "transient-error": "^1.0.0",
-    "uuid": "^8.3.0",
+    "uuid": "^11.0.3",
     "watchify": "^4.0.0"
   },
   "devDependencies": {
