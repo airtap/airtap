@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.0.0] - 2024-11-17
+
+_TLDR: drops support of Node.js < 20 and Internet Explorer._
+
+### Changed
+
+- **Breaking:** bump `tap-completed` from 1 to 2 ([#339](https://github.com/airtap/airtap/issues/339)) ([`7ed14e3`](https://github.com/airtap/airtap/commit/7ed14e3)) (Vincent Weevers)
+- **Breaking:** bump `browserify` from 16 to 17 ([#345](https://github.com/airtap/airtap/issues/345)) ([`58bf9d1`](https://github.com/airtap/airtap/commit/58bf9d1)) (Renée Kooi, Vincent Weevers)
+- Bump `readable-stream` from 3 to 4 ([#342](https://github.com/airtap/airtap/issues/342)) ([`50aae56`](https://github.com/airtap/airtap/commit/50aae56)) (Vincent Weevers)
+
+### Added
+
+- Document how to configure ESM support ([#328](https://github.com/airtap/airtap/issues/328)) ([`d37719b`](https://github.com/airtap/airtap/commit/d37719b)) (Cas\_, Daniel Lando)
+
 ## [4.0.4] - 2021-11-27
 
 ### Fixed
@@ -362,6 +376,8 @@ _First release :seedling:. Forked from [`zuul`](https://github.com/defunctzombie
 - README: remove frameworks other than tap(e) ([**@vweevers**](https://github.com/vweevers))
 - Undocument `--ui` option (we intend to remove it) ([**@vweevers**](https://github.com/vweevers))
 - Remove `HISTORY.md` (replaced by `CHANGELOG.md`) ([**@vweevers**](https://github.com/vweevers))
+
+[5.0.0]: https://github.com/airtap/airtap/releases/tag/v5.0.0
 
 [4.0.4]: https://github.com/airtap/airtap/releases/tag/v4.0.4
 
