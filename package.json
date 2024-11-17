@@ -50,7 +50,7 @@
     "run-parallel-settled": "^1.0.1",
     "server-destroy": "^1.0.1",
     "shell-quote": "^1.7.0",
-    "tap-completed": "^1.0.0",
+    "tap-completed": "^2.0.0",
     "thunky-with-args": "^1.0.0",
     "transient-error": "^1.0.0",
     "uuid": "^8.3.0",
@@ -85,6 +85,6 @@
     "testing"
   ],
   "engines": {
-    "node": ">=10.2"
+    "node": ">=20"
   }
 }

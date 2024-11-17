@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict'
 
-if (process.version.match(/^v(\d+)\./)[1] < 10) {
-  console.error('airtap: Node 10 or greater is required. `airtap` did not run.')
+if (process.version.match(/^v(\d+)\./)[1] < 20) {
+  console.error('airtap: Node 20 or greater is required. `airtap` did not run.')
   process.exit(0)
 }
 
