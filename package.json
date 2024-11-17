@@ -60,7 +60,7 @@
     "abstract-browser": "^1.0.0",
     "cross-env": "^7.0.2",
     "hallmark": "^4.0.0",
-    "nyc": "^15.1.0",
+    "nyc": "^17.1.0",
     "simple-get": "^4.0.0",
     "standard": "^16.0.4",
     "tape": "^5.0.1",
