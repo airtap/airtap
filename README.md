@@ -8,45 +8,6 @@
 [![Standard](https://img.shields.io/badge/standard-informational?logo=javascript\&logoColor=fff)](https://standardjs.com)
 [![Common Changelog](https://common-changelog.org/badge.svg)](https://common-changelog.org)
 
-## Table of Contents
-
-<details><summary>Click to expand</summary>
-
-- [Install](#install)
-- [Getting Started](#getting-started)
-  - [Adding Browsers](#adding-browsers)
-- [Available Providers](#available-providers)
-- [Cloud Testing With Sauce Labs](#cloud-testing-with-sauce-labs)
-  - [1. Set Credentials](#1-set-credentials)
-  - [2. Select Browsers](#2-select-browsers)
-  - [3. Set Hostname](#3-set-hostname)
-- [Continuous Integration](#continuous-integration)
-  - [Travis CI](#travis-ci)
-    - [1. Setup Travis](#1-setup-travis)
-    - [2. Add Test Script](#2-add-test-script)
-    - [3. Enable Code Coverage](#3-enable-code-coverage)
-    - [4. Set Credentials](#4-set-credentials)
-  - [GitHub Actions](#github-actions)
-- [CLI](#cli)
-- [Configuration](#configuration)
-  - [`providers` (array)](#providers-array)
-  - [`browsers` (array)](#browsers-array)
-    - [Specific version of a browser on a specific platform](#specific-version-of-a-browser-on-a-specific-platform)
-    - [Range of versions of a browser](#range-of-versions-of-a-browser)
-    - [Range of versions with negative start index.](#range-of-versions-with-negative-start-index)
-    - [Disjoint versions](#disjoint-versions)
-    - [Disjoint with ranges](#disjoint-with-ranges)
-    - [Float version numbers](#float-version-numbers)
-  - [`browserify` (array)](#browserify-array)
-    - [IE < 11 support](#ie--11-support)
-  - [`server` (string or object)](#server-string-or-object)
-  - [Firefox Profile](#firefox-profile)
-- [Who Uses Airtap?](#who-uses-airtap)
-- [Contributing](#contributing)
-- [License](#license)
-
-</details>
-
 ## Install
 
 With [npm](https://npmjs.org) do:
